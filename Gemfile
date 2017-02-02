@@ -40,6 +40,7 @@ group :test do
 #  gem 'shoulda-matchers', '~> 3.1', require: false
 #  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', require: false
   gem 'shoulda-matchers', require: false
+  gem 'database_cleaner'
 
 #  gem 'shoulda-matchers', '~> 2.0', require: false
 end

@@ -23,5 +23,21 @@ RSpec.describe Post, type: :model do
 #    it { should have_many(:performances) }
   end
 
+  context 'troubleshooting' do
+    it 'creates a new Post object' do
+      expect(Post.new).to_not eq(nil) 
+    end
+
+    it 'saves a new Post object' do
+      post = Post.new(url: 'http://taxreformyyc.com')
+      puts post.save
+      puts post.errors.messages
+      expect(post.save).to eq(true)
+      expect(Post.count).to eq(1) 
+    end
+
+
+  end
+
 
 end

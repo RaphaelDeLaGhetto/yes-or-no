@@ -15,6 +15,7 @@ GEM
     arel (7.1.4)
     bcrypt (3.1.11)
     concurrent-ruby (1.0.4)
+    database_cleaner (1.5.3)
     diff-lcs (1.3)
     enumerable-lazy (0.0.2)
     i18n (0.8.0)
@@ -99,6 +100,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (>= 3.1)
   bcrypt
+  database_cleaner
   padrino (= 0.13.1)
   pg
   rack-test

@@ -17,6 +17,20 @@ RSpec.configure do |conf|
   conf.include Rack::Test::Methods
   conf.include(Shoulda::Matchers::ActiveModel, type: :model)
   conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
+
+  # database_cleaner           
+  conf.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  conf.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+#    FileUtils.rm_rf(ENV['UPLOAD_DIR'], :secure => true)
+  end
+
 end
 
 # You can use this method to custom specify a Rack app
