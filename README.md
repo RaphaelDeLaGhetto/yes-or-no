@@ -24,14 +24,16 @@ docker run --name yesorno-postgres -e POSTGRES_USER=root -p 5432:5432 -d postgre
 
 #### Debug container
 ```
-docker exec -it yes_or_no_postgres_1 bash
-> psql -U yes_or_no
+docker exec -it yesorno-postgres bash
+> psql -U yesorno
 ```
 
 ### Create/Migrate
 
 ```
 bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake db:seed
 ```
 
 ## Test
@@ -43,7 +45,7 @@ bundle exec rspec
 ## Server
 
 ```
-padrino s
+padrino start -h 0.0.0.0
 ```
 
 
