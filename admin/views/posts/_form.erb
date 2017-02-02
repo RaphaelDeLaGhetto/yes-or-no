@@ -1,0 +1,49 @@
+<% error = @post.errors.include?(:url) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :url, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :url, :class => 'form-control input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:url) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @post.errors.include?(:initials) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :initials, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :initials, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:initials) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @post.errors.include?(:approved) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :approved, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :approved, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:approved) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @post.errors.include?(:yeses) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :yeses, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :yeses, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:yeses) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+<% error = @post.errors.include?(:nos) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :nos, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :nos, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:nos) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
+
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:posts, :index), :class => 'btn btn-default' %>
+</div>
