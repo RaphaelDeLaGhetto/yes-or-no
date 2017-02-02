@@ -38,6 +38,15 @@ bundle exec rake db:seed
 
 ## Test
 
+### Create/migrate test database
+
+```
+bundle exec rake db:create RACK_ENV=test
+bundle exec rake db:migrate RACK_ENV=test
+```
+
+### Execute
+
 ```
 bundle exec rspec
 ```

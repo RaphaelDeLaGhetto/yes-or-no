@@ -81,6 +81,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    shoulda-matchers (2.8.0)
+      activesupport (>= 3.0.0)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -102,6 +104,7 @@ DEPENDENCIES
   rack-test
   rake
   rspec
+  shoulda-matchers
 
 BUNDLED WITH
    1.12.5

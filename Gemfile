@@ -35,3 +35,11 @@ gem 'padrino', '0.13.1'
 # %w(core support gen helpers cache mailer admin).each do |g|
 #   gem 'padrino-' + g, '0.13.1'
 # end
+
+group :test do
+#  gem 'shoulda-matchers', '~> 3.1', require: false
+#  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', require: false
+  gem 'shoulda-matchers', require: false
+
+#  gem 'shoulda-matchers', '~> 2.0', require: false
+end
