@@ -1,17 +1,7 @@
 RACK_ENV = 'test' unless defined?(RACK_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))
-
-#require 'rspec'
-#require 'rack/test'
 require 'shoulda/matchers'
-#Shoulda::Matchers.configure do |config|
-#  config.integrate do |with|
-#    with.test_framework :rspec
-#    with.library :active_record
-#    with.library :active_model
-#  end
-#end
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods

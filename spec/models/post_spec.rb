@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Post, type: :model do
   context 'database schema' do
-    subject { Post }
+#    subject { Post }
     describe 'columns' do
       it { should have_db_column(:id) }
       it { should have_db_column(:url) }
@@ -16,7 +16,7 @@ RSpec.describe Post, type: :model do
   end
 
   context 'validations' do
-    subject { Post }
+#    subject { Post }
     it { should validate_presence_of (:url) }
     it { should validate_uniqueness_of (:url) }
 #    it { should validate_presence_of(:description) }
