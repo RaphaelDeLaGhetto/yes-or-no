@@ -22,17 +22,10 @@ RSpec.describe Post, type: :model do
   end
 
   context 'initialization' do
-    before(:each) do
-      @post = Post.create({ url: 'http://example.com/pic.jpg', tag: 'ldb' })
-    end
+    subject { Post.create({ url: 'http://example.com/pic.jpg', tag: 'ldb' }) }
 
-    it 'sets yeses to 0' do
-      expect(@post.yeses).to eq(0)
-    end
-
-    it 'sets nos to 0' do
-      expect(@post.nos).to eq(0)
-    end
+    it { expect(subject.yeses).to eq(0) }
+    it { expect(subject.nos).to eq(0) }
   end
 
 end
