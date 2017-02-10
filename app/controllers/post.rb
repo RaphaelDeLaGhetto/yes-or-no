@@ -18,6 +18,19 @@ YesOrNo::App.controllers :post do
   # get '/example' do
   #   'Hello world!'
   # end
-  
+
+  #
+  # create
+  #
+  post :create, map: "/post" do
+    @post = Post.new(params.except('authenticity_token'))
+    if @post.save
+      flash[:success] = 'Image submitted for review'
+      redirect '/'
+    else
+      erb :landing
+    end
+  end
+ 
 
 end
