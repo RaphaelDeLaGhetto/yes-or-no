@@ -12,9 +12,18 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (7.1.4)
     bcrypt (3.1.11)
+    capybara (2.7.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     concurrent-ruby (1.0.4)
+    database_cleaner (1.5.3)
     diff-lcs (1.3)
     enumerable-lazy (0.0.2)
     i18n (0.8.0)
@@ -23,10 +32,14 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mini_portile2 (2.1.0)
     minitest (5.10.1)
     moneta (0.7.20)
     mustermann19 (0.4.4)
       enumerable-lazy
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     padrino (0.13.1)
       padrino-admin (= 0.13.1)
       padrino-cache (= 0.13.1)
@@ -49,6 +62,9 @@ GEM
       rack-protection (>= 1.5.0)
       sinatra (~> 1.4.6)
       thor (~> 0.18)
+    padrino-flash (0.2.0)
+      padrino-core
+      padrino-helpers
     padrino-gen (0.13.1)
       bundler (~> 1.0)
       padrino-core (= 0.13.1)
@@ -62,6 +78,7 @@ GEM
     padrino-support (0.13.1)
       activesupport (>= 3.1)
     pg (0.19.0)
+    pkg-config (1.1.7)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -92,6 +109,8 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -99,7 +118,10 @@ PLATFORMS
 DEPENDENCIES
   activerecord (>= 3.1)
   bcrypt
+  capybara
+  database_cleaner
   padrino (= 0.13.1)
+  padrino-flash
   pg
   rack-test
   rake
