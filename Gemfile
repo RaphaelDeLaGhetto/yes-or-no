@@ -28,6 +28,8 @@ gem 'rack-test', :require => 'rack/test', :group => 'test'
 # Padrino Stable Gem
 gem 'padrino', '0.13.1'
 
+gem 'padrino-flash'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 
@@ -38,5 +40,6 @@ gem 'padrino', '0.13.1'
 
 group :test do
   gem 'shoulda-matchers', require: false
+  gem 'capybara'
   gem 'database_cleaner'
 end

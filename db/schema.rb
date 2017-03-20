@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2) do
 
   create_table "posts", force: :cascade do |t|
     t.string   "url"
-    t.string   "initials"
+    t.string   "tag"
     t.boolean  "approved",   default: false
     t.integer  "yeses",      default: 0
     t.integer  "nos",        default: 0

@@ -3,6 +3,7 @@ module YesOrNo
     use ConnectionPoolManagement
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Flash
 
     enable :sessions
 
@@ -62,5 +63,10 @@ module YesOrNo
     #     render 'errors/500'
     #   end
     #
+
+
+    get '/' do
+      render :landing
+    end
   end
 end
