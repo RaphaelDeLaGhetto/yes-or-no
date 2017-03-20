@@ -15,9 +15,6 @@ require 'shoulda/matchers'
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
-  conf.include(Shoulda::Matchers::ActiveModel, type: :model)
-  conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
-
   # database_cleaner           
   conf.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -30,6 +27,9 @@ RSpec.configure do |conf|
     end
 #    FileUtils.rm_rf(ENV['UPLOAD_DIR'], :secure => true)
   end
+#  conf.include(Shoulda::Matchers::ActiveModel, type: :model)
+#  conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
+
 
 end
 

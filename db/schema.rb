@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 2) do
   create_table "posts", force: :cascade do |t|
     t.string   "url"
     t.string   "initials"
-    t.boolean  "approved"
-    t.integer  "yeses"
-    t.integer  "nos"
+    t.boolean  "approved",   default: false
+    t.integer  "yeses",      default: 0
+    t.integer  "nos",        default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
