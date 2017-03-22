@@ -20,5 +20,32 @@ describe "add an image URI", :type => :feature do
     expect(Post.first.approved).to be false
   end
 
+  context 'approve an image URI' do
+    before :each do
+      @post = create(:post)
+      @admin = create(:admin)
+      visit '/'
+      expect(page).to have_selector('.post', count: 0)
+    end
+
+    it 'displays the post on the main page' do
+      visit '/admin'
+      fill_in 'Email', :with => @admin.email
+      fill_in 'Password', :with => 'secret'
+      click_button 'Sign In'
+      expect(page).to have_current_path('/admin/')
+      click_link 'Posts'
+      expect(page).to have_current_path("/admin/posts")
+      expect(page).to have_selector('tr.list-row', count: 1)
+      click_link 'Edit post'
+      expect(page).to have_current_path("/admin/posts/edit/#{@post.id}")
+      check 'Approved:'
+      click_button 'Save and continue'
+      expect(page).to have_current_path("/admin/posts")
+      visit '/'
+      expect(page).to have_selector('.post', count: 1)
+    end
+  end
+
 end
 
