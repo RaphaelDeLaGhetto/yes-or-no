@@ -23,6 +23,7 @@ docker run --name yesorno-postgres -e POSTGRES_USER=root -p 5432:5432 -d postgre
 ```
 
 #### Debug container
+
 ```
 docker exec -it yesorno-postgres bash
 > psql -U root

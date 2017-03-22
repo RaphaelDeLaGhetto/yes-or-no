@@ -21,6 +21,14 @@ RSpec.configure do |conf|
       example.run
     end
   end
+
+  # Factory Girl
+  conf.include FactoryGirl::Syntax::Methods
+
+  conf.before(:suite) do
+    FactoryGirl.find_definitions
+  end
+
 #  end
 
 ##  conf.use_transactional_fixtures = false
