@@ -19,12 +19,11 @@ RSpec.describe Post, type: :model do
     it { should validate_presence_of(:url) }
     it { should validate_uniqueness_of(:url) }
     it { should validate_presence_of(:tag) }
-    it { should validate_length_of(:tag).is_at_most(3).on(:create) }
- 
+    it { should validate_length_of(:tag).is_at_most(50).on(:create) }
   end
 
   context 'initialization' do
-    subject { Post.create({ url: 'http://example.com/pic.jpg', tag: 'ldb' }) }
+    subject { Post.create({ url: 'http://example.com/pic.jpg', tag: 'Some example image' }) }
     it { expect(subject.yeses).to eq(0) }
     it { expect(subject.nos).to eq(0) }
     it { expect(subject.approved).to be(false) }

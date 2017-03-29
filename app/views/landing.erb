@@ -1,5 +1,4 @@
 <%= partial(:errors, {locals: {obj: @post} }) if @post %>
-<%= partial(:flash, {locals: {obj: flash} }) %>
 <% form_tag url_for(:post, :create), :id => 'post-form', :method => 'post' do %>
   <%= label_tag(:url, :caption => 'Image URL') %>
   <%= url_field_tag(:url, :id => 'url') %>

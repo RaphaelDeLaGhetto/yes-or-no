@@ -13,11 +13,12 @@ describe "add an image URI", :type => :feature do
     fill_in "Image URL", :with => "example.com/image.jpg"
     fill_in "Tag", :with => "DSB"
     click_button "Add Image"
-    expect(page).to have_current_path('/')
-    expect(page).to have_content('Image submitted for review')
 
     expect(Post.count).to eq(1)
-    expect(Post.first.approved).to be false
+    post = Post.last
+    expect(post.approved).to be false
+    expect(page).to have_current_path("/post/#{post.id}")
+    expect(page).to have_content('Image submitted for review')
   end
 
   context 'approve an image URI' do

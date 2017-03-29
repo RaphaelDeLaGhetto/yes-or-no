@@ -6,6 +6,7 @@
   </head>
   <body>
     <nav><h1 id="question">Yes or no?</h1></nav>
+    <%= partial(:flash, {locals: {obj: flash} }) %>
     <%= yield %>
   </body>
 </html>

@@ -11,9 +11,10 @@ YesOrNo::App.controllers :post do
   #     else ...
   # end
 
-  # get :foo, :with => :id do
-  #   "Maps to url '/foo/#{params[:id]}'"
-  # end
+  get :show, :map => "/post/:id" do
+    @post = Post.find(params[:id])
+    render :show
+  end
 
   # get '/example' do
   #   'Hello world!'
@@ -26,11 +27,10 @@ YesOrNo::App.controllers :post do
     @post = Post.new(params.except('authenticity_token'))
     if @post.save
       flash[:success] = 'Image submitted for review'
-      redirect '/'
+      redirect "/post/#{@post.id}"
     else
       erb :landing
     end
   end
- 
 
 end
