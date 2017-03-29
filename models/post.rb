@@ -22,9 +22,16 @@ class Post < ActiveRecord::Base
     end
   end
 
+  #
+  # A four-star rating based on total yeses and nos
+  #
   def rating
     total_votes = self.yeses + self.nos
-    return nil if total_votes == 0
+    return 0 if total_votes == 0
     (4 * self.yeses) / total_votes
+  end
+
+  def self.order_by_rating(page=1)
+    Post.where(approved: true).page(page).sort_by(&:rating).reverse 
   end
 end

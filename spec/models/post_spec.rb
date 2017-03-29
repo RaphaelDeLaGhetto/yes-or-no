@@ -84,7 +84,7 @@ RSpec.describe Post, type: :model do
       it "doesn't barf if scores are 0" do
         expect(@post.yeses).to eq(0)
         expect(@post.nos).to eq(0)
-        expect(@post.rating).to be(nil)
+        expect(@post.rating).to be(0)
       end
 
       it "returns a rank of 0 to 4" do
@@ -92,6 +92,27 @@ RSpec.describe Post, type: :model do
         @post.nos = 2
         expect(@post.rating).to eq((4 * 10) / (2 + 10))
         expect(@post.rating <= 4).to be(true)
+      end
+    end
+  end
+
+  context 'class methods' do
+    before :each do
+      @post_0 = create(:post)
+      @post_1 = Post.create(url: 'example.com/image_1.jpg', tag: 'Post 1', approved: true, yeses: 10, nos: 2)
+      @post_2 = Post.create(url: 'example.com/image_2.jpg', tag: 'Post 2', approved: true)
+      @post_3 = Post.create(url: 'example.com/image_3.jpg', tag: 'Post 3', approved: true, yeses: 100, nos: 10)
+      expect(Post.count).to eq(4)
+    end
+
+    describe '.order_by_rating' do
+
+      it "returns the posts in the order by which they're ranked" do
+        posts = Post.order_by_rating
+        expect(posts.length).to eq(3)
+        expect(posts[0].id).to eq(@post_3.id)
+        expect(posts[1].id).to eq(@post_1.id)
+        expect(posts[2].id).to eq(@post_2.id)
       end
     end
   end
