@@ -11,6 +11,9 @@ YesOrNo::App.controllers :post do
   #     else ...
   # end
 
+  #
+  # show
+  #
   get :show, :map => "/post/:id" do
     @post = Post.find(params[:id])
     render :show
