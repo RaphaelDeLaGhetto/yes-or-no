@@ -29,4 +29,35 @@ RSpec.describe Post, type: :model do
     it { expect(subject.approved).to be(false) }
   end
 
+  context 'instance methods' do
+    describe '#answer_yes' do
+      before :each do
+        @post = create(:post)
+      end
+
+      it 'returns an error if post is not approved' do
+        expect(@post.approved).to be(false)
+        expect(@post.yeses).to eq(0)
+        @post.answer_yes
+        puts @post.errors.inspect
+        expect(@post.errors.count).to eq(1)
+        expect(@post.errors).to have_key(:approved)
+        expect(@post.yeses).to eq(0)
+        expect(Post.last.yeses).to eq(0)
+      end
+
+      it 'adds one to yeses if post is approved' do
+        @post.approved = true
+        @post.save
+        expect(@post.approved).to be(true)
+        expect(@post.yeses).to eq(0)
+        @post.answer_yes
+        expect(@post.errors.count).to eq(0)
+        expect(@post.yeses).to eq(1)
+        expect(Post.last.yeses).to eq(1)
+      end
+    end
+
+  end
+
 end
