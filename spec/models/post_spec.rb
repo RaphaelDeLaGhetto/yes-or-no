@@ -79,6 +79,21 @@ RSpec.describe Post, type: :model do
         expect(Post.last.nos).to eq(1)
       end
     end
+
+    describe '#rating' do
+      it "doesn't barf if scores are 0" do
+        expect(@post.yeses).to eq(0)
+        expect(@post.nos).to eq(0)
+        expect(@post.rating).to be(nil)
+      end
+
+      it "returns a rank of 0 to 4" do
+        @post.yeses = 10
+        @post.nos = 2
+        expect(@post.rating).to eq((4 * 10) / (2 + 10))
+        expect(@post.rating <= 4).to be(true)
+      end
+    end
   end
 
 end

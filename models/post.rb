@@ -21,4 +21,10 @@ class Post < ActiveRecord::Base
       self.errors.add(:approved, :false, message: "Post has not been approved")
     end
   end
+
+  def rating
+    total_votes = self.yeses + self.nos
+    return nil if total_votes == 0
+    (4 * self.yeses) / total_votes
+  end
 end
