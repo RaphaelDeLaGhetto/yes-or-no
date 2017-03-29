@@ -25,6 +25,10 @@ article {
   margin-top: 0;    
 }
 
+#question a {
+  color: white;
+  text-decoration: none;
+}
 
 section img {
   width: 100%;
