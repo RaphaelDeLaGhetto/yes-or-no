@@ -30,16 +30,15 @@ RSpec.describe Post, type: :model do
   end
 
   context 'instance methods' do
-    describe '#answer_yes' do
-      before :each do
-        @post = create(:post)
-      end
+    before :each do
+      @post = create(:post)
+    end
 
+    describe '#answer_yes' do
       it 'returns an error if post is not approved' do
         expect(@post.approved).to be(false)
         expect(@post.yeses).to eq(0)
         @post.answer_yes
-        puts @post.errors.inspect
         expect(@post.errors.count).to eq(1)
         expect(@post.errors).to have_key(:approved)
         expect(@post.yeses).to eq(0)
@@ -58,6 +57,28 @@ RSpec.describe Post, type: :model do
       end
     end
 
+    describe '#answer_no' do
+      it 'returns an error if post is not approved' do
+        expect(@post.approved).to be(false)
+        expect(@post.nos).to eq(0)
+        @post.answer_no
+        expect(@post.errors.count).to eq(1)
+        expect(@post.errors).to have_key(:approved)
+        expect(@post.nos).to eq(0)
+        expect(Post.last.nos).to eq(0)
+      end
+
+      it 'adds one to nos if post is approved' do
+        @post.approved = true
+        @post.save
+        expect(@post.approved).to be(true)
+        expect(@post.nos).to eq(0)
+        @post.answer_no
+        expect(@post.errors.count).to eq(0)
+        expect(@post.nos).to eq(1)
+        expect(Post.last.nos).to eq(1)
+      end
+    end
   end
 
 end

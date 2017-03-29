@@ -12,4 +12,13 @@ class Post < ActiveRecord::Base
       self.errors.add(:approved, :false, message: "Post has not been approved")
     end
   end
+
+  def answer_no
+    if self.approved
+      self.nos += 1
+      self.save
+    else
+      self.errors.add(:approved, :false, message: "Post has not been approved")
+    end
+  end
 end
