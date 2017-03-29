@@ -66,6 +66,7 @@ module YesOrNo
 
 
     get '/' do
+      @posts = Post.where(approved: true)
       render :landing
     end
   end

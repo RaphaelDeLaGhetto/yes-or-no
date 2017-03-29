@@ -1,6 +1,5 @@
-<h1>Yes or No?</h1>
-<%= erb(:_errors, {locals: {obj: @post} }) if @post %>
-<%= erb(:_flash, {locals: {obj: flash} }) %>
+<%= partial(:errors, {locals: {obj: @post} }) if @post %>
+<%= partial(:flash, {locals: {obj: flash} }) %>
 <% form_tag url_for(:post, :create), :id => 'post-form', :method => 'post' do %>
   <%= label_tag(:url, :caption => 'Image URL') %>
   <%= url_field_tag(:url, :id => 'url') %>
@@ -9,3 +8,6 @@
   <%= submit_tag('Add Image') %>
 <% end %>
  
+<% @posts.each do |post| %>
+  <%= partial('post/post', {locals: {post: post}}) %>
+<% end %>

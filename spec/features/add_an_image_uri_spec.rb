@@ -25,7 +25,7 @@ describe "add an image URI", :type => :feature do
       @post = create(:post)
       @admin = create(:admin)
       visit '/'
-      expect(page).to have_selector('.post', count: 0)
+      expect(page).to have_selector('article', count: 0)
     end
 
     it 'displays the post on the main page' do
@@ -43,7 +43,7 @@ describe "add an image URI", :type => :feature do
       click_button 'Save and continue'
       expect(page).to have_current_path("/admin/posts")
       visit '/'
-      expect(page).to have_selector('.post', count: 1)
+      expect(page).to have_selector('article', count: 1)
     end
   end
 
