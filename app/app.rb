@@ -4,6 +4,7 @@ module YesOrNo
     register Padrino::Mailer
     register Padrino::Helpers
     register Padrino::Flash
+    register WillPaginate::Sinatra
 
     enable :sessions
 
@@ -66,7 +67,7 @@ module YesOrNo
 
 
     get '/' do
-      @posts = Post.where(approved: true)
+      @posts = Post.where(:approved => true).page(params[:page]).order('updated_at ASC')
       render :landing
     end
   end
