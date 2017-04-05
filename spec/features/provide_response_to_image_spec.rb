@@ -10,6 +10,7 @@ describe "provide a response to image", js: true, :type => :feature do
     visit '/'
     expect(page).to have_selector('article', count: 1)
     click_button 'Yes'
+    wait_for_ajax
     expect(page).to have_current_path("/")
     expect(Post.last.yeses).to eq(1)
   end
@@ -19,6 +20,7 @@ describe "provide a response to image", js: true, :type => :feature do
     visit '/'
     expect(page).to have_selector('article', count: 1)
     click_button 'No'
+    wait_for_ajax
     expect(page).to have_current_path("/")
     expect(Post.last.nos).to eq(1)
   end

@@ -39,15 +39,11 @@ YesOrNo::App.controllers :post do
   #
   # Yes/No decision routes
   #
-  post :yes, map: "/post/yes" do
-    puts "YES"
-    "YES"
+  post :answer, map: "/post/:answer" do
+    post = Post.find(params[:id])
+    post.answer_yes if params[:answer] == 'yes'
+    post.answer_no if params[:answer] == 'no'
+    post.to_json
   end
-
-  post :no, map: "/post/no" do
-    puts "NO"
-    "NO"
-  end
-
 
 end
