@@ -87,11 +87,12 @@ RSpec.describe Post, type: :model do
         expect(@post.rating).to be(0)
       end
 
-      it "returns a rank of 0 to 4" do
+      it "returns an integer rank of 0 to 100" do
+        # Yeses as percent of total are 83.33%
+        # Integer division takes care of rounding
         @post.yeses = 10
         @post.nos = 2
-        expect(@post.rating).to eq((4 * 10) / (2 + 10))
-        expect(@post.rating <= 4).to be(true)
+        expect(@post.rating).to eq(((100 * 10) / (2 + 10)).round)
       end
     end
   end

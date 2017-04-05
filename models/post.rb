@@ -28,7 +28,7 @@ class Post < ActiveRecord::Base
   def rating
     total_votes = self.yeses + self.nos
     return 0 if total_votes == 0
-    (4 * self.yeses) / total_votes
+    (100 * self.yeses) / total_votes
   end
 
   def self.order_by_rating(page=1)
