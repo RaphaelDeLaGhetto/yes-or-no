@@ -36,4 +36,18 @@ YesOrNo::App.controllers :post do
     end
   end
 
+  #
+  # Yes/No decision routes
+  #
+  post :yes, map: "/post/yes" do
+    puts "YES"
+    "YES"
+  end
+
+  post :no, map: "/post/no" do
+    puts "NO"
+    "NO"
+  end
+
+
 end

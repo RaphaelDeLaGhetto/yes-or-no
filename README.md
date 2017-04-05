@@ -39,6 +39,10 @@ bundle exec rake db:seed
 
 ## Test
 
+## Dependencies
+
+Install `phantomjs`. It was already installed in my current Ubuntu 14.04, so I'm not sure about `apt` or other dependencies.
+
 ### Create/migrate test database
 
 ```

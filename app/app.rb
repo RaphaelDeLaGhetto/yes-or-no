@@ -67,7 +67,8 @@ module YesOrNo
 
 
     get '/' do
-      @posts = Post.where(:approved => true).page(params[:page]).order('updated_at ASC')
+      page = params[:page] || 1
+      @posts = Post.where(:approved => true).page(page).order('updated_at ASC')
       render :landing
     end
   end

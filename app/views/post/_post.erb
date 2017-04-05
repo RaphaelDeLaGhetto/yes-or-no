@@ -1,10 +1,10 @@
 <article>
   <header><h1><%= post[:tag] %></h1></header>
   <section class="image">
-    <img src='<%= post[:url] %>' alt='<%= post[:tag] %>'>
+    <img src="<%= post[:url] %>" alt="<%= post[:tag] %>">
   </section>
   <footer>
-    <button class="no">No</button>
-    <button class="yes">Yes</button>
+    <button class="no" name="no" value="<%= post.id %>">No</button>
+    <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
   </footer>
 </article>

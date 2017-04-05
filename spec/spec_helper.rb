@@ -2,6 +2,7 @@ RACK_ENV = 'test' unless defined?(RACK_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 require 'shoulda/matchers'
 
 RSpec.configure do |conf|
@@ -11,9 +12,29 @@ RSpec.configure do |conf|
 #  conf.include(Shoulda::Matchers::ActiveModel, type: :model)
 #  conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
+  #
+  # 2017-4-5 http://stackoverflow.com/questions/8178120/capybara-with-js-true-causes-test-to-fail
+  #
   conf.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+  end
+
+  conf.before(:each) do
+    # set the default
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  conf.before(:each, type: :feature) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  conf.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  conf.append_after(:each) do
+    DatabaseCleaner.clean
   end
 
   conf.around(:each) do |example|
@@ -29,9 +50,7 @@ RSpec.configure do |conf|
     FactoryGirl.find_definitions
   end
 
-#  end
 
-##  conf.use_transactional_fixtures = false
 ##
 ##  conf.before(:suite) do
 ##    if conf.use_transactional_fixtures?
@@ -78,6 +97,7 @@ RSpec.configure do |conf|
   conf.include Capybara::DSL
 end
 
+
 # You can use this method to custom specify a Rack app
 # you want rack-test to invoke:
 #
@@ -93,5 +113,7 @@ def app(app = nil, &blk)
 end
 
 # Capybara
+Capybara.javascript_driver = :poltergeist
+#Capybara.javascript_driver = :webkit
 Capybara.app = app
 
