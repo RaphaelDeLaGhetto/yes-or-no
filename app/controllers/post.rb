@@ -43,7 +43,7 @@ YesOrNo::App.controllers :post do
     post = Post.find(params[:id])
     post.answer_yes if params[:answer] == 'yes'
     post.answer_no if params[:answer] == 'no'
-    post.to_json
+    { rating: post.rating }.to_json
   end
 
 end
