@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2) do
+ActiveRecord::Schema.define(version: 6) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,45 @@ ActiveRecord::Schema.define(version: 2) do
     t.datetime "updated_at"
   end
 
+  create_table "agents", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agents_ips", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.integer  "ip_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ips", force: :cascade do |t|
+    t.string   "address"
+    t.boolean  "expired",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string   "url"
     t.string   "tag"
     t.boolean  "approved",   default: false
     t.integer  "yeses",      default: 0
     t.integer  "nos",        default: 0
+    t.integer  "agent_id"
+    t.integer  "ip_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "agent_id"
+    t.integer  "ip_id"
+    t.boolean  "yes",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -6,6 +6,8 @@ class CreatePosts < ActiveRecord::Migration
       t.boolean :approved, default: false
       t.integer :yeses, default: 0
       t.integer :nos, default: 0
+      t.references :agent
+      t.references :ip
       t.timestamps
     end
   end
