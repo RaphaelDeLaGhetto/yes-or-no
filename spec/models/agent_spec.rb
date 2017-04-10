@@ -47,4 +47,18 @@ RSpec.describe Agent do
       end
     end
   end
+
+  describe 'password' do
+    before :each do
+      @agent = build(:agent) 
+      @agent.password_confirmation = nil
+    end
+
+    it 'requires a password confirmation' do
+      expect(@agent.password_confirmation).to be_nil
+      expect(@agent.valid?).to be_falsey
+      @agent.password_confirmation = 'secret'
+      expect(@agent.valid?).to be_truthy
+    end
+  end
 end
