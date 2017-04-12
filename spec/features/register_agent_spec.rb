@@ -28,6 +28,13 @@ describe "agent registration", :type => :feature do
       expect(Agent.count).to eq(1)
     end
 
+    it 'sends confirmation email' do
+      email = Mail::TestMailer.deliveries.last
+      expect(email.to).to eq(['someguy@example.com'])
+      expect(email.from).to eq([ENV['EMAIL']])
+      expect(email.subject).to have_content("Verify your account")
+      expect(email.attachments.count).to eq(0)
+    end
   end
 
   describe 'failure' do

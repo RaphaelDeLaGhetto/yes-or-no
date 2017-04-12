@@ -16,7 +16,7 @@ Paste and save the following:
 
 ```
 # Mailer
-MAMA_EMAIL=someguy@example.com
+EMAIL=someguy@example.com
 SMTP_ADDRESS=127.0.0.1
 SMTP_PORT=1025
 EMAIL_USERNAME=
