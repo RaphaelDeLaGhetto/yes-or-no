@@ -57,8 +57,4 @@ describe "agent registration", :type => :feature do
     end
   end
 
-  it 'redirects to home if agent is already logged in' do
-
-  end
-
 end
