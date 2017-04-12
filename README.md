@@ -4,6 +4,27 @@ yes-or-no
 Simple visual _Yes or No_ application built on [Padrino](http://padrinorb.com/).
 Submit image links and present to allow users to repond _Yes_ or _No_.
 
+# Configuration
+
+Create a `.env` file:
+
+```
+touch .env
+```
+
+Paste and save the following:
+
+```
+# Mailer
+MAMA_EMAIL=someguy@example.com
+SMTP_ADDRESS=127.0.0.1
+SMTP_PORT=1025
+EMAIL_USERNAME=
+EMAIL_PASSWORD=
+```
+
+The mailer configuration provided works with `mailcatcher`.
+
 # Development
 
 ## Set up
@@ -37,7 +58,18 @@ bundle exec rake db:migrate
 bundle exec rake db:seed
 ```
 
-## Test
+## Email
+
+Start up `mailcatcher` to see what's being sent out:
+
+```
+bundle exec mailcatcher
+```
+
+This runs as a daemon. Go to the web console (http://127.0.0.1:1080) to look at emails and terminate the program.
+
+
+# Test
 
 ## Dependencies
 
