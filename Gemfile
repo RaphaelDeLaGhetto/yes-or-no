@@ -32,6 +32,8 @@ gem 'padrino-flash'
 
 gem 'will_paginate', '~> 3.1.1'
 
+gem 'dotenv'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 
