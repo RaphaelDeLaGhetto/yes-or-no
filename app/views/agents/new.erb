@@ -1,0 +1,15 @@
+<h1>Registration</h1>
+
+<% form_for(@agent, '/agents/create') do |f| %>
+  <%= error_messages_for @agent %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password, value: '' %>
+  <%= f.password_field :password, value: '' %>
+  <%= f.label :password_confirmation, value: '' %>
+  <%= f.password_field :password_confirmation, value: '' %>
+ 
+  <p>
+    <%= f.submit "Register", :class => "btn btn-primary" %>
+  </p>
+<% end %>
