@@ -42,11 +42,12 @@ gem 'dotenv'
 #   gem 'padrino-' + g, '0.13.1'
 # end
 
-group :test do
+group :test, :development do
   gem 'shoulda-matchers', require: false
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'poltergeist'
+  gem 'mailcatcher'
 #  gem "capybara-webkit"
 end
