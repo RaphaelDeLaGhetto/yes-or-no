@@ -1,3 +1,4 @@
+require 'securerandom'
 YesOrNo::App.controllers :agents do
   
   # get :index, :map => '/foo/bar' do
@@ -25,8 +26,10 @@ YesOrNo::App.controllers :agents do
   end
 
   post :create do
-    @agent = Agent.new(params[:agent])
+    confirmation = SecureRandom.hex(10)
+    @agent = Agent.new(email: params[:agent][:email], confirmation: confirmation.to_s)
     if @agent.save
+      deliver(:confirmation, :confirmation_email, @agent.email, confirmation)
       redirect('/')
     else
       render 'agents/new'

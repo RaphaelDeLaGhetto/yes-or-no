@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 6) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "name"
-    t.string   "email",         null: false
-    t.string   "password_hash", null: false
+    t.string   "email",             null: false
+    t.string   "password_hash"
+    t.string   "confirmation_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -3,7 +3,8 @@ class CreateAgents < ActiveRecord::Migration
     create_table :agents do |t|
       t.string :name
       t.string :email, unique: true, null: false
-      t.string :password_hash, null: false
+      t.string :password_hash
+      t.string :confirmation_hash
       t.timestamps
     end
   end

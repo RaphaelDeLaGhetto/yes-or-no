@@ -1,0 +1,11 @@
+<h1>Set your password</h1>
+<h2><%=@agent.email %>
+<% form_for(@agent, '/agents/confirm') do |f| %>
+  <%= hidden_field_tag :id, :value => @agent.id %>
+  <%= f.label :password, value: '' %>
+  <%= f.password_field :password, value: '' %>
+  <%= error_message_on @agent, :password, :class => "text-error", :prepend => "The password " %>
+  <p>
+    <%= f.submit "Update", :class => "btn btn-primary" %>
+  </p>
+<% end %>

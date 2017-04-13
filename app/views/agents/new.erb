@@ -1,15 +1,9 @@
 <h1>Registration</h1>
-
+<h2>Enter a valid email to activate account and set password</h2>
 <% form_for(@agent, '/agents/create') do |f| %>
   <%= f.label :email %>
   <%= f.text_field :email %>
   <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email " %>
-  <%= f.label :password, value: '' %>
-  <%= f.password_field :password, value: '' %>
-  <%= error_message_on @agent, :password, :class => "text-error", :prepend => "The password " %>
-  <%= f.label :password_confirmation, value: '' %>
-  <%= f.password_field :password_confirmation, value: '' %>
-  <%= error_message_on @agent, :password_confirmation, :class => "text-error" %>
   <p>
     <%= f.submit "Register", :class => "btn btn-primary" %>
   </p>

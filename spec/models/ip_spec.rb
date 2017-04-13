@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Ip do
-  context 'database schema', type: :model do
+RSpec.describe Ip, type: :model do
+  context 'database schema' do
     describe 'columns' do
       it { should have_db_column(:id) }
       it { should have_db_column(:address) }

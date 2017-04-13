@@ -34,6 +34,8 @@ gem 'will_paginate', '~> 3.1.1'
 
 gem 'dotenv'
 
+gem 'mail', '2.6.3'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

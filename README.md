@@ -15,6 +15,9 @@ touch .env
 Paste and save the following:
 
 ```
+# General
+HOST=http://localhost
+
 # Mailer
 EMAIL=someguy@example.com
 SMTP_ADDRESS=127.0.0.1

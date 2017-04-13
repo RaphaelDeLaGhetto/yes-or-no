@@ -9,10 +9,6 @@ require 'shoulda/matchers'
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
 
-  # Do I need this?
-#  conf.include(Shoulda::Matchers::ActiveModel, type: :model)
-#  conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
-
   #
   # 2017-4-5 http://stackoverflow.com/questions/8178120/capybara-with-js-true-causes-test-to-fail
   #
@@ -96,6 +92,10 @@ RSpec.configure do |conf|
 
   # Capybara
   conf.include Capybara::DSL
+
+  # Shoulda
+  conf.include(Shoulda::Matchers::ActiveModel, type: :model)
+  conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end
 
 

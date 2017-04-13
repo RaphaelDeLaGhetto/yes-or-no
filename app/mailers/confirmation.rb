@@ -1,14 +1,14 @@
 ##
 # Mailer methods can be defined using the simple format:
 #
-# email :registration_email do |name, user|
+# email :confirmation_email do |name, user|
 #   from 'admin@site.com'
 #   to   user.email
 #   subject 'Welcome to the site!'
 #   locals  :name => name
 #   content_type 'text/html'       # optional, defaults to plain/text
 #   via     :sendmail              # optional, to smtp if defined, otherwise sendmail
-#   render  'registration_email'
+#   render  'confirmation_email'
 # end
 #
 # You can set the default delivery settings from your app through:
@@ -39,10 +39,14 @@
 # and then all delivered mail will use these settings unless otherwise specified.
 #
 
-YesOrNo::App.mailer :registration do
+YesOrNo::App.mailer :confirmation do
 
-  email :registration_email do
-    # Your mailer goes here ...
+  email :confirmation_email do |email, confirmation|
+    from ENV['EMAIL'] 
+    subject "Set your password to verify your account"
+    to email
+    locals :confirmation_link => "#{ENV['HOST']}/confirm/#{confirmation}"
+    render 'confirmation/confirmation_email'
   end
 
 end

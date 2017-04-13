@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Vote do
-  context 'database schema', type: :model do
+RSpec.describe Vote, type: :model do
+  context 'database schema' do
     describe 'columns' do
       it { should have_db_column(:id) }
       it { should have_db_column(:ip_id) }
