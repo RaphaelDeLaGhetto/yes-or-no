@@ -20,7 +20,8 @@ YesOrNo::App.controllers :agents do
   # get '/example' do
   #   'Hello world!'
   # end
-  
+
+ 
   get :new do
     redirect '/' if logged_in?
     @agent = Agent.new
@@ -67,5 +68,10 @@ YesOrNo::App.controllers :agents do
       render :confirm
     end
   end
+
+  get :index, :with => :id do
+    redirect('/login') if !logged_in?
+  end
+ 
 
 end
