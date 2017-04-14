@@ -27,3 +27,5 @@ else
 end
 
 shell.say ""
+
+Agent.create(email: 'daniel@capitolhill.ca', password: 'secret')
