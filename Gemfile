@@ -51,5 +51,6 @@ group :test, :development do
   gem 'factory_girl'
   gem 'poltergeist'
   gem 'mailcatcher'
+  gem 'rack_session_access'
 #  gem "capybara-webkit"
 end
