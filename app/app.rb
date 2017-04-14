@@ -77,7 +77,18 @@ module YesOrNo
       :authentication  => :plain, # :plain, :login, :cram_md5, no auth by default
       :domain          => "localhost.localdomain" # the HELO domain provided by the client to the server
     }
-    set :delivery_method, :test if RACK_ENV == 'test'
+
+    ##########
+    # 2017-4-13
+    # cf. with the commented test config in `spec/spec_helper.rb`. It's a lot
+    # nicer to put this there, but then the admin application doesn't run for
+    # the tests. I don't know why this is
+    #
+    if RACK_ENV == 'test'
+      use RackSessionAccess::Middleware
+      set :protect_from_csrf, false
+      set :delivery_method, :test
+    end
 
     get '/' do
       page = params[:page] || 1
