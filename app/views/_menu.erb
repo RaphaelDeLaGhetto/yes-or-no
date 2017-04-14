@@ -1,0 +1,18 @@
+<nav id="primary_nav_wrap">
+  <h1 id="question"><a href='/'>Yes or no?</a></h1>
+  <% if logged_in? %>
+    <ul>
+      <li><a href="#">Account</a>
+      <ul>
+        <li><a href="/agents/<%= agent_id %>">Your posts</a></li>
+        <li><a href="/agents/<%= agent_id %>/yeses">Yeses</a></li>
+        <li><a href="/agents/<%= agent_id %>/nos">Nos</a></li>
+        <li><a href="/logout">Logout</a>
+      <ul>
+    </ul>
+  <% else %>
+    <a href='/login'>Login</a></h1>
+  <% end %>
+</nav>
+
+
