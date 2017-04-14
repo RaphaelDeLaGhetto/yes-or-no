@@ -41,11 +41,11 @@
 
 YesOrNo::App.mailer :confirmation do
 
-  email :confirmation_email do |email, confirmation|
+  email :confirmation_email do |agent, confirmation|
     from ENV['EMAIL'] 
     subject "Set your password to verify your account"
-    to email
-    locals :confirmation_link => "#{ENV['HOST']}/confirm/#{confirmation}"
+    to agent.email
+    locals :confirmation_link => "#{ENV['HOST']}/agents/#{agent.id}/confirm/#{confirmation}"
     render 'confirmation/confirmation_email'
   end
 

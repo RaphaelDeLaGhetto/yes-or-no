@@ -46,7 +46,7 @@ describe "provide a response to image", js: true, :type => :feature do
     expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq(nil);
     click_button 'Yes'
     wait_for_ajax
-    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%; ");
+    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
   end
 
   it "sets the star rating when No is pressed" do
@@ -54,7 +54,7 @@ describe "provide a response to image", js: true, :type => :feature do
     expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq(nil);
     click_button 'No'
     wait_for_ajax
-    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%; ");
+    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
   end
 
   it "disables the buttons when Yes is pressed" do

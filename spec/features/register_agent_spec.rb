@@ -13,7 +13,7 @@ describe "agent registration", :type => :feature do
 
   describe 'success' do
     before :each do
-      SecureRandom.should_receive(:hex).and_return('abc123')
+      allow(SecureRandom).to receive(:hex).and_return('abc123')
       expect(Agent.count).to eq(0)
       fill_in "Email", :with => "someguy@example.com"
       click_button "Register" 
@@ -28,7 +28,7 @@ describe "agent registration", :type => :feature do
       expect(email.to).to eq(['someguy@example.com'])
       expect(email.from).to eq([ENV['EMAIL']])
       expect(email.subject).to have_content("Set your password to verify your account")
-      expect(email.body).to have_content("#{ENV['HOST']}/confirm/abc123")
+      expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}/confirm/abc123")
       expect(email.attachments.count).to eq(0)
     end
 
@@ -39,31 +39,88 @@ describe "agent registration", :type => :feature do
     it 'adds an agent to the database' do
       expect(Agent.count).to eq(1)
     end
+
+    describe 'email password set' do
+      context 'success' do
+        before :each do
+          visit "/agents/#{Agent.first.id}/confirm/abc123"
+        end
+  
+        it 'renders a password form' do
+          expect(page).to have_selector('input[name="agent[email]"]', count: 0)
+          expect(page).to have_selector('input[name="agent[password]"]', count: 1)
+          expect(page).to have_selector('input[type="submit"]', count: 1)
+        end
+    
+        it 'does not allow a blank password' do
+          fill_in "Password", :with => ''
+          click_button "Update"
+          expect(page).to have_current_path('/agents/confirm')
+          expect(page).to have_content('Password cannot be blank')
+          fill_in "Password", :with => '    '
+          click_button "Update"
+          expect(page).to have_current_path('/agents/confirm')
+          expect(page).to have_content('Password cannot be blank')
+        end
+  
+        it 'sets confirmation_hash to nil in the database' do
+          fill_in "Password", :with => 'secret'
+          click_button "Update"
+          expect(Agent.first.confirmation_hash).to be_nil 
+        end
+
+        it 'redirects home if successful and logs in' do
+          fill_in "Password", :with => 'secret'
+          click_button "Update"
+          expect(page).to have_current_path('/')
+          expect(page).to have_selector('input[name="url"]', count: 1)
+          expect(page).to have_selector('input[name="tag"]', count: 1)
+          expect(page).to have_selector('input[type="submit"]', count: 1)
+        end
+      end
+
+      context 'failure' do
+        it 'returns 404 if agent does not exist' do
+          visit "/agents/333/confirm/abc123"
+          expect(page.status_code).to eq(404)
+        end
+
+        it 'renders error message if confirmation code is wrong' do
+          visit "/agents/#{Agent.first.id}/confirm/nosuchcode"
+          expect(page).to have_current_path('/agents/new')
+          expect(page).to have_content('That code is either invalid or expired. Enter email to reset password or signup.')
+        end
+
+
+      end
+    end
   end
 
   describe 'failure' do
     before :each do
       @agent = create(:agent)
+      expect(Agent.count).to eq(1)
+      Mail::TestMailer.deliveries.clear
       visit '/agents/new'
+      fill_in "Email", :with => @agent.email 
+      click_button "Register"
     end
 
     it 'does not add a duplicate email to the database' do
       expect(Agent.count).to eq(1)
-      fill_in "Email", :with => @agent.email 
-      click_button "Register" 
-      expect(Agent.count).to eq(1)
+    end
+
+    it 'stays on the agent create page' do
       expect(page).to have_current_path('/agents/create')
     end
 
-#    it 'does not add a blank password to the database' do
-#      expect(Agent.count).to eq(1)
-#      fill_in "Email", :with => 'newagent@example.com' 
-##      fill_in "agent_password", :with => ""
-##      fill_in "agent_password_confirmation", :with => "secret"
-#      click_button "Register" 
-#      expect(Agent.count).to eq(1)
-#      expect(page).to have_current_path('/agents/create')
-#    end
+    it 'does not send a confimration email' do
+      expect(Mail::TestMailer.deliveries.count).to eq(0)
+    end
+
+    it 'displays an error on the agent create page' do
+      expect(page).to have_content('That email has already been taken')
+    end
   end
 
 end

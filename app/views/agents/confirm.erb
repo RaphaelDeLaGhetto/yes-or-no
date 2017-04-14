@@ -1,6 +1,7 @@
 <h1>Set your password</h1>
 <h2><%=@agent.email %>
 <% form_for(@agent, '/agents/confirm') do |f| %>
+  <%= hidden_field_tag :'_method', :value => 'PATCH' %>
   <%= hidden_field_tag :id, :value => @agent.id %>
   <%= f.label :password, value: '' %>
   <%= f.password_field :password, value: '' %>

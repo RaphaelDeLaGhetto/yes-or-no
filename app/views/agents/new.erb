@@ -3,7 +3,7 @@
 <% form_for(@agent, '/agents/create') do |f| %>
   <%= f.label :email %>
   <%= f.text_field :email %>
-  <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email " %>
+  <%= error_message_on @agent, :email, :class => "text-error", :prepend => "That email" %>
   <p>
     <%= f.submit "Register", :class => "btn btn-primary" %>
   </p>

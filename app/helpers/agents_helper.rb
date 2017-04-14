@@ -3,9 +3,9 @@
 module YesOrNo
   class App
     module AgentsHelper
-      # def simple_helper_method
-      # ...
-      # end
+      def logged_in?
+        !session[:agent_id].nil?
+      end 
     end
 
     helpers AgentsHelper
