@@ -18,6 +18,7 @@ class Agent < ActiveRecord::Base
   include BCrypt
 
   def password
+    return nil if !password_hash.present?
     @password ||= Password.new(password_hash)
   end
 
