@@ -95,5 +95,21 @@ module YesOrNo
       @posts = Post.where(:approved => true).page(page).order('updated_at ASC')
       render :landing
     end
+
+    get '/login' do
+      redirect '/' if logged_in?
+      @agent = Agent.new
+      erb :login
+    end
+
+    post '/login' do
+      @agent = Agent.find_by_email(params[:email])
+      if @agent.password == params[:password]
+        session[:agent_id] = @agent.id
+        redirect '/'
+      else
+        erb :login
+      end 
+    end
   end
 end

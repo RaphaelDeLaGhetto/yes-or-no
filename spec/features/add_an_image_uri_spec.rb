@@ -7,8 +7,8 @@ describe "add an image URI", :type => :feature do
     end
 
     it 'does not render submission form' do
-      expect(page).to have_selector('input[name="post[url]"]', count: 0)
-      expect(page).to have_selector('input[name="post[tag]"]', count: 0)
+      expect(page).to have_selector('input[name="url"]', count: 0)
+      expect(page).to have_selector('input[name="tag"]', count: 0)
       expect(page).to have_selector('input[type="submit"]', count: 0)
     end
   end

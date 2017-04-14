@@ -22,6 +22,7 @@ YesOrNo::App.controllers :agents do
   # end
   
   get :new do
+    redirect '/' if logged_in?
     @agent = Agent.new
     render 'agents/new'
   end
