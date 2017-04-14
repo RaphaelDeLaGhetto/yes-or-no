@@ -5,6 +5,7 @@ Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'shoulda/matchers'
+require "rack_session_access/capybara"
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
@@ -96,6 +97,7 @@ RSpec.configure do |conf|
   # Shoulda
   conf.include(Shoulda::Matchers::ActiveModel, type: :model)
   conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
+
 end
 
 
@@ -113,9 +115,27 @@ def app(app = nil, &blk)
   @app ||= Padrino.application
 end
 
+##########
+# 2017-4-13
+# cf. with the test config in `app/app.rb`. It's a lot nicer to put it here,
+# but then the admin application doesn't run for the tests. I don't know
+# why this is
+#
+#app(YesOrNo::App) do
+#  use RackSessionAccess::Middleware
+#  set :protect_from_csrf, false
+#  set :delivery_method, :test  
+#end
+
 # Capybara
 Capybara.javascript_driver = :poltergeist
 #Capybara.default_max_wait_time = 1000
 #Capybara.javascript_driver = :webkit
 Capybara.app = app
 
+#
+# Conveniently get the session hash
+#
+#def session
+#  last_request.env['rack.session']
+#end
