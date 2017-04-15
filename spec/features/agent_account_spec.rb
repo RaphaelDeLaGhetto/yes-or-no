@@ -28,6 +28,30 @@ describe "agent account", :type => :feature do
       expect(page).to have_link('Logout', href: '/logout')
     end
 
+    describe 'GET /agents/:id' do
+      before :each do
+        @post = create(:post, agent: @agent)
+        Post.create(url: 'fakeurl.com', tag: 'fake', agent: Agent.create(email: 'fake@emall.com'))
+        expect(Post.count).to eq(2)
+        click_link 'Your posts'
+        expect(page).to have_current_path("/agents/#{@agent.id}")
+      end
+
+      it 'only displays posts belonging to this agent' do
+        expect(page).to have_selector('article', count: 1)
+      end
+
+      it 'does not display the yes/no buttons' do
+        expect(true).to eq(false)
+      end
+
+      it 'display star rating' do
+        expect(true).to eq(false)
+      end
+
+
+    end
+
   end
 
 end

@@ -1,18 +1,27 @@
 <article id="post-<%= post.id %>">
-  <header><h1><%= post[:tag] %></h1></header>
+  <header>
+    <h1><%= post[:tag] %></h1>
+    <% if !post.approved %>
+      <h2 class="pending">Pending approval</h2>
+    <% end %>
+  </header>
   <section class="image">
     <img src="<%= post[:url] %>" alt="<%= post[:tag] %>">
   </section>
   <footer>
-    <button class="no" name="no" value="<%= post.id %>">No</button>
+    <% if can_vote %>
+      <button class="no" name="no" value="<%= post.id %>">No</button>
+    <% end %>
     <div class="star-ratings-css">
-      <div class="star-ratings-css-top">
+      <div class="star-ratings-css-top" style="width: <%= post.rating %>%;">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
       <div class="star-ratings-css-bottom">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
     </div>
-    <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
+    <% if can_vote %>
+      <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
+    <% end %>
   </footer>
 </article>

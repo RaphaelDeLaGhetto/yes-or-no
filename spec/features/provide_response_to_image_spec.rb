@@ -43,7 +43,7 @@ describe "provide a response to image", js: true, :type => :feature do
 
   it "sets the star rating when Yes is pressed" do
     visit '/'
-    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq(nil);
+    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq('width: 0%;');
     click_button 'Yes'
     wait_for_ajax
     expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
@@ -51,7 +51,7 @@ describe "provide a response to image", js: true, :type => :feature do
 
   it "sets the star rating when No is pressed" do
     visit '/'
-    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq(nil);
+    expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq('width: 0%;');
     click_button 'No'
     wait_for_ajax
     expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");

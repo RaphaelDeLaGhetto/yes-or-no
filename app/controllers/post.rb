@@ -27,6 +27,9 @@ YesOrNo::App.controllers :post do
   # create
   #
   post :create, map: "/post" do
+    @agent = Agent.find_by(id: session[:agent_id])
+    params[:agent_id] = @agent.id
+
     @post = Post.new(params.except('authenticity_token'))
     if @post.save
       flash[:success] = 'Image submitted for review'

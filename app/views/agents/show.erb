@@ -1,0 +1,5 @@
+<% @posts.each do |post| %>
+  <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
+<% end %>
+
+<%= will_paginate @posts, :page_links => false %>
