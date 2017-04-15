@@ -23,6 +23,7 @@ RSpec.describe Agent, type: :model do
   context 'relationships' do
     subject { Agent.new }
     it { should have_many(:votes) }
+    it { should have_many(:posts) }
     it { should have_and_belong_to_many(:ips) }
   end
 
