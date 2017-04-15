@@ -16,7 +16,7 @@ describe "agent registration", :type => :feature do
       allow(SecureRandom).to receive(:hex).and_return('abc123')
       expect(Agent.count).to eq(0)
       fill_in "Email", :with => "someguy@example.com"
-      click_button "Register" 
+      click_button "Submit" 
     end
 
     it 'displays a message confirming email was sent' do
@@ -90,37 +90,63 @@ describe "agent registration", :type => :feature do
           expect(page).to have_current_path('/agents/new')
           expect(page).to have_content('That code is either invalid or expired. Enter email to reset password or signup.')
         end
-
-
       end
     end
   end
 
-  describe 'failure' do
+  describe 'existing agent' do
     before :each do
       @agent = create(:agent)
       expect(Agent.count).to eq(1)
       Mail::TestMailer.deliveries.clear
       visit '/agents/new'
       fill_in "Email", :with => @agent.email 
-      click_button "Register"
+      click_button "Submit"
     end
 
     it 'does not add a duplicate email to the database' do
       expect(Agent.count).to eq(1)
     end
 
-    it 'stays on the agent create page' do
-      expect(page).to have_current_path('/agents/create')
+    it 'redirects to the home page' do
+      expect(page).to have_current_path('/')
+    end
+
+    it 'sends a confimration email' do
+      expect(Mail::TestMailer.deliveries.count).to eq(1)
+    end
+
+    it 'displays a message confirming email was sent' do
+      expect(page).to have_content('Check your email to set your password')
+    end
+  end
+
+  describe 'mangled email' do
+    before :each do
+      Mail::TestMailer.deliveries.clear
+      visit '/agents/new'
+      fill_in "Email", :with => 'not_an_email.com' 
+      click_button "Submit"
+    end
+
+    it 'does not add a mangled email to the database' do
+      expect(Agent.count).to eq(0)
+    end
+ 
+    it 'displays an error on the agent create page' do
+      expect(page).to have_content('That email is invalid')
     end
 
     it 'does not send a confimration email' do
       expect(Mail::TestMailer.deliveries.count).to eq(0)
     end
 
-    it 'displays an error on the agent create page' do
-      expect(page).to have_content('That email has already been taken')
+    it 'remains on the registration page' do
+      expect(page).to have_current_path('/agents/create')
     end
+
+
+
   end
 
 end

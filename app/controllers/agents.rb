@@ -30,7 +30,14 @@ YesOrNo::App.controllers :agents do
 
   post :create do
     confirmation = SecureRandom.hex(10)
-    @agent = Agent.new(email: params[:agent][:email], confirmation: confirmation)
+    @agent = Agent.find_by(email: params[:agent][:email])
+
+    if @agent.nil?
+      @agent = Agent.new(email: params[:agent][:email], confirmation: confirmation)
+    else
+      @agent.confirmation = confirmation
+    end
+
     if @agent.save
       deliver(:confirmation, :confirmation_email, @agent, confirmation)
       flash[:success] = 'Check your email to set your password'
@@ -73,5 +80,4 @@ YesOrNo::App.controllers :agents do
     redirect('/login') if !logged_in?
   end
  
-
 end

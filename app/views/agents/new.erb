@@ -1,10 +1,10 @@
-<h1>Registration</h1>
-<h2>Enter a valid email to activate account and set password</h2>
+<h1>Account Registration and Retrieval</h1>
+<h2>Enter a valid email to set password</h2>
 <% form_for(@agent, '/agents/create') do |f| %>
   <%= f.label :email %>
   <%= f.text_field :email %>
   <%= error_message_on @agent, :email, :class => "text-error", :prepend => "That email" %>
   <p>
-    <%= f.submit "Register", :class => "btn btn-primary" %>
+    <%= f.submit "Submit", :class => "btn btn-primary" %>
   </p>
 <% end %>
