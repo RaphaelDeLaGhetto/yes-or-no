@@ -81,7 +81,6 @@ YesOrNo::App.controllers :agents do
     @agent = Agent.find_by(id: session[:agent_id])
 
     page = params[:page] || 1
-     #@posts = Post.page(page).order('created_at DESC')
     @posts = @agent.posts.page(page).order('created_at DESC')
     render :show
   end

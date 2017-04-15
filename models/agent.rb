@@ -9,12 +9,6 @@ class Agent < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, :format => { with: VALID_EMAIL_REGEX }
 
-#  attr_accessor :password, :password_confirmation#, :confirmation
-#  validates_presence_of :password
-#  validates_confirmation_of :password
-#  validates_presence_of :password_confirmation, :if => lambda { |o| o.password.present? }
-#  validates_presence_of :password_confirmation
-
   # agent.password_hash in the database is a :string
   include BCrypt
 
@@ -35,5 +29,13 @@ class Agent < ActiveRecord::Base
   def confirmation=(new_confirmation)
     @confirmation = Password.create(new_confirmation)
     self.confirmation_hash = @confirmation
+  end
+
+  def can_vote?(post)
+    post.present? && !post.id.nil? && post.agent != self
+  end
+
+  def vote(yes, post)
+    self.votes.create(yes: yes, post: post) if self.can_vote? post 
   end
 end

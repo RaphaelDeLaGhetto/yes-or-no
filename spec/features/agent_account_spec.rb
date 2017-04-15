@@ -42,13 +42,13 @@ describe "agent account", :type => :feature do
       end
 
       it 'does not display the yes/no buttons' do
-        expect(true).to eq(false)
+        expect(page).to have_selector('.yes', count: 0)
+        expect(page).to have_selector('.no', count: 0)
       end
 
       it 'display star rating' do
-        expect(true).to eq(false)
+        expect(page).to have_selector('.star-ratings-css', count: 1)
       end
-
 
     end
 

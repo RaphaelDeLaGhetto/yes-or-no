@@ -71,6 +71,137 @@ RSpec.describe Agent, type: :model do
       expect(@agent.confirmation_hash).to match(/\$2a\$10\$/);
       expect(@agent.confirmation == 'abc123').to eq(true)
     end
+  end
 
+  describe '#can_vote?' do
+    before :each do
+      @agent = create(:agent) 
+      @post = build(:post)
+    end
+
+    it 'returns false if agent has already voted' do
+      @agent.vote false, @post
+      expect(@agent.can_vote? @post).to eq(false)
+    end
+
+    it 'returns false if post belongs to agent' do
+      @post.agent = @agent
+      @post.save
+      expect(@agent.can_vote? @post).to eq(false)
+    end
+
+    it 'returns false if post doesn\'t exist' do
+      expect(@post.id).to be_nil 
+      expect(@agent.can_vote? @post).to eq(false)
+    end
+
+    it 'returns true if agent has not voted' do
+      @post.save
+      expect(@post.agent).not_to eq(@agent)
+      expect(@agent.can_vote? @post).to eq(true)
+    end
+  end
+
+  describe '#vote' do
+    before :each do
+      @agent = create(:agent) 
+    end
+
+    context 'has not voted' do
+      before :each do
+        @post = create(:post, approved: true)
+        expect(Vote.count).to eq(0)
+        expect(@agent).not_to eq(@post.agent)
+        @agent.vote true, @post
+        @post = Post.first
+      end
+
+      it 'creates a vote record for the agent' do
+        expect(Vote.count).to eq(1)
+        vote = Vote.first
+        expect(vote.agent).to eq(@agent)
+        expect(vote.post).to eq(@post)
+        expect(vote.yes).to eq(true)
+      end
+  
+      it 'creates a vote record for the agent' do
+        vote = Vote.first
+        @agent = Agent.first
+        expect(@agent.votes[0]).to eq(vote)
+      end
+ 
+      it 'creates a vote record for the post' do
+        vote = Vote.first
+        @post = Post.first
+        expect(@post.votes[0]).to eq(vote)
+      end
+  
+      it 'increments the post\'s vote count' do
+        @post = Post.first
+        expect(@post.yeses).to eq(1)
+        expect(@post.nos).to eq(0)
+      end
+
+      context 'has voted' do
+        it 'does not create a new vote record' do
+          expect(Vote.count).to eq(1)
+          @agent.vote false, @post
+          expect(Vote.count).to eq(1)
+        end
+ 
+        it 'does not create another vote record for the agent' do
+          expect(@agent.votes.count).to eq(1)
+          @agent.vote false, @post
+          @agent = Agent.first
+          expect(@agent.votes.count).to eq(1)
+        end
+    
+        it 'does not create another vote record for the post' do
+          expect(@post.votes.count).to eq(1)
+          @agent.vote false, @post
+          @post = Post.first
+          expect(@post.votes.count).to eq(1)
+        end
+    
+        it 'does not change the post\'s vote count' do
+          @post = Post.first
+          expect(@post.yeses).to eq(1)
+          expect(@post.nos).to eq(0)
+          @agent.vote false, @post
+          @post = Post.first
+          expect(@post.yeses).to eq(1)
+          expect(@post.nos).to eq(0)
+        end
+      end
+    end
+
+    context 'owns post' do
+      before :each do
+        @post = create(:post, approved: true, agent: @agent)
+        @agent.posts.push(@post)
+        @agent.save
+        @agent.vote false, @post
+      end
+
+      it 'does not create another vote record' do
+        expect(Vote.count).to eq(0)
+      end
+ 
+      it 'does not create another vote record for the agent' do
+        @agent = Agent.first
+        expect(@agent.votes.count).to eq(0)
+      end
+  
+      it 'does not create another vote record for the post' do
+        @post = Post.first
+        expect(@post.votes.count).to eq(0)
+      end
+  
+      it 'does not increment the post\'s vote count' do
+        @post = Post.first
+        expect(@post.yeses).to eq(0)
+        expect(@post.nos).to eq(0)
+      end
+    end
   end
 end
