@@ -129,6 +129,7 @@ end
 
 # Capybara
 Capybara.javascript_driver = :poltergeist
+#Capybara.ignore_hidden_elements = true
 #Capybara.default_max_wait_time = 1000
 #Capybara.javascript_driver = :webkit
 Capybara.app = app

@@ -11,7 +11,6 @@ $(document).ready(function(){
         authenticity_token: $('meta[name="csrf-token"]').attr('content') 
       },
       success: function(result) {
-      console.log(result);
         $('#post-' + id + ' .star-ratings-css-top').width(JSON.parse(result).rating + '%');
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();

@@ -50,6 +50,8 @@ describe "add an image URI", :type => :feature do
         expect(page).to have_content('Pending approval')
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
+        expect(page).to have_css('.star-ratings-css') 
+        expect(page).to have_selector('.star-ratings-css', count: 1)
       end
  
       context 'approve an image URI' do

@@ -48,6 +48,7 @@ describe "agent account", :type => :feature do
 
       it 'display star rating' do
         expect(page).to have_selector('.star-ratings-css', count: 1)
+        expect(page.find('.star-ratings-css').visible?).to eq(true)
       end
 
     end

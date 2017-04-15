@@ -12,7 +12,7 @@
     <% if can_vote %>
       <button class="no" name="no" value="<%= post.id %>">No</button>
     <% end %>
-    <div class="star-ratings-css">
+    <div class="star-ratings-css" style="display: <%= can_vote ? 'none' : 'block' %>;">
       <div class="star-ratings-css-top" style="width: <%= post.rating %>%;">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
