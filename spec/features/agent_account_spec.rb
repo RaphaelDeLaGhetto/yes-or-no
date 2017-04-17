@@ -53,6 +53,22 @@ describe "agent account", :type => :feature do
 
     end
 
+    describe 'GET /logout' do
+      before :each do
+        visit "/agents/#{@agent.id}"
+        expect(page).to have_current_path("/agents/#{@agent.id}")
+        expect(page).to have_link('Logout', :href => '/logout')
+      end
+
+      it 'clears the session' do
+        click_link 'Logout'
+        expect(page).to have_current_path('/')
+        expect(page).to have_link('Login', :href => '/login')
+        visit "/agents/#{@agent.id}"
+        expect(page).to have_current_path('/login')
+      end
+    end
+
   end
 
 end
