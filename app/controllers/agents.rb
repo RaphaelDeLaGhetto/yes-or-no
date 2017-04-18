@@ -85,4 +85,13 @@ YesOrNo::App.controllers :agents do
     render :show
   end
  
+  get :answer, map: "/agents/:id/:answer" do
+    redirect('/login') if !logged_in?
+    @agent = Agent.find_by(id: session[:agent_id])
+
+    page = params[:page] || 1
+    @posts = Post.joins(:votes).where(votes: { yes: params[:answer] == 'yeses', agent: @agent }).page(page).order('created_at DESC')
+
+    render :show
+  end
 end

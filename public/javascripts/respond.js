@@ -16,9 +16,14 @@ $(document).ready(function(){
         $('#post-' + id + ' button').hide();
         $('#post-' + id + ' .star-ratings-css').show();
       },
-      error: function(result) {
-        console.log('ERROR ');
-        console.log(JSON.stringify(result));
+      error: function(jqXHR, textStatus, errorThrown) {
+        if(jqXHR.status === 403) {
+          $( location ).attr("href", '/login');
+        } else {
+          console.log(JSON.stringify(jqXHR));
+          console.log(JSON.stringify(textStatus));
+          console.log(JSON.stringify(errorThrown));
+        }
       }
     });
   });

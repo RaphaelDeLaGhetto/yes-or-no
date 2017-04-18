@@ -69,6 +69,64 @@ describe "agent account", :type => :feature do
       end
     end
 
+    describe 'GET /agents/:id/yeses', js: true do
+      before :each do
+        @fake_agent = Agent.create(email: 'fake@emall.com')
+        Post.create(url: 'fakeurl.com/1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
+        Post.create(url: 'fakeurl.com/2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
+        expect(Post.count).to eq(2)
+        visit '/'
+        click_button 'Yes', match: :first
+        wait_for_ajax
+        click_link 'Account' 
+        click_link 'Yeses' 
+      end
+
+      it 'only displays posts on which this agent voted yes' do
+        expect(page).to have_selector('article', count: 1)
+        expect(page).to have_selector('img[src="fakeurl.com/1.jpg"]', count: 1)
+      end
+
+      it 'does not display the yes/no buttons' do
+        expect(page).to have_selector('.yes', count: 0)
+        expect(page).to have_selector('.no', count: 0)
+      end
+
+      it 'display star rating' do
+        expect(page).to have_selector('.star-ratings-css', count: 1)
+        expect(page.find('.star-ratings-css').visible?).to eq(true)
+      end
+    end
+
+    describe 'GET /agents/:id/nos', js: true do
+      before :each do
+        @fake_agent = Agent.create(email: 'fake@emall.com')
+        Post.create(url: 'fakeurl.com/1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
+        Post.create(url: 'fakeurl.com/2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
+        expect(Post.count).to eq(2)
+        visit '/'
+        click_button 'No', match: :first
+        wait_for_ajax
+        click_link 'Account' 
+        click_link 'Nos' 
+      end
+
+      it 'only displays posts on which this agent voted no' do
+        expect(page).to have_selector('article', count: 1)
+        expect(page).to have_selector('img[src="fakeurl.com/1.jpg"]', count: 1)
+      end
+
+      it 'does not display the yes/no buttons' do
+        expect(page).to have_selector('.yes', count: 0)
+        expect(page).to have_selector('.no', count: 0)
+      end
+
+      it 'display star rating' do
+        expect(page).to have_selector('.star-ratings-css', count: 1)
+        expect(page.find('.star-ratings-css').visible?).to eq(true)
+      end
+    end
+
   end
 
 end

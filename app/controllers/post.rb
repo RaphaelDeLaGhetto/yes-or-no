@@ -43,9 +43,10 @@ YesOrNo::App.controllers :post do
   # Yes/No decision routes
   #
   post :answer, map: "/post/:answer" do
+    halt(403, 'Log in to vote') unless logged_in?
+    @agent = Agent.find_by(id: session[:agent_id])
     post = Post.find(params[:id])
-    post.answer_yes if params[:answer] == 'yes'
-    post.answer_no if params[:answer] == 'no'
+    @agent.vote params[:answer] == 'yes', post
     { rating: post.rating }.to_json
   end
 
