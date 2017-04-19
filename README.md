@@ -2,7 +2,7 @@ yes-or-no
 =========
 
 Simple visual _Yes or No_ application built on [Padrino](http://padrinorb.com/).
-Submit image links and present to allow users to repond _Yes_ or _No_.
+Submit image links and present to allow users to respond _Yes_ or _No_.
 
 # Configuration
 
