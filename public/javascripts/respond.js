@@ -28,18 +28,24 @@ $(document).ready(function(){
     });
   });
 
-  $('.question-image').imagesLoaded()
-//    .always( function( instance ) {
-//      console.log('image loaded ');
-//    })
-    .done( function( instance ) {
-      console.log('all images successfully loaded ');
-    })
-    .fail( function() {
-      console.log('all images loaded, at least one is broken');
-    })
-    .progress( function( instance, image ) {
-      var result = image.isLoaded ? 'loaded' : 'broken';
-      console.log( 'image is ' + result + ' for ' + image.img.src );
+  $('.question-image').on('error', function(instance) {
+    var parent = this;
+    var parentId = $(this).parent().parent().attr('id');
+    $.ajax({
+      type: 'POST',
+      url: '/post/deapprove',
+      data: { 
+        id: parentId.replace('post-', ''),
+        authenticity_token: $('meta[name="csrf-token"]').attr('content') 
+      },
+      success: function(result) {
+        $('#'+parentId).hide();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(JSON.stringify(jqXHR));
+        console.log(JSON.stringify(textStatus));
+        console.log(JSON.stringify(errorThrown));
+      }
     });
+  });
 });

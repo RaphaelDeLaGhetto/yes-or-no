@@ -10,17 +10,14 @@
     <%= partial(:menu, {locals: {agent_id: session[:agent_id]} }) %>
     <%= partial(:flash, {locals: {obj: flash} }) %>
     <%= yield %>
-    <!--
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous"></script>
-      -->
-    <script src="/javascripts/jquery-3.2.1.min.js"></script>
-    <!--
-    <script src="https://unpkg.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
-      -->
-    <script src="/javascripts/imagesloaded.pkgd.min.js"></script>
+    <% if RACK_ENV == 'test' %>
+      <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <% else %>
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <% end %>
     <script src="/javascripts/respond.js"></script>
   </body>
 </html>

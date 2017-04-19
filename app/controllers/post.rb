@@ -35,6 +35,10 @@ YesOrNo::App.controllers :post do
     end
   end
 
+  post :deapprove, map: "/post/deapprove" do
+    Post.update(params[:id], {:approved => false})
+  end
+
   #
   # Yes/No decision routes
   #

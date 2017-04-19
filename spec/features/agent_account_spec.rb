@@ -31,7 +31,7 @@ describe "agent account", :type => :feature do
     describe 'GET /agents/:id' do
       before :each do
         @post = create(:post, agent: @agent)
-        Post.create(url: 'fakeurl.com', tag: 'fake', agent: Agent.create(email: 'fake@emall.com'))
+        Post.create(url: 'http://fakeurl.com/image1.jpg', tag: 'fake', agent: Agent.create(email: 'fake@emall.com'))
         expect(Post.count).to eq(2)
         click_link 'Your posts'
         expect(page).to have_current_path("/agents/#{@agent.id}")
@@ -71,11 +71,15 @@ describe "agent account", :type => :feature do
 
     describe 'GET /agents/:id/yeses', js: true do
       before :each do
+        proxy.stub('http://fakeurl.com/image1.jpg').and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+        proxy.stub('http://fakeurl.com/image2.jpg').and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+
         @fake_agent = Agent.create(email: 'fake@emall.com')
-        Post.create(url: 'fakeurl.com/1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
-        Post.create(url: 'fakeurl.com/2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
+        Post.create(url: 'http://fakeurl.com/image1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
+        Post.create(url: 'http://fakeurl.com/image2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
         expect(Post.count).to eq(2)
         visit '/'
+        wait_for_ajax
         click_button 'Yes', match: :first
         wait_for_ajax
         click_link 'Account' 
@@ -84,7 +88,7 @@ describe "agent account", :type => :feature do
 
       it 'only displays posts on which this agent voted yes' do
         expect(page).to have_selector('article', count: 1)
-        expect(page).to have_selector('img[src="fakeurl.com/1.jpg"]', count: 1)
+        expect(page).to have_selector('img[src="http://fakeurl.com/image1.jpg"]', count: 1)
       end
 
       it 'does not display the yes/no buttons' do
@@ -101,10 +105,11 @@ describe "agent account", :type => :feature do
     describe 'GET /agents/:id/nos', js: true do
       before :each do
         @fake_agent = Agent.create(email: 'fake@emall.com')
-        Post.create(url: 'fakeurl.com/1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
-        Post.create(url: 'fakeurl.com/2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
+        Post.create(url: 'http://fakeurl.com/image1.jpg', tag: 'fake 1', approved: true, agent: @fake_agent)
+        Post.create(url: 'http://fakeurl.com/image2.jpg', tag: 'fake 2', approved: true, agent: @fake_agent)
         expect(Post.count).to eq(2)
         visit '/'
+        wait_for_ajax
         click_button 'No', match: :first
         wait_for_ajax
         click_link 'Account' 
@@ -113,7 +118,7 @@ describe "agent account", :type => :feature do
 
       it 'only displays posts on which this agent voted no' do
         expect(page).to have_selector('article', count: 1)
-        expect(page).to have_selector('img[src="fakeurl.com/1.jpg"]', count: 1)
+        expect(page).to have_selector('img[src="http://fakeurl.com/image1.jpg"]', count: 1)
       end
 
       it 'does not display the yes/no buttons' do
