@@ -27,6 +27,23 @@ RSpec.describe Post, type: :model do
     it { should belong_to(:ip) }
     it { should belong_to(:agent) }
     it { should have_many(:votes) }
+
+    it "deletes associated votes" do
+      expect(Vote.count).to eq(0)
+
+      agent = create(:agent)
+      post = create(:post, agent: agent, approved: true)
+
+      agent2 = create(:another_agent)
+      agent2.vote true, post
+
+      expect(Vote.count).to eq(1)
+
+      post.destroy
+
+      expect(Vote.count).to eq(0)
+    end
+
   end
 
   context 'initialization' do

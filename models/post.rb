@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   validates_length_of :tag, maximum: 50 
   belongs_to :ip
   belongs_to :agent
-  has_many :votes
+  has_many :votes, dependent: :destroy
 
   def answer_yes
     if self.approved
@@ -44,11 +44,14 @@ class Post < ActiveRecord::Base
   def self.order_by_rating(page=1)
     # Original. Breaks pagination
     #Post.where(approved: true).page(page).sort_by(&:rating).reverse 
+
     # Does this sort every record before paginating the array?
     #Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+
     # Need a few more records to see if this works. I suspect the page view helper will
     # always be stuck on page one
     Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+
     # Alternatively, I could sort descending on yeses and ascending on nos. If the above
     # doesn't pan out, try that
   end
