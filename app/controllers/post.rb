@@ -1,15 +1,15 @@
 YesOrNo::App.controllers :post do
   
-  # get :index, :map => '/foo/bar' do
-  #   session[:foo] = 'bar'
-  #   render 'index'
-  # end
+  #
+  # index
+  #
+  get :index do
+    page = params[:page] || 1
+    @posts = Post.order_by_rating(page)
 
-  # get :sample, :map => '/sample/url', :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
+    @can_vote = false
+    render :landing
+  end
 
   #
   # show
@@ -18,10 +18,6 @@ YesOrNo::App.controllers :post do
     @post = Post.find(params[:id])
     render :show
   end
-
-  # get '/example' do
-  #   'Hello world!'
-  # end
 
   #
   # create

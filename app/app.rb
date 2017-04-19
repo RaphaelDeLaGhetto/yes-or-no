@@ -93,6 +93,7 @@ module YesOrNo
     get '/' do
       page = params[:page] || 1
       @posts = Post.where(:approved => true).page(page).order('updated_at ASC')
+      @can_vote = true
       render :landing
     end
 

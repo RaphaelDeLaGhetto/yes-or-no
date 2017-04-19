@@ -1,4 +1,6 @@
+require 'will_paginate/array'
 class Post < ActiveRecord::Base
+
   validates_presence_of :url
   validates_uniqueness_of :url
   validates_presence_of :tag
@@ -34,7 +36,20 @@ class Post < ActiveRecord::Base
     (100 * self.yeses) / total_votes
   end
 
+  #
+  # 2017-4-18
+  #
+  # Keep an eye on this. Something stinks
+  #
   def self.order_by_rating(page=1)
-    Post.where(approved: true).page(page).sort_by(&:rating).reverse 
+    # Original. Breaks pagination
+    #Post.where(approved: true).page(page).sort_by(&:rating).reverse 
+    # Does this sort every record before paginating the array?
+    #Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+    # Need a few more records to see if this works. I suspect the page view helper will
+    # always be stuck on page one
+    Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+    # Alternatively, I could sort descending on yeses and ascending on nos. If the above
+    # doesn't pan out, try that
   end
 end

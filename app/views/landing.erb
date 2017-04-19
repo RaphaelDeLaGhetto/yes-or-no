@@ -10,7 +10,7 @@
 <% end %>
  
 <% @posts.each do |post| %>
-  <%= partial('post/post', {locals: {post: post, can_vote: true}}) %>
+  <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
 <% end %>
 
 <%= will_paginate @posts, :page_links => false %>
