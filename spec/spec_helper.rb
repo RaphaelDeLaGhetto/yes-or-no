@@ -6,6 +6,7 @@ require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'shoulda/matchers'
 require "rack_session_access/capybara"
+require 'billy/capybara/rspec'
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
@@ -128,7 +129,8 @@ end
 #end
 
 # Capybara
-Capybara.javascript_driver = :poltergeist
+#Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist_billy
 #Capybara.ignore_hidden_elements = true
 #Capybara.default_max_wait_time = 1000
 #Capybara.javascript_driver = :webkit

@@ -1,4 +1,4 @@
-<article id="post-<%= post.id %>">
+<article id="post-<%= post.id %>" class="question">
   <header>
     <h1><%= post[:tag] %></h1>
     <% if !post.approved %>
@@ -6,7 +6,7 @@
     <% end %>
   </header>
   <section class="image">
-    <img src="<%= post[:url] %>" alt="<%= post[:tag] %>">
+    <img class="question-image" src="<%= post[:url] %>" alt="<%= post[:tag] %>">
   </section>
   <footer>
     <% if can_vote %>

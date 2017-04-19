@@ -52,5 +52,5 @@ group :test, :development do
   gem 'poltergeist'
   gem 'mailcatcher'
   gem 'rack_session_access'
-#  gem "capybara-webkit"
+  gem 'puffing-billy'
 end

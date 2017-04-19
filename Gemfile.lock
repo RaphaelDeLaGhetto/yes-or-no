@@ -12,8 +12,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.5.1)
-      public_suffix (~> 2.0, >= 2.0.2)
+    addressable (2.4.0)
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.3)
@@ -26,14 +25,27 @@ GEM
       xpath (~> 2.0)
     cliver (0.3.2)
     concurrent-ruby (1.0.5)
+    cookiejar (0.3.3)
     daemons (1.2.4)
     database_cleaner (1.5.3)
     diff-lcs (1.3)
     dotenv (2.2.0)
+    em-http-request (1.1.5)
+      addressable (>= 2.3.4)
+      cookiejar (!= 0.3.1)
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.1)
+      eventmachine (>= 1.0.0.beta.4)
+    em-synchrony (1.0.6)
+      eventmachine (>= 1.0.0.beta.1)
     enumerable-lazy (0.0.2)
     eventmachine (1.0.9.1)
+    eventmachine_httpserver (0.2.1)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
+    http_parser.rb (0.6.0)
     i18n (0.8.1)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
@@ -49,6 +61,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     moneta (0.7.20)
+    multi_json (1.12.1)
     mustermann19 (0.4.4)
       enumerable-lazy
     nokogiri (1.7.1)
@@ -95,7 +108,14 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    public_suffix (2.0.5)
+    puffing-billy (0.10.0)
+      addressable (~> 2.4.0)
+      em-http-request (~> 1.1.0)
+      em-synchrony
+      eventmachine (~> 1.0.4)
+      eventmachine_httpserver
+      http_parser.rb (~> 0.6.0)
+      multi_json
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -160,6 +180,7 @@ DEPENDENCIES
   padrino-flash
   pg
   poltergeist
+  puffing-billy
   rack-test
   rack_session_access
   rake

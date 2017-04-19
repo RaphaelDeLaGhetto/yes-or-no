@@ -1,8 +1,10 @@
 require 'spec_helper'
 
+
 describe "provide a response to image", js: true, :type => :feature do
   before :each do
-    @post = Post.create(url: 'fakeurl.com', tag: 'fake', approved: true, agent: Agent.create(email: 'fake@emall.com'))
+    @post = Post.create(url: 'http://fakeurl.com/image.jpg', tag: 'fake', approved: true, agent: Agent.create(email: 'fake@emall.com'))
+    proxy.stub('http://fakeurl.com/image.jpg').and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
     expect(Post.count).to eq(1)
   end
 
