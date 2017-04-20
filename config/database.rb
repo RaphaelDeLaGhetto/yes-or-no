@@ -39,12 +39,12 @@ ActiveRecord::Base.configurations[:development] = {
 #postgres://khplbrhtdbzccc:418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd@ec2-54-221-244-196.compute-1.amazonaws.com:5432/dd4aun0uch7mmt
 ActiveRecord::Base.configurations[:production] = {
   :adapter   => 'postgresql',
-#  :url       => ENV["DATABASE_URL"]
-  :database  => 'dd4aun0uch7mmt',
-  :username  => 'khplbrhtdbzccc',
-  :password  => '418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd',
-  :host      => 'ec2-54-221-244-196.compute-1.amazonaws.com',
-  :port      => 5432 
+  :url       => ENV["DATABASE_URL"]
+#  :database  => 'dd4aun0uch7mmt',
+#  :username  => 'khplbrhtdbzccc',
+#  :password  => '418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd',
+#  :host      => 'ec2-54-221-244-196.compute-1.amazonaws.com',
+#  :port      => 5432 
 }
 
 # Generic
