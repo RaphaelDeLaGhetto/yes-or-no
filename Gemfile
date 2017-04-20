@@ -54,3 +54,7 @@ group :test, :development do
   gem 'rack_session_access'
   gem 'puffing-billy'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
