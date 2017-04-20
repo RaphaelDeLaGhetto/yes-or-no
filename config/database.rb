@@ -38,7 +38,7 @@ ActiveRecord::Base.configurations[:development] = {
 #ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 #postgres://khplbrhtdbzccc:418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd@ec2-54-221-244-196.compute-1.amazonaws.com:5432/dd4aun0uch7mmt
 ActiveRecord::Base.configurations[:production] = {
-#  :adapter   => 'postgresql',
+  :adapter   => 'postgresql',
 #  :url       => ENV["DATABASE_URL"]
   :database  => 'dd4aun0uch7mmt',
   :username  => 'khplbrhtdbzccc',
