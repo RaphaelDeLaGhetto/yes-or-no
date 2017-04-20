@@ -23,15 +23,36 @@ ActiveRecord::Base.configurations[:development] = {
 
 }
 
+#db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+#ActiveRecord::Base.configurations[:production] = {
+#   
+#    adapter: "postgresql",
+#host: db.host,
+#username: db.user,
+#password: db.password,
+#database: db.path[1..-1],
+#encoding: 'utf8'
+#}
+
+# Heroku
 ActiveRecord::Base.configurations[:production] = {
   :adapter   => 'postgresql',
-  :database  => 'yes_or_no_production',
-  :username  => 'root',
-  :password  => '',
-  :host      => 'localhost',
-  :port      => 5432
-
+  :database  => ENV['DATABASE'],
+  :username  => ENV['USER'],
+  :password  => ENV['PASSWORD'],
+  :host      => ENV['HOST'],
+  :port      => ENV['PORT']
 }
+
+# Generic
+#ActiveRecord::Base.configurations[:production] = {
+#  :adapter   => 'postgresql',
+#  :database  => 'yes_or_no_production',
+#  :username  => 'root',
+#  :password  => '',
+#  :host      => 'localhost',
+#  :port      => 5432
+#}
 
 ActiveRecord::Base.configurations[:test] = {
   :adapter   => 'postgresql',
