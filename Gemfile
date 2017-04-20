@@ -55,7 +55,7 @@ group :test, :development do
   gem 'puffing-billy'
 end
 
-group :production do
+group :heroku do
   gem 'rails_12factor'
   gem 'thin'
 end

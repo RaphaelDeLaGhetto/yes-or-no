@@ -97,4 +97,9 @@ bundle exec rspec
 padrino start -h 0.0.0.0
 ```
 
+# Production
+
+## Heroku
+
+This should be setup to work with Heroku out of the box. Heroku specific dependencies are listed in the `:heroku` group in the `Gemfile`. As such, `RACK_ENV` Config variable needs to be set to `heroku`.
 

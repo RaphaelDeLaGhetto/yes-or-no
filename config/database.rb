@@ -35,18 +35,9 @@ ActiveRecord::Base.configurations[:development] = {
 #}
 
 # Heroku
-#ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
-#postgres://khplbrhtdbzccc:418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd@ec2-54-221-244-196.compute-1.amazonaws.com:5432/dd4aun0uch7mmt
 db = URI.parse(ENV['DATABASE_URL'])
-ActiveRecord::Base.configurations[:production] = {
-  :adapter   => 'postgresql',
-#  :url       => ENV["DATABASE_URL"]
-#  :database  => 'dd4aun0uch7mmt',
-#  :database  => 'dd4aun0uch7mmt',
-#  :username  => 'khplbrhtdbzccc',
-#  :password  => '418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd',
-#  :host      => 'ec2-54-221-244-196.compute-1.amazonaws.com',
-#  :port      => 5432 
+ActiveRecord::Base.configurations[:heroku] = {
+  adapter: 'postgresql',
   host: db.host,
   username: db.user,
   password: db.password,
@@ -55,14 +46,14 @@ ActiveRecord::Base.configurations[:production] = {
 }
 
 # Generic
-#ActiveRecord::Base.configurations[:production] = {
-#  :adapter   => 'postgresql',
-#  :database  => 'yes_or_no_production',
-#  :username  => 'root',
-#  :password  => '',
-#  :host      => 'localhost',
-#  :port      => 5432
-#}
+ActiveRecord::Base.configurations[:production] = {
+  :adapter   => 'postgresql',
+  :database  => 'yes_or_no_production',
+  :username  => 'root',
+  :password  => '',
+  :host      => 'localhost',
+  :port      => 5432
+}
 
 ActiveRecord::Base.configurations[:test] = {
   :adapter   => 'postgresql',
