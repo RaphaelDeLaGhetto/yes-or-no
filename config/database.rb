@@ -37,14 +37,21 @@ ActiveRecord::Base.configurations[:development] = {
 # Heroku
 #ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 #postgres://khplbrhtdbzccc:418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd@ec2-54-221-244-196.compute-1.amazonaws.com:5432/dd4aun0uch7mmt
+db = URI.parse(ENV['DATABASE_URL'])
 ActiveRecord::Base.configurations[:production] = {
   :adapter   => 'postgresql',
-  :url       => ENV["DATABASE_URL"]
+#  :url       => ENV["DATABASE_URL"]
+#  :database  => 'dd4aun0uch7mmt',
 #  :database  => 'dd4aun0uch7mmt',
 #  :username  => 'khplbrhtdbzccc',
 #  :password  => '418a88ca6d79e83e38243f98c3d0807ea1801afee32fab10a05b0203c0f401cd',
 #  :host      => 'ec2-54-221-244-196.compute-1.amazonaws.com',
 #  :port      => 5432 
+  host: db.host,
+  username: db.user,
+  password: db.password,
+  database: db.path[1..-1],
+  encoding: 'utf8'
 }
 
 # Generic
