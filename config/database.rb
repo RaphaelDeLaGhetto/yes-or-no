@@ -23,17 +23,6 @@ ActiveRecord::Base.configurations[:development] = {
 
 }
 
-#db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
-#ActiveRecord::Base.configurations[:production] = {
-#   
-#    adapter: "postgresql",
-#host: db.host,
-#username: db.user,
-#password: db.password,
-#database: db.path[1..-1],
-#encoding: 'utf8'
-#}
-
 # Heroku
 db = URI.parse(ENV['DATABASE_URL'])
 ActiveRecord::Base.configurations[:heroku] = {
