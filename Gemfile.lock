@@ -192,6 +192,7 @@ DEPENDENCIES
   rake
   rspec
   shoulda-matchers
+  thin
   will_paginate (~> 3.1.1)
 
 BUNDLED WITH
