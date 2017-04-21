@@ -6,6 +6,10 @@ module YesOrNo
       def logged_in?
         !session[:agent_id].nil?
       end 
+
+      def current_agent
+        logged_in? ? Agent.find(session[:agent_id]) : nil
+      end
     end
 
     helpers AgentsHelper

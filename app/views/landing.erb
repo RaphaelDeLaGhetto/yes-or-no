@@ -10,7 +10,11 @@
 <% end %>
  
 <% @posts.each do |post| %>
-  <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+  <% if @agent %>
+    <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>
+  <% else %>
+    <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+  <% end %>
 <% end %>
 
 <%= will_paginate @posts, :page_links => false %>
