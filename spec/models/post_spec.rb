@@ -20,6 +20,19 @@ RSpec.describe Post, type: :model do
     it { should validate_uniqueness_of(:url) }
     it { should validate_presence_of(:tag) }
     it { should validate_length_of(:tag).is_at_most(50).on(:create) }
+    it { should_not allow_value('').for(:tag) }
+    it { should_not allow_value('  ').for(:tag) }
+    it { should_not allow_value('').for(:url) }
+    it { should_not allow_value('  ').for(:url) }
+
+
+#    it "does not allow_blank" do
+#      subject.should_not allow_value("").for(:url)
+#      subject.should_not allow_value("").for(:url)
+#      @model.should_not allow_value("  ").for(:attr)
+#      @model.should ensure_inclusion_of(:attr).in_array(["one",
+#      "two", ""]).allow_blank(false)
+#    end
   end
 
   context 'relationships' do

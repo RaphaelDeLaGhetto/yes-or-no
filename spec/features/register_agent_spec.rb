@@ -73,9 +73,7 @@ describe "agent registration", :type => :feature do
           fill_in "Password", :with => 'secret'
           click_button "Update"
           expect(page).to have_current_path('/')
-          expect(page).to have_selector('input[name="url"]', count: 1)
-          expect(page).to have_selector('input[name="tag"]', count: 1)
-          expect(page).to have_selector('input[type="submit"]', count: 1)
+          expect(page).to have_link('Logout', href: '/logout')
         end
       end
 
@@ -144,9 +142,5 @@ describe "agent registration", :type => :feature do
     it 'remains on the registration page' do
       expect(page).to have_current_path('/agents/create')
     end
-
-
-
   end
-
 end

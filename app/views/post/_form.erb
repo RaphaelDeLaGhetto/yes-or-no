@@ -1,0 +1,10 @@
+<% if logged_in? %>
+  <% form_tag url_for(:post, :create), :id => 'post-form', :method => 'post' do %>
+    <%= label_tag(:url, :caption => 'Image URL') %>
+    <%= url_field_tag(:url, :id => 'url') %>
+    <%= label_tag(:tag, :caption => 'Tag') %>
+    <%= text_field_tag(:tag, :id => 'tag', :maxlength => 75) %>
+    <%= submit_tag('Add Image') %>
+  <% end %>
+<% end %>
+ 

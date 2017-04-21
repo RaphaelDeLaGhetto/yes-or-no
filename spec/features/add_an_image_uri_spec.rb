@@ -1,15 +1,18 @@
 require 'spec_helper'
 
 describe "add an image URI", :type => :feature do
-  before :each do
-    visit '/'
-  end
-
   context 'not logged in' do
+    before :each do
+      visit '/agents/1'
+    end
+
+    it 'redirects to login' do
+      expect(page).to have_current_path('/login')
+    end
+
     it 'does not render submission form' do
       expect(page).to have_selector('input[name="url"]', count: 0)
       expect(page).to have_selector('input[name="tag"]', count: 0)
-      expect(page).to have_selector('input[type="submit"]', count: 0)
     end
   end
 
@@ -20,8 +23,52 @@ describe "add an image URI", :type => :feature do
       fill_in "Email", :with => @agent.email
       fill_in "Password", :with => 'secret'
       click_button "Login"
+      click_link "Your posts"
+    end
+
+    it 'renders a submission form' do
+      expect(page).to have_selector('input[name="url"]', count: 1)
+      expect(page).to have_selector('input[name="tag"]', count: 1)
+      expect(page).to have_selector('input[type="submit"]', count: 1)
     end
   
+    describe 'unsuccessful image submission' do
+
+      describe 'no image URL provided' do
+        before :each do
+          expect(Post.count).to eq(0)
+          fill_in "Image URL", :with => ""
+          fill_in "Tag", :with => "DSB"
+          click_button "Add Image"
+        end
+  
+        it "does not enter image into database" do
+          expect(Post.count).to eq(0)
+        end
+
+        it "displays an error message" do
+          expect(page).to have_content("Url can't be blank")
+        end
+      end
+
+      describe 'no image description provided' do
+        before :each do
+          expect(Post.count).to eq(0)
+          fill_in "Image URL", :with => "http://example.com/image.jpg"
+          fill_in "Tag", :with => "  "
+          click_button "Add Image"
+        end
+  
+        it "does not enter image into database" do
+          expect(Post.count).to eq(0)
+        end
+
+        it "displays an error message" do
+          expect(page).to have_content("Tag can't be blank")
+        end
+      end
+    end
+
     describe 'image submission' do
       before :each do
         expect(Post.count).to eq(0)
