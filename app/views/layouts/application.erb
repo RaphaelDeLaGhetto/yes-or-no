@@ -4,12 +4,15 @@
     <title>Yes or no?</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/pagination.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
   </head>
   <body>
     <%= partial(:menu, {locals: {agent_id: session[:agent_id]} }) %>
     <%= partial(:flash, {locals: {obj: flash} }) %>
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
     <% if RACK_ENV == 'test' %>
       <script src="/javascripts/jquery-3.2.1.min.js"></script>
     <% else %>
