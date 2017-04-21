@@ -104,7 +104,7 @@ module YesOrNo
     end
 
     post '/login' do
-      @agent = Agent.find_by_email(params[:email])
+      @agent = Agent.find_by_email(params[:email]) || Agent.new(email: params[:email])
       if @agent.password == params[:password]
         session[:agent_id] = @agent.id
         redirect '/'

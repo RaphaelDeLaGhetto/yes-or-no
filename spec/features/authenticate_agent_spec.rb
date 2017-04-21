@@ -32,12 +32,20 @@ describe "authenticate agent", :type => :feature do
       expect(page).to have_current_path('/')
     end
 
-    it 'renders the login form if there is an error' do
+    it 'renders the login form if the password is wrong' do
       fill_in "Email", :with => @agent.email 
       fill_in "Password", :with => 'wrongpassword'
       click_button "Login"
       expect(page).to have_current_path('/login')
       expect(page).to have_selector("input[name='email'][value='#{@agent.email}']", count: 1)
+    end
+
+    it 'renders the login form if the email is wrong' do
+      fill_in "Email", :with => 'nosuchemail@example.com' 
+      fill_in "Password", :with => 'secret'
+      click_button "Login"
+      expect(page).to have_current_path('/login')
+      expect(page).to have_selector("input[name='email'][value='nosuchemail@example.com']", count: 1)
     end
   end
 
