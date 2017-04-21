@@ -101,7 +101,16 @@ padrino start -h 0.0.0.0
 
 ## Heroku
 
-This should be setup to work with Heroku out of the box (with the exception of mail configuration). Heroku specific dependencies are listed in the `:heroku` group in the `Gemfile`. As such, `RACK_ENV` config variable needs to be set to `heroku`.
+```
+heroku create
+git push heroku master
+```
 
-Refer to the sample `.env` configuration for guidance on the required config variables and their values.
+This should be setup to work with Heroku out of the box (with the exception of mail configuration). Heroku specific dependencies are listed in the `:heroku` group in the `Gemfile`. As such, `RACK_ENV` config variable needs to be set to `heroku`. Once set,
+
+```
+heroku run bundle exec rake db:migrate
+heroku run bundle exec rake db:seed
+```
+
 
