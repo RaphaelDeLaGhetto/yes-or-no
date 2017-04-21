@@ -80,6 +80,7 @@ RSpec.describe Agent, type: :model do
     end
 
     it 'returns false if agent has already voted' do
+      @post.save
       @agent.vote false, @post
       expect(@agent.can_vote? @post).to eq(false)
     end

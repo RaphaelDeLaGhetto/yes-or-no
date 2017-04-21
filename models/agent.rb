@@ -32,7 +32,7 @@ class Agent < ActiveRecord::Base
   end
 
   def can_vote?(post)
-    post.present? && !post.id.nil? && post.agent != self
+    post.present? && !post.id.nil? && post.agent != self && self.votes.find_by(post_id: post.id).nil?
   end
 
   def vote(yes, post)
