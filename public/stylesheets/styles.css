@@ -2,10 +2,7 @@ body {
   margin: 0;
 }
 
-main {
-  width: 100%;
-}
-
+main,
 form {
   width: 100%;
 }
@@ -14,7 +11,7 @@ form {
  * Splash
  */
 nav {
-  margin: 0;
+  margin: 0 0 2em 0;
   background-color: grey;
   background-image: url(/images/splash.jpg);
   width: 100%;
@@ -51,12 +48,22 @@ nav ul li a {
 }
 
 article {
+        /*
   width: 90%;
   text-align: center;
   background-color: #efefef;
   border-radius: 3px;
   margin-bottom: 2em;
   margin 0em 0em 2em 0em;
+  */
+
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  position: relative;
 }
 
 #question {
@@ -85,16 +92,18 @@ section img {
 header h1 {
   margin-top: .1em;
   margin-bottom: .1em;
-  font-size: 3em; 
+  font-size: 1.3em; 
 }
 
 footer {
   position: relative;
 }
 
+/*
 footer button {
-  font-size: 4em;
+  font-size: 3em;
 }
+*/
 
 .yes {
   margin-right: .5em;
@@ -112,25 +121,16 @@ footer button {
  * 2017-4-5
  * https://codepen.io/Bluetidepro/pen/GkpEa
  */
-.star-ratings-css {
+.star-ratings {
   unicode-bidi: bidi-override;
   color: #c5c5c5;
-  /*
-  font-size: 25px;
-  height: 25px;
-  width: 100px;
-  */
+  font-size: 50px;
+  height: 50px;
+  width: 200px;
   margin: 0 auto;
-  position: relative;
-  padding: 0;
-  text-shadow: 0px 1px 0 #a2a2a2;
-
-  font-size: 4em;
-  /*height: 25px;*/
-  width: 2em;
 }
 
-.star-ratings-css-top {
+.star-ratings-top {
   color: #e7711b;
   padding: 0;
   position: absolute;
@@ -141,7 +141,7 @@ footer button {
   overflow: hidden;
 }
 
-.star-ratings-css-bottom {
+.star-ratings-bottom {
   padding: 0;
   display: block;
   z-index: 0;
@@ -169,4 +169,42 @@ footer button {
 
 .alert-warning {
   background-color: #ff9800; /* Orange */
+}
+
+/**
+ * Forms
+ */
+input {
+  font-size: 1.1em;
+}
+
+input,
+.form-group {
+  display: block;
+  width: 80%;
+  margin: 0;
+  border: 0;
+}
+
+form {
+  width: 80%;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+/*
+button,
+*/
+button[type="submit"] {
+  padding: 0.5em;
+/*
+  color: #FFF;
+  background: #1abc9c;
+  font-size: 1em;
+  text-align: center;
+  font-style: normal;
+  width: 100%;
+  border: 1px solid #16a085;
+  border-width: 1px 1px 3px;
+*/
 }

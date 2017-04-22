@@ -1,4 +1,4 @@
-<article id="post-<%= post.id %>" class="question">
+<article id="post-<%= post.id %>">
   <header>
     <h1><%= post[:tag] %></h1>
     <% if !post.approved %>
@@ -12,11 +12,11 @@
     <% if can_vote %>
       <button class="no" name="no" value="<%= post.id %>">No</button>
     <% end %>
-    <div class="star-ratings-css" style="display: <%= can_vote ? 'none' : 'block' %>;">
-      <div class="star-ratings-css-top" style="width: <%= post.rating %>%;">
+    <div class="star-ratings" style="display: <%= can_vote ? 'none' : 'block' %>;">
+      <div class="star-ratings-top" style="width: <%= post.rating %>%;">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
-      <div class="star-ratings-css-bottom">
+      <div class="star-ratings-bottom">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
     </div>

@@ -1,9 +1,16 @@
+<%= partial(:errors, {locals: {obj: @agent}}) %>
 <% form_tag '/login', :method => 'post' do %>
-  <%= label_tag(:email) %>
-  <%= email_field_tag(:email, :id => 'email', :value => @agent.email) %>
-  <%= label_tag(:password) %>
-  <%= password_field_tag(:password, :id => 'password') %>
-  <%= submit_tag('Login') %>
+  <% field_set_tag(:class => 'form-group') do %>
+    <%= label_tag(:email) %>
+    <%= email_field_tag(:email, :id => 'email', :value => @agent.email) %>
+  <% end %>
+  <% field_set_tag(:class => 'form-group') do %>
+    <%= label_tag(:password) %>
+    <%= password_field_tag(:password, :id => 'password') %>
+  <% end %>
+  <% field_set_tag(:class => 'form-group') do %>
+    <%= submit_tag('Login') %>
+  <% end %>
 <% end %>
 
 <a id="signup" href="/agents/new">Signup or reset password</a>
