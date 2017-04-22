@@ -82,7 +82,7 @@ describe "agent account", :type => :feature do
         wait_for_ajax
         click_button 'Yes', match: :first
         wait_for_ajax
-        click_link 'Account' 
+        click_link ENV['QUESTION'] 
         click_link 'Yeses' 
       end
 
@@ -112,7 +112,7 @@ describe "agent account", :type => :feature do
         wait_for_ajax
         click_button 'No', match: :first
         wait_for_ajax
-        click_link 'Account' 
+        click_link ENV['QUESTION'] 
         click_link 'Nos' 
       end
 

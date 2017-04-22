@@ -69,7 +69,7 @@ describe "authenticate agent", :type => :feature do
     end
 
     it "displays a link to the agent's account" do
-      expect(page).to have_link('Account', href: "#")
+      expect(page).to have_link(ENV['QUESTION'], href: '/')
     end
 
   end

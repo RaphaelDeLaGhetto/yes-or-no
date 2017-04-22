@@ -24,6 +24,9 @@ SMTP_ADDRESS=127.0.0.1
 SMTP_PORT=1025
 EMAIL_USERNAME=
 EMAIL_PASSWORD=
+
+# App
+QUESTION="Is this app useful?"
 ```
 
 The mailer configuration provided works with `mailcatcher`.
