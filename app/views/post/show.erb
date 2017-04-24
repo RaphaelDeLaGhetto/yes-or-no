@@ -1,2 +1,4 @@
-
-<%= partial('post/post', {locals: {post: @post, can_vote: true}}) %>
+<% if @agent == @post.agent %>
+  <span class="delete">&#x1f5d1;</span>
+<% end %>
+<%= partial('post/post', {locals: {post: @post, can_vote: @agent.can_vote?(@post)}}) %>

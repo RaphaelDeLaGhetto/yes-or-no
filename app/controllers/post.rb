@@ -15,6 +15,7 @@ YesOrNo::App.controllers :post do
   # show
   #
   get :show, :map => "/post/:id" do
+    @agent = Agent.find_by(id: session[:agent_id]) || Agent.new
     @post = Post.find(params[:id])
     render :show
   end

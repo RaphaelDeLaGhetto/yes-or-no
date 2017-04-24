@@ -30,7 +30,7 @@ $(document).ready(function(){
 
   $('.question-image').on('error', function(instance) {
     var parent = this;
-    var parentId = $(this).parent().parent().attr('id');
+    var parentId = $(this).parent().parent().parent().attr('id');
     $.ajax({
       type: 'POST',
       url: '/post/deapprove',

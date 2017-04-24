@@ -6,7 +6,9 @@
     <% end %>
   </header>
   <section class="image">
-    <img class="question-image" src="<%= post[:url] %>" alt="<%= post[:tag] %>">
+    <a href="/post/<%= post[:id] %>">
+      <img class="question-image" src="<%= post[:url] %>" alt="<%= post[:tag] %>">
+    </a>
   </section>
   <footer>
     <% if can_vote %>
