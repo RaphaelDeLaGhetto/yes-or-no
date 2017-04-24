@@ -110,6 +110,7 @@ module YesOrNo
         session[:agent_id] = @agent.id
         redirect '/'
       else
+        @agent.errors.add(:email, :blank, message: "or password incorrect")
         erb :login
       end 
     end

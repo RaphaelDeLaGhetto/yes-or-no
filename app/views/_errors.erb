@@ -1,5 +1,4 @@
 <% if obj.errors.present? %>
-  <%= obj.inspect %>
   <ul class="errors">
     <% obj.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
