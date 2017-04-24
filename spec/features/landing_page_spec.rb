@@ -22,7 +22,7 @@ describe "landing page", :type => :feature do
     it 'renders recent posts yes/no buttons but no results' do
       expect(page).to have_selector('.yes', count: 2)
       expect(page).to have_selector('.no', count: 2)
-      expect(page).to have_selector('.star-ratings-css', count: 0)
+      expect(page).to have_selector('.star-ratings', count: 0)
     end
 
     it 'renders posts in descending order of updated_at' do
@@ -49,7 +49,7 @@ describe "landing page", :type => :feature do
       it 'renders post results but no yes/no buttons' do
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
-        expect(page).to have_selector('.star-ratings-css', count: 2)
+        expect(page).to have_selector('.star-ratings', count: 2)
       end
 
       it 'renders posts in descending order of rank' do
@@ -78,7 +78,7 @@ describe "landing page", :type => :feature do
     it 'renders recent posts with results and no yes/no buttons' do
       expect(page).to have_selector('.yes', count: 0)
       expect(page).to have_selector('.no', count: 0)
-      expect(page).to have_selector('.star-ratings-css', count: 2)
+      expect(page).to have_selector('.star-ratings', count: 2)
     end
 
     it 'renders posts in descending order of updated_at' do
@@ -105,7 +105,7 @@ describe "landing page", :type => :feature do
       it 'renders post results but no yes/no buttons' do
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
-        expect(page).to have_selector('.star-ratings-css', count: 2)
+        expect(page).to have_selector('.star-ratings', count: 2)
       end
 
       it 'renders posts in descending order of rank' do
@@ -135,7 +135,7 @@ describe "landing page", :type => :feature do
     it 'renders recent posts with yes/no buttons and no results' do
       expect(page).to have_selector('.yes', count: 2)
       expect(page).to have_selector('.no', count: 2)
-      expect(page).to have_selector('.star-ratings-css', count: 0)
+      expect(page).to have_selector('.star-ratings', count: 0)
     end
 
     it 'renders posts in descending order of updated_at' do
@@ -162,7 +162,7 @@ describe "landing page", :type => :feature do
       it 'renders post results but no yes/no buttons' do
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
-        expect(page).to have_selector('.star-ratings-css', count: 2)
+        expect(page).to have_selector('.star-ratings', count: 2)
       end
 
       it 'renders posts in descending order of rank' do

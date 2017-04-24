@@ -11,10 +11,10 @@ $(document).ready(function(){
         authenticity_token: $('meta[name="csrf-token"]').attr('content') 
       },
       success: function(result) {
-        $('#post-' + id + ' .star-ratings-css-top').width(JSON.parse(result).rating + '%');
+        $('#post-' + id + ' .star-ratings-top').width(JSON.parse(result).rating + '%');
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();
-        $('#post-' + id + ' .star-ratings-css').show();
+        $('#post-' + id + ' .star-ratings').show();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if(jqXHR.status === 403) {

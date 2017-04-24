@@ -47,8 +47,8 @@ describe "agent account", :type => :feature do
       end
 
       it 'display star rating' do
-        expect(page).to have_selector('.star-ratings-css', count: 1)
-        expect(page.find('.star-ratings-css').visible?).to eq(true)
+        expect(page).to have_selector('.star-ratings', count: 1)
+        expect(page.find('.star-ratings').visible?).to eq(true)
       end
 
     end
@@ -97,8 +97,8 @@ describe "agent account", :type => :feature do
       end
 
       it 'display star rating' do
-        expect(page).to have_selector('.star-ratings-css', count: 1)
-        expect(page.find('.star-ratings-css').visible?).to eq(true)
+        expect(page).to have_selector('.star-ratings', count: 1)
+        expect(page.find('.star-ratings').visible?).to eq(true)
       end
     end
 
@@ -127,8 +127,8 @@ describe "agent account", :type => :feature do
       end
 
       it 'display star rating' do
-        expect(page).to have_selector('.star-ratings-css', count: 1)
-        expect(page.find('.star-ratings-css').visible?).to eq(true)
+        expect(page).to have_selector('.star-ratings', count: 1)
+        expect(page.find('.star-ratings').visible?).to eq(true)
       end
     end
 

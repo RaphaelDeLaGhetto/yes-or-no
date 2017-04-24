@@ -110,36 +110,36 @@ describe "provide a response to image", js: true, :type => :feature do
 
     it "reveals ranking when Yes is pressed" do
       visit '/'
-      expect(page).to have_selector('.star-ratings-css', count: 0)
+      expect(page).to have_selector('.star-ratings', count: 0)
       click_button 'Yes'
       wait_for_ajax
       expect(page).to have_current_path("/")
-      expect(page).to have_selector('.star-ratings-css', count: 1)
+      expect(page).to have_selector('.star-ratings', count: 1)
     end
   
     it "reveals ranking when No is pressed" do
       visit '/'
-      expect(page).to have_selector('.star-ratings-css', count: 0)
+      expect(page).to have_selector('.star-ratings', count: 0)
       click_button 'No'
       wait_for_ajax
       expect(page).to have_current_path("/")
-      expect(page).to have_selector('.star-ratings-css', count: 1)
+      expect(page).to have_selector('.star-ratings', count: 1)
     end
   
     it "sets the star rating when Yes is pressed" do
       visit '/'
-      expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq('width: 0%;');
+      expect(page.find("article#post-#{@post.id} footer .star-ratings .star-ratings-top", visible: false)['style']).to eq('width: 0%;');
       click_button 'Yes'
       wait_for_ajax
-      expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
+      expect(page.find("article#post-#{@post.id} footer .star-ratings .star-ratings-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
     end
   
     it "sets the star rating when No is pressed" do
       visit '/'
-      expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq('width: 0%;');
+      expect(page.find("article#post-#{@post.id} footer .star-ratings .star-ratings-top", visible: false)['style']).to eq('width: 0%;');
       click_button 'No'
       wait_for_ajax
-      expect(page.find("article#post-#{@post.id} footer .star-ratings-css .star-ratings-css-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
+      expect(page.find("article#post-#{@post.id} footer .star-ratings .star-ratings-top", visible: false)['style']).to eq("width: #{Post.last.rating}%;");
     end
   
     it "disables the buttons when Yes is pressed" do
