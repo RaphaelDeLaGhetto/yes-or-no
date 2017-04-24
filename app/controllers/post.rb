@@ -1,5 +1,5 @@
 YesOrNo::App.controllers :post do
-  
+
   #
   # index
   #
@@ -52,4 +52,15 @@ YesOrNo::App.controllers :post do
     { rating: post.rating }.to_json
   end
 
+  #
+  # delete
+  #
+  delete :delete, :map => "/post/:id" do
+    @post = Post.find(params[:id])
+    if @post.delete
+      flash[:success] = "Post deleted"
+    end
+    redirect to("/agents/#{@post.agent_id}")
+  end
+ 
 end
