@@ -38,6 +38,7 @@ describe "authenticate agent", :type => :feature do
       click_button "Login"
       expect(page).to have_current_path('/login')
       expect(page).to have_selector("input[name='email'][value='#{@agent.email}']", count: 1)
+      expect(page).to have_content('Email or password incorrect')
     end
 
     it 'renders the login form if the email is wrong' do
@@ -46,6 +47,7 @@ describe "authenticate agent", :type => :feature do
       click_button "Login"
       expect(page).to have_current_path('/login')
       expect(page).to have_selector("input[name='email'][value='nosuchemail@example.com']", count: 1)
+      expect(page).to have_content('Email or password incorrect')
     end
   end
 
