@@ -57,6 +57,7 @@ YesOrNo::App.controllers :post do
   #
   delete :delete, :map => "/post/:id" do
     @post = Post.find(params[:id])
+    halt(403, 'Log in to vote') unless logged_in? && @post.agent_id == session[:agent_id]
     if @post.delete
       flash[:success] = "Post deleted"
     end
