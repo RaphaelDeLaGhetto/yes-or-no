@@ -1,7 +1,9 @@
 <% if @agent == @post.agent %>
-  <form class="delete" action="/post/<%=@post.id%>" method="post">
+  <form action="/post/<%=@post.id%>" method="post">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="&#x1f5d1;">
+    <% field_set_tag(:class => 'form-group') do %>
+      <input class="delete" type="submit" value="&#x1f5d1;">
+    <% end %>
   </form>
 <% end %>
 <%= partial('post/post', {locals: {post: @post, can_vote: @agent.can_vote?(@post)}}) %>

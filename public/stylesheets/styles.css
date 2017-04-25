@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background: #f2f2f2;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 main,
@@ -48,22 +50,13 @@ nav ul li a {
 }
 
 article {
-        /*
-  width: 90%;
   text-align: center;
-  background-color: #efefef;
-  border-radius: 3px;
-  margin-bottom: 2em;
-  margin 0em 0em 2em 0em;
-  */
-
-  text-align: center;
-  margin-top: 2em;
   margin-bottom: 1em;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
   position: relative;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
 }
 
 #question {
@@ -73,6 +66,9 @@ article {
 @media all and (min-width: 900px) {
   #question {
     font-size: 4em;
+  }
+  article {
+    width: 40%;
   }
   li {
     font-size: 2em;
@@ -97,22 +93,42 @@ header h1 {
 
 footer {
   position: relative;
+  margin-bottom: 1em;
 }
 
-/*
-footer button {
-  font-size: 3em;
-}
-*/
-
+/**
+ * Buttons
+ */
 .yes {
-  margin-right: .5em;
+  background-color: #ffffff;
+  font-size: 2em;
+  margin-left: 1.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+ 
+/**
   float: right; 
+ */
 }
 
 .no {
-  margin-left: .5em;
+  background-color: #ffffff;
+  font-size: 2em;
+  margin-right: 1.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+ 
+/**
   float: left; 
+ */
+}
+
+.delete {
+  text-align: center;
+  font-size: 2em;
+  width: 25%;
+  color: #ffffff;
+  background-color: #b33a3a;
 }
 
 /**
@@ -178,19 +194,45 @@ input {
   font-size: 1.1em;
 }
 
-input,
 .form-group {
+  padding: 0 0 1em 0;
   display: block;
   width: 80%;
-  margin: 0;
   border: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+
+}
+
+.form-group input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  float: right;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
 }
 
 form {
-  width: 80%;
-  margin-left: 1em;
-  margin-right: 1em;
+  width: 100%;
+  background-color: white;
+  padding-top: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #ccc;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+@media all and (min-width: 900px) {
+  form {
+    width: 40%;
+  }
+}
+
+
 
 /*
 button,
