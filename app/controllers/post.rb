@@ -38,7 +38,11 @@ YesOrNo::App.controllers :post do
   end
 
   post :deapprove, map: "/post/deapprove" do
-    Post.update(params[:id], {:approved => false})
+    content_type :json
+    post = Post.find(params[:id])
+    post.approved = false
+    post.save
+    { isOwner: post.agent == current_agent, url: post.url }.to_json
   end
 
   #

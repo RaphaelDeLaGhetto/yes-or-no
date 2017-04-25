@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe "de-approve images that are not found", js: true, :type => :feature do
   before :each do
+    @agent = create(:agent)
     @post1 = Post.create(url: 'http://fakeurl.com/image.jpg',
                          tag: 'fake', approved: true,
-                         agent: Agent.create(email: 'fake@emall.com'))
+                         agent: @agent)
     #
     # 2017-4-19
     # Notice the `image3.jpg`. `puffing-billy` doesn't seem to be resetting
@@ -14,7 +15,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     #
     @post2 = Post.create(url: 'http://fakeurl.com/image3.jpg',
                          tag: 'another fake', approved: true,
-                         agent: Agent.create(email: 'fake@emall.com'))
+                         agent: @agent)
     expect(Post.count).to eq(2)
 
     proxy.stub('http://fakeurl.com/image.jpg').
@@ -45,9 +46,8 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     end
   end
 
-  context 'logged in' do
+  context 'owner logged in' do
     before :each do
-      @agent = create(:agent)
       visit '/login'
       fill_in "Email", :with => @agent.email 
       fill_in "Password", :with => 'secret'
@@ -55,8 +55,36 @@ describe "de-approve images that are not found", js: true, :type => :feature do
       wait_for_ajax
     end
 
+    it 'only displays all posts' do
+      expect(page).to have_selector('article', count: 2)
+    end
+
+    it 'displays an error message or the post that didn\'t load' do
+      expect(page).to have_content("The image at #{@post2.url} could not be loaded")
+    end
+
+    it 'de-approves the missing post' do
+      expect(Post.find(@post1.id).approved).to eq(true)
+      expect(Post.find(@post2.id).approved).to eq(false)
+    end
+  end
+
+  context 'non-owner logged in' do
+    before :each do
+      @another_agent = create(:another_agent)
+      visit '/login'
+      fill_in "Email", :with => @another_agent.email 
+      fill_in "Password", :with => 'secret'
+      click_button "Login"
+      wait_for_ajax
+    end
+
     it 'only displays images that successfully loaded' do
       expect(page).to have_selector('article', count: 1)
+    end
+
+    it 'displays no error message for the post that didn\'t load' do
+      expect(page).not_to have_content('Image could not be loaded')
     end
 
     it 'de-approves the missing post' do

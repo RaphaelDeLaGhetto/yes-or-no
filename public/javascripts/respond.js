@@ -39,7 +39,12 @@ $(document).ready(function(){
         authenticity_token: $('meta[name="csrf-token"]').attr('content') 
       },
       success: function(result) {
-        $('#'+parentId).hide();
+        if(result.isOwner) {
+          $('#'+parentId).
+            html('<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>');
+        } else {
+          $('#'+parentId).hide();
+        }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(JSON.stringify(jqXHR));
