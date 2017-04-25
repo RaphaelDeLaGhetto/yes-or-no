@@ -99,28 +99,24 @@ footer {
 /**
  * Buttons
  */
-.yes {
-  background-color: #ffffff;
+
+button {
+  width: 30%;
+  color: #ffffff;
   font-size: 2em;
+  border: none;
+}
+
+.yes {
+  background-color: #005b00;
   margin-left: 1.5em;
-  border: 1px solid #ccc;
   border-radius: 4px;
- 
-/**
-  float: right; 
- */
 }
 
 .no {
-  background-color: #ffffff;
-  font-size: 2em;
+  background-color: #f60239;
   margin-right: 1.5em;
-  border: 1px solid #ccc;
   border-radius: 4px;
- 
-/**
-  float: left; 
- */
 }
 
 .delete {
@@ -201,8 +197,6 @@ input {
   border: 0;
   margin-left: auto;
   margin-right: auto;
-
-
 }
 
 .form-group input {
@@ -237,9 +231,9 @@ form {
 /*
 button,
 */
+/*
 button[type="submit"] {
   padding: 0.5em;
-/*
   color: #FFF;
   background: #1abc9c;
   font-size: 1em;
