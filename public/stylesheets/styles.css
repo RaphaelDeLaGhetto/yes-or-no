@@ -119,13 +119,6 @@ button {
   border-radius: 4px;
 }
 
-.delete {
-  text-align: center;
-  font-size: 2em;
-  width: 25%;
-  color: #ffffff;
-  background-color: #b33a3a;
-}
 
 /**
  * Star rating
@@ -226,21 +219,32 @@ form {
   }
 }
 
+/* Delete form */
 
-
-/*
-button,
-*/
-/*
-button[type="submit"] {
-  padding: 0.5em;
-  color: #FFF;
-  background: #1abc9c;
-  font-size: 1em;
-  text-align: center;
-  font-style: normal;
+.delete {
   width: 100%;
-  border: 1px solid #16a085;
-  border-width: 1px 1px 3px;
-*/
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
 }
+
+.delete input {
+  font-size: 2em;
+  width: 15%;
+  color: #ffffff;
+  background-color: #b33a3a;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+@media all and (min-width: 900px) {
+  .delete {
+    margin-right: auto;
+    margin-left: auto;
+    width: 40%;
+  }
+}
+
+

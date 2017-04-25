@@ -42,18 +42,18 @@ describe "delete post", :type => :feature do
   
     it 'removes the post from the database' do
       expect(Post.count).to eq(2)
-      find("input.delete[type='submit']").click
+      find(".delete input[type='submit']").click
       expect(Post.count).to eq(1)
     end
 
     it 'redirects to the agent\'s post page' do
       expect(page).to have_current_path("/post/#{@post_1.id}")
-      find("input.delete[type='submit']").click
+      find(".delete input[type='submit']").click
       expect(page).to have_current_path("/agents/#{@post_1.agent_id}")
     end
 
     it 'displays a confirmation message' do
-      find("input.delete[type='submit']").click
+      find(".delete input[type='submit']").click
       expect(page).to have_content("Post deleted")
     end
   end
