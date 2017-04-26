@@ -162,6 +162,7 @@ button {
   margin-bottom: 15px;
   font-size: 3em;
   text-align: center;
+  word-wrap: break-word;
 }
 
 .alert-success {
