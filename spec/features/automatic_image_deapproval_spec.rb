@@ -60,7 +60,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     end
 
     it 'displays an error message or the post that didn\'t load' do
-      expect(page).to have_content("The image at #{@post2.url} could not be loaded")
+      expect(page).to have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
     end
 
     it 'de-approves the missing post' do
@@ -84,7 +84,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     end
 
     it 'displays no error message for the post that didn\'t load' do
-      expect(page).to_not have_content("The image at #{@post2.url} could not be loaded")
+      expect(page).to_not have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
     end
 
     it 'de-approves the missing post' do

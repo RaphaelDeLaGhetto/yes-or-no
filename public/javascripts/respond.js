@@ -41,7 +41,9 @@ $(document).ready(function(){
       success: function(result) {
         if(result.isOwner) {
           $('#'+parentId).
-            html('<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>');
+            html('<a href="/post/' + parentId.replace('post-', '') + '">' +
+                 '<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>' +
+                 '</a>');
         } else {
           $('#'+parentId).hide();
         }
