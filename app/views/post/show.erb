@@ -1,5 +1,5 @@
 <% if @agent == @post.agent %>
-  <% form_tag("/post/#{@post.id}", class: 'delete', method: 'delete') do %>
+  <% form_tag("/post/#{@post.id}", class: 'delete', method: 'delete', :confirm => "This post cannot be retrieved! Are you sure?") do %>
     <input type="submit" value="&#9249;">
   <% end %>
 <% end %>

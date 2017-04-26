@@ -15,11 +15,13 @@
     </main>
     <% if RACK_ENV == 'test' %>
       <script src="/javascripts/jquery-3.2.1.min.js"></script>
+      <script src="/javascripts/jquery-ujs.js"></script>
     <% else %>
       <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ujs/1.2.2/rails.min.js"></script>
     <% end %>
     <script src="/javascripts/respond.js"></script>
   </body>
