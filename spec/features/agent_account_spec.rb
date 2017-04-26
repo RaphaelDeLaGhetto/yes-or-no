@@ -37,6 +37,10 @@ describe "agent account", :type => :feature do
         expect(page).to have_current_path("/agents/#{@agent.id}")
       end
 
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/agents/#{@agent.id}'][class='active']", count: 1)
+      end
+
       it 'only displays posts belonging to this agent' do
         expect(page).to have_selector('article', count: 1)
       end
@@ -91,6 +95,10 @@ describe "agent account", :type => :feature do
         click_link 'Yeses' 
       end
 
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/agents/#{@agent.id}/yeses'][class='active']", count: 1)
+      end
+
       it 'only displays posts on which this agent voted yes' do
         expect(page).to have_selector('article', count: 1)
         expect(page).to have_selector('img[src="http://fakeurl.com/image1.jpg"]', count: 1)
@@ -125,6 +133,10 @@ describe "agent account", :type => :feature do
         wait_for_ajax
         click_link ENV['QUESTION'] 
         click_link 'Nos' 
+      end
+
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/agents/#{@agent.id}/nos'][class='active']", count: 1)
       end
 
       it 'only displays posts on which this agent voted no' do

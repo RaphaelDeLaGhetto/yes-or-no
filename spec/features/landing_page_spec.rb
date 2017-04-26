@@ -46,6 +46,10 @@ describe "landing page", :type => :feature do
         expect(page).to have_current_path('/post')
       end
 
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/post'][class='active']", count: 1)
+      end
+
       it 'renders post results but no yes/no buttons' do
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
@@ -100,6 +104,10 @@ describe "landing page", :type => :feature do
   
         click_link 'Top Picks'
         expect(page).to have_current_path('/post')
+      end
+
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/post'][class='active']", count: 1)
       end
 
       it 'renders post results but no yes/no buttons' do
@@ -157,6 +165,10 @@ describe "landing page", :type => :feature do
   
         click_link 'Top Picks'
         expect(page).to have_current_path('/post')
+      end
+
+      it 'sets style for active link' do
+        expect(page).to have_selector("a[href='/post'][class='active']", count: 1)
       end
 
       it 'renders post results but no yes/no buttons' do

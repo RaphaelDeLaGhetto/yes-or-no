@@ -1,20 +1,17 @@
 <nav>
   <ul>
     <li id="question"><a href='/'><%= ENV['QUESTION'] %></a></li>
-    <% if logged_in? %>
-     <ul>
-        <li><a href='/post'>Top Picks</a></h1></li>
-        <li><a href="/agents/<%= agent_id %>">Your posts</a></li>
-        <li><a href="/agents/<%= agent_id %>/yeses">Yeses</a></li>
-        <li><a href="/agents/<%= agent_id %>/nos">Nos</a></li>
+    <ul>
+      <li><a class='<%= request.path_info == '/post' ? "active" : ''  %>' href='/post'>Top Picks</a></h1></li>
+      <% if logged_in? %>
+        <li><a class='<%= request.path_info == "/agents/#{agent_id}" ? "active" : ''  %>' href="/agents/<%= agent_id %>">Your posts</a></li>
+        <li><a class='<%= request.path_info == "/agents/#{agent_id}/yeses" ? "active" : ''  %>' href="/agents/<%= agent_id %>/yeses">Yeses</a></li>
+        <li><a class='<%= request.path_info == "/agents/#{agent_id}/nos" ? "active" : ''  %>' href="/agents/<%= agent_id %>/nos">Nos</a></li>
         <li><a href="/logout">Logout</a>
-      </ul>
-    <% else %>
-      <ul>
-        <li><a href='/post'>Top Picks</a></li>
+      <% else %>
         <li><a href='/login'>Login</a></li>
-      </ul>
-    <% end %>
+      <% end %>
+    </ul>
   </ul>
   <h1><a href='/'>Yes or no?</a></h1>
 </nav>
