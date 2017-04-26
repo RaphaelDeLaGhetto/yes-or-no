@@ -35,6 +35,7 @@ nav h1 {
 nav h1 a {
   display: block;
   text-align: right;
+  font-size: .7em;
 }
 
 nav a:hover {
