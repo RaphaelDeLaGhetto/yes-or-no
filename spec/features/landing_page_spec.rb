@@ -25,7 +25,7 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
     end
 
-    it 'renders posts in descending order of updated_at' do
+    it 'renders posts in ascending order of updated_at' do
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
@@ -81,7 +81,7 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 2)
     end
 
-    it 'renders posts in descending order of updated_at' do
+    it 'renders posts in ascending order of updated_at' do
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
@@ -138,7 +138,7 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
     end
 
-    it 'renders posts in descending order of updated_at' do
+    it 'renders posts in ascending order of updated_at' do
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
