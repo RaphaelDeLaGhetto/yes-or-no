@@ -9,6 +9,11 @@ form {
   width: 100%;
 }
 
+h1 {
+  text-align: center;
+  color: #313131;
+}
+
 /**
  * Splash
  */

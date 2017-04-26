@@ -3,8 +3,12 @@
   <%= partial('post/form') %>
 <% end %>
 
-<% @posts.each do |post| %>
-  <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
+<% if @posts.empty? %>
+  <h1>You haven't answered yet</h1>
+<% else %>
+  <% @posts.each do |post| %>
+    <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
+  <% end %>
 <% end %>
 
 <%= will_paginate @posts, :page_links => false %>
