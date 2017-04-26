@@ -1,7 +1,9 @@
 <%= partial(:errors, {locals: {obj: @post} }) if @post %>
-<%= partial('post/form') %>
+<% if @show_form %>
+  <%= partial('post/form') %>
+<% end %>
 
- <% @posts.each do |post| %>
+<% @posts.each do |post| %>
   <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
 <% end %>
 

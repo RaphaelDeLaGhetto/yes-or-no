@@ -51,6 +51,11 @@ describe "agent account", :type => :feature do
         expect(page.find('.star-ratings').visible?).to eq(true)
       end
 
+      it 'renders a submission form' do
+        expect(page).to have_selector('input[name="url"]', count: 1)
+        expect(page).to have_selector('input[name="tag"]', count: 1)
+        expect(page).to have_selector('input[type="submit"]', count: 1)
+      end
     end
 
     describe 'GET /logout' do
@@ -100,6 +105,12 @@ describe "agent account", :type => :feature do
         expect(page).to have_selector('.star-ratings', count: 1)
         expect(page.find('.star-ratings').visible?).to eq(true)
       end
+
+      it 'does not render a submission form' do
+        expect(page).to have_selector('input[name="url"]', count: 0)
+        expect(page).to have_selector('input[name="tag"]', count: 0)
+        expect(page).to have_selector('input[type="submit"]', count: 0)
+      end
     end
 
     describe 'GET /agents/:id/nos', js: true do
@@ -130,6 +141,13 @@ describe "agent account", :type => :feature do
         expect(page).to have_selector('.star-ratings', count: 1)
         expect(page.find('.star-ratings').visible?).to eq(true)
       end
+
+      it 'does not render a submission form' do
+        expect(page).to have_selector('input[name="url"]', count: 0)
+        expect(page).to have_selector('input[name="tag"]', count: 0)
+        expect(page).to have_selector('input[type="submit"]', count: 0)
+      end
+
     end
 
   end

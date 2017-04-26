@@ -82,6 +82,7 @@ YesOrNo::App.controllers :agents do
 
     page = params[:page] || 1
     @posts = @agent.posts.page(page).order('created_at DESC')
+    @show_form = true;
     render :show
   end
  
@@ -92,6 +93,7 @@ YesOrNo::App.controllers :agents do
     page = params[:page] || 1
     @posts = Post.joins(:votes).where(votes: { yes: params[:answer] == 'yeses', agent: @agent }).page(page).order('created_at DESC')
 
+    @show_form = false;
     render :show
   end
 end
