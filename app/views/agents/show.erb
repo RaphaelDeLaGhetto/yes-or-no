@@ -4,7 +4,11 @@
 <% end %>
 
 <% if @posts.empty? %>
-  <h1>You haven't answered yet</h1>
+  <% if request.path_info == "/agents/#{@agent.id}" %>
+    <h1>You haven't posted yet</h1>
+  <% else %>
+    <h1>You haven't answered yet</h1>
+  <% end %>
 <% else %>
   <% @posts.each do |post| %>
     <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
