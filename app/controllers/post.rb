@@ -25,11 +25,15 @@ YesOrNo::App.controllers :post do
   #
   post :create, map: "/post" do
     @agent = Agent.find_by(id: session[:agent_id])
+    admin = Account.find_by(email: @agent.email)
+
     params[:agent_id] = @agent.id
 
     @post = Post.new(params.except('authenticity_token'))
+    @post.approved = true if admin.present?
+
     if @post.save
-      flash[:success] = 'Image submitted for review'
+      flash[:success] = admin.present? ? 'Image submitted' : 'Image submitted for review'
       redirect "/post/#{@post.id}"
     else
       flash[:error] = @post.errors.full_messages.map { |msg| "#{msg}" }.join("<br>")

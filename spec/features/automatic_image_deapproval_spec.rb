@@ -84,7 +84,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     end
 
     it 'displays no error message for the post that didn\'t load' do
-      expect(page).not_to have_content('Image could not be loaded')
+      expect(page).to_not have_content("The image at #{@post2.url} could not be loaded")
     end
 
     it 'de-approves the missing post' do
