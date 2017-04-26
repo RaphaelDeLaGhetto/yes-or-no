@@ -1,10 +1,13 @@
-
-<% @posts.each do |post| %>
-  <% if @agent %>
-    <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>
-  <% else %>
-    <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+<% if @posts.empty? %>
+  <h1>No one's posted anything</h1>
+<% else %>
+  <% @posts.each do |post| %>
+    <% if @agent %>
+      <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>
+    <% else %>
+      <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+    <% end %>
   <% end %>
+  <%= will_paginate @posts, :page_links => false %>
 <% end %>
 
-<%= will_paginate @posts, :page_links => false %>
