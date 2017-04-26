@@ -28,4 +28,13 @@ end
 
 shell.say ""
 
-Agent.create(email: 'daniel@capitolhill.ca', password: 'secret')
+agent = Agent.create(email: 'daniel@capitolhill.ca', password: 'secret')
+posts = [
+  { url: 'http://terrygurno.com/wp-content/uploads/2016/02/Yes-or-no.jpg', tag: 'Written on palms', approved: true, agent_id: agent.id },
+  { url: 'http://denisewakeman.com/wp-content/uploads/2015/07/Ghost-Blogging-Yes-or-No-Poll-c.png', tag: 'Ghost blogging', approved: true, agent_id: agent.id },
+  { url: 'http://4.bp.blogspot.com/-MBQjm0C9UhE/UReuPAbyovI/AAAAAAAAATY/RaKP2UoFsZ0/s1600/Yes-no.jpg', tag: 'Thai movie', approved: true, agent_id: agent.id }
+]
+
+posts.each do |post|
+  Post.create(post)
+end
