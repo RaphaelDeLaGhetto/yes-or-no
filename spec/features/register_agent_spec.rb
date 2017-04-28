@@ -132,7 +132,7 @@ describe "agent registration", :type => :feature do
     end
  
     it 'displays an error on the agent create page' do
-      expect(page).to have_content('That email is invalid')
+      expect(page).to have_content('The email is invalid')
     end
 
     it 'does not send a confimration email' do
