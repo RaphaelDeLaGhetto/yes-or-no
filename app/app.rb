@@ -72,7 +72,7 @@ module YesOrNo
     set :delivery_method, :smtp => {
       :address         => ENV['SMTP_ADDRESS'],
       :port            => ENV['SMTP_PORT'],
-      :user_name       => ENV['EMAIL'],
+      :user_name       => ENV['EMAIL_USERNAME'],
       :password        => ENV['EMAIL_PASSWORD'],
       :authentication  => :plain, # :plain, :login, :cram_md5, no auth by default
       :domain          => "localhost.localdomain" # the HELO domain provided by the client to the server
