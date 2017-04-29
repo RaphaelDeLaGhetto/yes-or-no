@@ -28,6 +28,11 @@ describe "administer post submissions", :type => :feature do
   #
   context 'admin logged in', js: true do
     before :each do
+      proxy.stub('http://example.com/image.jpg').
+        and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+      proxy.stub('http://example.com/another_image.jpg').
+        and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+
       @agent = create(:agent)
       @post1 = create(:post, agent_id: @agent.id, approved: true)
       @post2 = create(:another_post, agent_id: @agent.id)
