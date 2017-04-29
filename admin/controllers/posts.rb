@@ -1,7 +1,8 @@
 YesOrNo::Admin.controllers :posts do
   get :index do
     @title = "Posts"
-    @posts = Post.all
+    page = params[:page] || 1
+    @posts = Post.page(page).order('approved ASC')
     render 'posts/index'
   end
 
@@ -85,4 +86,13 @@ YesOrNo::Admin.controllers :posts do
     end
     redirect url(:posts, :index)
   end
+
+  patch :toggle_approved, :map => "/posts/:id/toggle" do
+    content_type :json
+    post = Post.find(params[:id])
+    post.approved = !post.approved
+    post.save
+    { approved: post.approved }.to_json
+  end
+
 end

@@ -114,5 +114,38 @@
     // Autofocus first field with an error. (usability)
     var error_input;
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
+
+
+    /**
+     * Toggle post approval status
+     */
+    $('.toggle-approved').click(function(e) {
+      var id = $(this).attr('id').replace('post-', '');
+      $.ajax({
+        type: 'PATCH',
+        url: '/admin/posts/' + id + '/toggle',
+        data: { 
+          id: id,
+          authenticity_token: $('meta[name="csrf-token"]').attr('content') 
+        },
+        success: function(result) {
+          if (result.approved) {
+            $('#post-' + id).html('<i class="fa fa-check-square-o"></i>');
+          } else {
+            $('#post-' + id).html('<i class="fa fa-square-o"></i>');
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          if(jqXHR.status === 403) {
+            $( location ).attr("href", '/login');
+          } else {
+            console.log(JSON.stringify(jqXHR));
+            console.log(JSON.stringify(textStatus));
+            console.log(JSON.stringify(errorThrown));
+          }
+        }
+      });
+    });
+
   });
 }(window.jQuery);

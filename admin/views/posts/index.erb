@@ -55,9 +55,11 @@
             <%= check_box_tag 'post_ids[]', :value => post.id, :class => 'list-selectable-checkbox' %>
            </td>
           <td class=list-column> <%= post.id %> </td>
-          <td class=list-column> <%= post.url %> </td>
+          <td class=list-column> <%= image_tag(post.url, :width => 100) %></td>
           <td class=list-column> <%= post.tag %> </td>
-          <td class=list-column> <%= post.approved ? tag_icon(:ok) : tag_icon(:remove) %> </td>
+          <td class=list-column>
+            <%= link_to(post.approved ? tag_icon(:'check-square-o') : tag_icon(:'square-o'), :rel => :tooltip, :title => "#{pat(:toggle_approved)} post", :class => "toggle-approved", :id => "post-#{post.id}") %>
+          </td>
           <td class=list-column> <%= post.yeses %> </td>
           <td class=list-column> <%= post.nos %> </td>
           <td class=list-column> <%= time_ago_in_words post.created_at %></td>
@@ -82,4 +84,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= will_paginate @posts, :page_links => true %>
 </div>
