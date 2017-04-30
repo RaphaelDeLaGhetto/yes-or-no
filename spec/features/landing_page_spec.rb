@@ -17,6 +17,7 @@ describe "landing page", :type => :feature do
     it 'renders page links' do
       expect(page).to have_link('Login', href: "/login")
       expect(page).to have_link('Top Picks', href: "/post")
+      expect(page).to have_link('Yes or no?', href: "/about")
     end
   
     it 'renders recent posts yes/no buttons but no results' do
@@ -59,6 +60,17 @@ describe "landing page", :type => :feature do
       it 'renders posts in descending order of rank' do
         expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_1.tag)
         expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_2.tag)
+      end
+    end
+
+
+    describe 'get /about' do
+      before :each do
+        click_link 'Yes or no?'
+      end 
+
+      it "renders the 'about' page" do
+        expect(page).to have_current_path('/about')
       end
     end
   end

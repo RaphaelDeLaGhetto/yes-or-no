@@ -14,6 +14,39 @@ h1, h2 {
   color: #313131;
 }
 
+.about {
+  color: #313131;
+  background: #fafafa;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.about em {
+  color: #313161;
+  font-weight: bold;
+}
+
+.about a {
+  text-decoration: none;
+}
+
+@media all and (min-width: 900px) {
+  .about {
+    width: 60%;
+  }
+
+  .about li {
+    font-size: 1em;
+  }
+}
+
+
+
 /**
  * Splash
  */
@@ -35,7 +68,7 @@ nav h1 {
 nav h1 a {
   display: block;
   text-align: right;
-  font-size: .7em;
+  font-size: .6em;
 }
 
 nav a:hover {

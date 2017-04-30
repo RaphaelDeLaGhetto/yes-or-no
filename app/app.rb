@@ -119,5 +119,9 @@ module YesOrNo
       session.clear
       redirect '/'
     end
+
+    get '/about' do
+      render :about
+    end
   end
 end
