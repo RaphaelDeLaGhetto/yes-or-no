@@ -1,8 +1,17 @@
 YesOrNo::Admin.controllers :agents do
   get :index do
     @title = "Agents"
-    @agents = Agent.all
+    page = params[:page] || 1
+    @agents = Agent.page(page)
     render 'agents/index'
+  end
+
+  get :show, :map => "/agent/:id" do
+    @title = "Agent posts"
+    @agent = Agent.find(params[:id])
+    page = params[:page] || 1
+    @posts = @agent.posts.page(page).order('approved ASC')
+    render 'agent/show'
   end
 
   get :new do

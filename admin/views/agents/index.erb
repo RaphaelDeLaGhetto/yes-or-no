@@ -39,8 +39,7 @@
                 <th class=header> <%= mat(:agent, :id) %></th>
                 <th class=header> <%= mat(:agent, :name) %></th>
                 <th class=header> <%= mat(:agent, :email) %></th>
-                <th class=header> <%= mat(:agent, :password_hash) %></th>
-                <th class=header> <%= mat(:agent, :confirmation_hash) %></th>
+                <th class=header> Posts </th>
                 <th class=header> <%= mat(:agent, :created_at) %></th>
                 <th class=header> <%= mat(:agent, :updated_at) %></th>
                 <th class="header list-row-action-header"></th>
@@ -56,8 +55,7 @@
           <td class=list-column> <%= agent.id %> </td>
           <td class=list-column> <%= agent.name %> </td>
           <td class=list-column> <%= agent.email %> </td>
-          <td class=list-column> <%= agent.password_hash %> </td>
-          <td class=list-column> <%= agent.confirmation_hash %> </td>
+          <td class=list-column> <%= link_to agent.posts.count, :href => url(:agents, :show, :id => agent.id) %> </td>
           <td class=list-column> <%= time_ago_in_words agent.created_at %></td>
           <td class=list-column> <%= time_ago_in_words agent.updated_at %></td>
           <td class="list-column list-row-action">
@@ -80,4 +78,5 @@
       <% end %>
     </tbody>
   </table>
+  <%= will_paginate @agents, :page_links => true %>
 </div>

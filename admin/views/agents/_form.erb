@@ -14,24 +14,14 @@
     <span class='help-inline'><%= error ? f.error_message_on(:email) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @agent.errors.include?(:password_hash) %>
+<% error = @agent.errors.include?(:password) %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :password_hash, :class => 'control-label' %>
+  <%= f.label :password, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :password_hash, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:password_hash) : "Ex: a simple text" %></span>
+    <%= f.password_field :password, :class => 'form-control input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:password) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @agent.errors.include?(:confirmation_hash) %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :confirmation_hash, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :confirmation_hash, :class => 'form-control input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:confirmation_hash) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-
-
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>
   &nbsp;
