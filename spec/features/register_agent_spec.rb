@@ -16,7 +16,7 @@ describe "agent registration", :type => :feature do
       allow(SecureRandom).to receive(:hex).and_return('abc123')
       expect(Agent.count).to eq(0)
       fill_in "Email", :with => "someguy@example.com"
-      click_button "Submit" 
+      click_button "Send" 
     end
 
     it 'displays a message confirming email was sent' do
@@ -99,7 +99,7 @@ describe "agent registration", :type => :feature do
       Mail::TestMailer.deliveries.clear
       visit '/agents/new'
       fill_in "Email", :with => @agent.email 
-      click_button "Submit"
+      click_button "Send"
     end
 
     it 'does not add a duplicate email to the database' do
@@ -124,7 +124,7 @@ describe "agent registration", :type => :feature do
       Mail::TestMailer.deliveries.clear
       visit '/agents/new'
       fill_in "Email", :with => 'not_an_email.com' 
-      click_button "Submit"
+      click_button "Send"
     end
 
     it 'does not add a mangled email to the database' do

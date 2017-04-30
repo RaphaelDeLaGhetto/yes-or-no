@@ -1,12 +1,14 @@
-<h1>Account Registration and Retrieval</h1>
-<h2>Enter a valid email to set password</h2>
-<% form_for(@agent, '/agents/create') do |f| %>
-  <% field_set_tag(:class => 'form-group') do %>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-    <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email" %>
+<div class="about">
+  <p>Easy Account Registration and Retrieval</p>
+  <% form_for(@agent, '/agents/create') do |f| %>
+    <% field_set_tag(:class => 'form-group') do %>
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+      <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email" %>
+    <% end %>
+    <% field_set_tag(:class => 'form-group') do %>
+      <%= f.submit "Send", :class => "btn btn-primary" %>
+    <% end %>
   <% end %>
-  <% field_set_tag(:class => 'form-group') do %>
-    <%= f.submit "Submit", :class => "btn btn-primary" %>
-  <% end %>
-<% end %>
+  <p>You will receive a link to set your password</p>
+</div>
