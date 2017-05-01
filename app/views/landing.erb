@@ -1,6 +1,13 @@
-<% if @posts.empty? %>
+<% if @posts.empty? && @new_posts.empty? %>
   <h1>No one's posted anything</h1>
 <% else %>
+  <% @new_posts.each do |post| %>
+    <% if @agent %>
+      <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>
+    <% else %>
+      <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+    <% end %>
+  <% end if @new_posts %>
   <% @posts.each do |post| %>
     <% if @agent %>
       <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>

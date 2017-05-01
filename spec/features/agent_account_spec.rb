@@ -101,7 +101,7 @@ describe "agent account", :type => :feature do
 
       it 'only displays posts on which this agent voted yes' do
         expect(page).to have_selector('article', count: 1)
-        expect(page).to have_selector('img[src="http://fakeurl.com/image1.jpg"]', count: 1)
+        expect(page).to have_selector('img[src="http://fakeurl.com/image2.jpg"]', count: 1)
       end
 
       it 'does not display the yes/no buttons' do
@@ -141,7 +141,7 @@ describe "agent account", :type => :feature do
 
       it 'only displays posts on which this agent voted no' do
         expect(page).to have_selector('article', count: 1)
-        expect(page).to have_selector('img[src="http://fakeurl.com/image1.jpg"]', count: 1)
+        expect(page).to have_selector('img[src="http://fakeurl.com/image2.jpg"]', count: 1)
       end
 
       it 'does not display the yes/no buttons' do

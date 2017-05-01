@@ -92,7 +92,14 @@ module YesOrNo
 
     get '/' do
       page = params[:page] || 1
-      @posts = Post.where(:approved => true).page(page).order('updated_at ASC')
+      @new_posts = Post.where('approved = true and updated_at = created_at').order('updated_at DESC')
+
+#      puts "NEW #{@new_posts.inspect}"
+      ignore_ids = @new_posts.pluck(:id)
+
+      @posts = Post.where.not(id: ignore_ids).where(approved: true).order('updated_at ASC').page(page)
+#      puts "OLD #{@posts.inspect}"
+
       @agent = current_agent
       @can_vote = true
       render :landing

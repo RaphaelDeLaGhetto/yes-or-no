@@ -31,6 +31,15 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
 
+    it 'puts new posts at the top of the list' do
+      post = Post.create(url: 'http://example.com/new.jpg', tag: 'Brand new', approved: true, agent: @agent)
+      expect(post.updated_at > @post_2.updated_at).to eq(true)
+      visit '/'
+      expect(page).to have_selector("article:nth-of-type(1) header h1", :text => post.tag)
+      expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_2.tag)
+      expect(page).to have_selector("article:nth-of-type(3) header h1", :text => @post_1.tag)
+    end
+
     describe 'get /post' do
       before :each do
         @post_2.nos = 100
