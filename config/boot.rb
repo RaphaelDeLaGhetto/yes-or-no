@@ -4,6 +4,9 @@ PADRINO_ROOT = File.expand_path('../..', __FILE__) unless defined?(PADRINO_ROOT)
 
 # Load our dependencies
 require 'bundler/setup'
+#require 'mail'
+#require 'active_support'
+#require 'padrino-core/support'
 Bundler.require(:default, RACK_ENV)
 
 ##
