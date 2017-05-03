@@ -188,34 +188,34 @@ button {
 /**
  * Star rating
  * 
- * 2017-4-5
+ * 2017-4-5, old-version for reference
  * https://codepen.io/Bluetidepro/pen/GkpEa
  */
 .star-ratings {
-  unicode-bidi: bidi-override;
-  color: #c5c5c5;
-  font-size: 50px;
-  height: 50px;
-  width: 200px;
-  margin: 0 auto;
+  width: 125px;
+  height: 100px;
+  font-size: 2em;
+  position: relative;
+}
+
+.star-ratings-bottom,
+.star-ratings-top {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .star-ratings-top {
-  color: #e7711b;
-  padding: 0;
-  position: absolute;
   z-index: 1;
-  display: block;
-  top: 0;
-  left: 0;
+  color: #e7711b;
   overflow: hidden;
 }
 
 .star-ratings-bottom {
-  padding: 0;
-  display: block;
-  z-index: 0;
-}
+  color: #c5c5c5;              
+} 
 
 /**
  * Alerts
