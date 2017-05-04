@@ -196,6 +196,7 @@ button {
   height: 50px;
   font-size: 2em;
   position: relative;
+  text-align: left;
 }
 
 .star-ratings-bottom,
