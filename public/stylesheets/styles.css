@@ -192,7 +192,7 @@ button {
  * https://codepen.io/Bluetidepro/pen/GkpEa
  */
 .star-ratings {
-  width: 225px;
+  width: 125px;
   height: 50px;
   font-size: 2em;
   position: relative;
@@ -219,6 +219,7 @@ button {
 } 
 
 .percent-rating {
+  font-size: 2em;
   z-index: 2;
   position: absolute;
   width: 100%;
@@ -227,6 +228,7 @@ button {
   font-weight: bold;
   opacity: 0.75;
   text-align: right;
+  right: .5em;
 }
 
 /* Details */

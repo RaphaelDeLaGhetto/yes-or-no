@@ -18,8 +18,8 @@
       <button class="no" name="no" value="<%= post.id %>">No</button>
     <% end %>
     <div class="results">
+      <div class="percent-rating" style="display: <%= can_vote ? 'none' : 'block' %>;"><%= post.rating %>%</div>
       <div class="star-ratings" style="display: <%= can_vote ? 'none' : 'block' %>;">
-        <div class="percent-rating"><%= post.rating %>%</div>
         <div class="star-ratings-top" style="width: <%= post.rating %>%;">
           <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
         </div>

@@ -21,6 +21,7 @@ $(document).ready(function(){
         $('#post-' + id + ' button').hide();
         $('#post-' + id + ' .star-ratings').show();
         $('#post-' + id + ' .details').show();
+        $('#post-' + id + ' .percent-rating').show();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if(jqXHR.status === 403) {
