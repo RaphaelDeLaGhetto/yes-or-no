@@ -26,6 +26,14 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
     end
 
+    it "does not reveal vote tally or rank" do
+      visit '/'
+      expect(page).to have_selector('.nos', count: 0)
+      expect(page).to have_selector('.yeses', count: 0)
+      expect(page).to have_selector('.total-votes', count: 0)
+      expect(page).to have_selector('.percent-rating', count: 0)
+    end
+
     it 'renders posts in ascending order of updated_at' do
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)

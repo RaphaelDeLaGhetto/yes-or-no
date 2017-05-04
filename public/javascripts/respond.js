@@ -19,9 +19,8 @@ $(document).ready(function(){
         $('#post-' + id + ' .percent-rating').text(result.rating + '%');
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();
-        $('#post-' + id + ' .star-ratings').show();
+        $('#post-' + id + ' .results').show();
         $('#post-' + id + ' .details').show();
-        $('#post-' + id + ' .percent-rating').show();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if(jqXHR.status === 403) {
