@@ -21,7 +21,7 @@
       <div class="star-ratings-bottom" style="width: <%= post.rating %>%;">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
-      <div class="details">
+      <div class="details" style="display: <%= (post.yeses + post.nos) > 0 ? 'block' : 'none' %>;">
         <div class="nos"><%= post.nos %></div>
         <div class="operator">+</div>
         <div class="yeses"><%= post.yeses %></div>
@@ -30,6 +30,9 @@
         <div class="rating"><%= post.rating %>%</div>
       </div>
     </div>
+    <% if (post.yeses + post.nos) == 0 %>
+      <h1>No one's answered</h1>
+    <% end %>
     <% if can_vote %>
       <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
     <% end %>

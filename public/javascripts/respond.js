@@ -20,6 +20,7 @@ $(document).ready(function(){
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();
         $('#post-' + id + ' .star-ratings').show();
+        $('#post-' + id + ' .details').show();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if(jqXHR.status === 403) {
