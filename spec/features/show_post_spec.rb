@@ -98,7 +98,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.yeses', count: 0)
       expect(page).to have_selector('.total-votes', count: 0)
       expect(page).to have_selector('.rating', count: 0)
-      expect(page).to have_content('No one\'s answered')
+      expect(page).to_not have_content('No one\'s answered')
     end
 
     context 'there have been responses' do

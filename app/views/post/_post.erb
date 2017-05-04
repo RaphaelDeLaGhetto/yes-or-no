@@ -11,6 +11,9 @@
     </a>
   </section>
   <footer>
+    <% if (post.yeses + post.nos) == 0 && !can_vote %>
+      <h1>No one's answered</h1>
+    <% end %>
     <% if can_vote %>
       <button class="no" name="no" value="<%= post.id %>">No</button>
     <% end %>
@@ -30,9 +33,6 @@
         <div class="rating"><%= post.rating %>%</div>
       </div>
     </div>
-    <% if (post.yeses + post.nos) == 0 %>
-      <h1>No one's answered</h1>
-    <% end %>
     <% if can_vote %>
       <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
     <% end %>
