@@ -11,7 +11,12 @@ $(document).ready(function(){
         authenticity_token: $('meta[name="csrf-token"]').attr('content') 
       },
       success: function(result) {
-        $('#post-' + id + ' .star-ratings-top').width(JSON.parse(result).rating + '%');
+        result = JSON.parse(result);
+        $('#post-' + id + ' .star-ratings-top').width(result.rating + '%');
+        $('#post-' + id + ' .nos').text(result.nos);
+        $('#post-' + id + ' .yeses').text(result.yeses);
+        $('#post-' + id + ' .total-votes').text(result.yeses + result.nos);
+        $('#post-' + id + ' .rating').text(result.rating + '%');
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();
         $('#post-' + id + ' .star-ratings').show();

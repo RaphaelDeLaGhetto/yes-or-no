@@ -57,7 +57,7 @@ YesOrNo::App.controllers :post do
     @agent = Agent.find_by(id: session[:agent_id])
     post = Post.find(params[:id])
     @agent.vote params[:answer] == 'yes', post
-    { rating: post.rating }.to_json
+    { nos: post.nos, yeses: post.yeses, rating: post.rating }.to_json
   end
 
   #

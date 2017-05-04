@@ -126,6 +126,38 @@ describe "provide a response to image", js: true, :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 1)
     end
   
+    it "reveals vote tally and rank when Yes is pressed" do
+      visit '/'
+      expect(page).to have_selector('.nos', count: 0)
+      expect(page).to have_selector('.yeses', count: 0)
+      expect(page).to have_selector('.total-votes', count: 0)
+      expect(page).to have_selector('.rating', count: 0)
+      click_button 'Yes'
+      wait_for_ajax
+      expect(page).to have_selector('.nos', count: 1)
+      expect(page).to have_selector('.yeses', count: 1)
+      expect(page).to have_selector('.total-votes', count: 1)
+      expect(page).to have_selector('.rating', count: 1)
+      post = Post.last
+      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses} #{post.rating}%")
+    end
+
+    it "reveals vote tally and rank when No is pressed" do
+      visit '/'
+      expect(page).to have_selector('.nos', count: 0)
+      expect(page).to have_selector('.yeses', count: 0)
+      expect(page).to have_selector('.total-votes', count: 0)
+      expect(page).to have_selector('.rating', count: 0)
+      click_button 'No'
+      wait_for_ajax
+      expect(page).to have_selector('.nos', count: 1)
+      expect(page).to have_selector('.yeses', count: 1)
+      expect(page).to have_selector('.total-votes', count: 1)
+      expect(page).to have_selector('.rating', count: 1)
+      post = Post.last
+      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses} #{post.rating}%")
+    end
+
     it "sets the star rating when Yes is pressed" do
       visit '/'
       expect(page.find("article#post-#{@post.id} footer .star-ratings .star-ratings-top", visible: false)['style']).to eq('width: 0%;');

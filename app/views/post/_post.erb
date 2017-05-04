@@ -21,6 +21,14 @@
       <div class="star-ratings-bottom" style="width: <%= post.rating %>%;">
         <span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span><span>&#x2605;</span>
       </div>
+      <div class="details">
+        <div class="nos"><%= post.nos %></div>
+        <div class="operator">+</div>
+        <div class="yeses"><%= post.yeses %></div>
+        <div class="operator">=</div>
+        <div class="total-votes"><%= post.yeses + post.nos %></div>
+        <div class="rating"><%= post.rating %>%</div>
+      </div>
     </div>
     <% if can_vote %>
       <button class="yes" name="yes" value="<%= post.id %>">Yes</button>
