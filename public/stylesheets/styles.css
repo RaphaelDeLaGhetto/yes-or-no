@@ -193,7 +193,7 @@ button {
  */
 .star-ratings {
   width: 125px;
-  height: 100px;
+  height: 50px;
   font-size: 2em;
   position: relative;
 }
@@ -216,6 +216,35 @@ button {
 .star-ratings-bottom {
   color: #c5c5c5;              
 } 
+
+.percent-rating {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #188EE4;
+  font-weight: bold;
+  opacity: 0.75;
+}
+
+/* Details */
+.details {
+  font-size: 1.5em;
+  margin-right: 1em;
+  text-align: right;
+}
+
+.details .nos {
+  color: #771F1F;
+}
+
+.details .yeses {
+  color: #33825e;
+}
+
+.details .total-votes {
+/*  color: #e7711b;*/
+}
 
 /**
  * Alerts

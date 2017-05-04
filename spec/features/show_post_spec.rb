@@ -41,6 +41,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.yes', count: 0)
       expect(page).to have_selector('.no', count: 0)
       expect(page).to have_selector('.star-ratings', count: 1)
+      expect(page).to have_selector('.percent-rating', count: 1)
       expect(page).to have_selector('.pending', count: 0)
       expect(page).to have_selector('.delete', count: 1)
       expect(page).to have_selector('header h1', :text => @post_1.tag)
@@ -52,7 +53,6 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.nos', count: 0)
       expect(page).to have_selector('.yeses', count: 0)
       expect(page).to have_selector('.total-votes', count: 0)
-      expect(page).to have_selector('.rating', count: 0)
       expect(page).to have_content('No one\'s answered')
     end
 
@@ -64,7 +64,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.nos', count: 1)
       expect(page).to have_selector('.yeses', count: 1)
       expect(page).to have_selector('.total-votes', count: 1)
-      expect(page).to have_selector('.rating', count: 1)
+      expect(page).to have_selector('.percent-rating', count: 1)
     end
   end
 
@@ -97,7 +97,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.nos', count: 0)
       expect(page).to have_selector('.yeses', count: 0)
       expect(page).to have_selector('.total-votes', count: 0)
-      expect(page).to have_selector('.rating', count: 0)
+      expect(page).to have_selector('.percent-rating', count: 0)
       expect(page).to_not have_content('No one\'s answered')
     end
 
@@ -111,9 +111,10 @@ describe "show post", :type => :feature do
         expect(page).to have_selector('.nos', count: 1)
         expect(page).to have_selector('.yeses', count: 1)
         expect(page).to have_selector('.total-votes', count: 1)
-        expect(page).to have_selector('.rating', count: 1)
+        expect(page).to have_selector('.percent-rating', count: 1)
         post = Post.find(@post_1.id)
-        expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses} #{post.rating}%")
+        expect(page).to have_content("#{post.rating}%")
+        expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses}")
       end
     end
   end

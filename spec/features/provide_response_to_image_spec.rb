@@ -131,15 +131,16 @@ describe "provide a response to image", js: true, :type => :feature do
       expect(page).to have_selector('.nos', count: 0)
       expect(page).to have_selector('.yeses', count: 0)
       expect(page).to have_selector('.total-votes', count: 0)
-      expect(page).to have_selector('.rating', count: 0)
+      expect(page).to have_selector('.percent-rating', count: 0)
       click_button 'Yes'
       wait_for_ajax
       expect(page).to have_selector('.nos', count: 1)
       expect(page).to have_selector('.yeses', count: 1)
       expect(page).to have_selector('.total-votes', count: 1)
-      expect(page).to have_selector('.rating', count: 1)
+      expect(page).to have_selector('.percent-rating', count: 1)
       post = Post.last
-      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses} #{post.rating}%")
+      expect(page).to have_content("#{post.rating}%")
+      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses}")
     end
 
     it "reveals vote tally and rank when No is pressed" do
@@ -147,15 +148,16 @@ describe "provide a response to image", js: true, :type => :feature do
       expect(page).to have_selector('.nos', count: 0)
       expect(page).to have_selector('.yeses', count: 0)
       expect(page).to have_selector('.total-votes', count: 0)
-      expect(page).to have_selector('.rating', count: 0)
+      expect(page).to have_selector('.percent-rating', count: 0)
       click_button 'No'
       wait_for_ajax
       expect(page).to have_selector('.nos', count: 1)
       expect(page).to have_selector('.yeses', count: 1)
       expect(page).to have_selector('.total-votes', count: 1)
-      expect(page).to have_selector('.rating', count: 1)
+      expect(page).to have_selector('.percent-rating', count: 1)
       post = Post.last
-      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses} #{post.rating}%")
+      expect(page).to have_content("#{post.rating}%")
+      expect(page).to have_content("#{post.nos} + #{post.yeses} = #{post.nos + post.yeses}")
     end
 
     it "sets the star rating when Yes is pressed" do

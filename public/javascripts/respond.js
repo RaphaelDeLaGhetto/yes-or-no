@@ -16,7 +16,7 @@ $(document).ready(function(){
         $('#post-' + id + ' .nos').text(result.nos);
         $('#post-' + id + ' .yeses').text(result.yeses);
         $('#post-' + id + ' .total-votes').text(result.yeses + result.nos);
-        $('#post-' + id + ' .rating').text(result.rating + '%');
+        $('#post-' + id + ' .percent-rating').text(result.rating + '%');
         $('#post-' + id + ' button').prop('disabled', true);
         $('#post-' + id + ' button').hide();
         $('#post-' + id + ' .star-ratings').show();
