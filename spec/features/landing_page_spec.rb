@@ -34,7 +34,8 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.percent-rating', count: 0)
     end
 
-    it 'renders posts in ascending order of updated_at' do
+    it 'renders posts in descending order of created_at' do
+      expect(@post_2.created_at).to be > @post_1.created_at
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
@@ -80,7 +81,6 @@ describe "landing page", :type => :feature do
       end
     end
 
-
     describe 'get /about' do
       before :each do
         click_link 'Yes or no?'
@@ -114,7 +114,8 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 2)
     end
 
-    it 'renders posts in ascending order of updated_at' do
+    it 'renders posts in descending order of created_at' do
+      expect(@post_2.created_at).to be > @post_1.created_at
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
@@ -175,7 +176,8 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
     end
 
-    it 'renders posts in ascending order of updated_at' do
+    it 'renders posts in descending order of created_at' do
+      expect(@post_2.created_at).to be > @post_1.created_at
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
@@ -212,6 +214,4 @@ describe "landing page", :type => :feature do
       end
     end
   end
-
 end
-
