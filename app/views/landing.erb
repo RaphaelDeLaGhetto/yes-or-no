@@ -8,6 +8,8 @@
       <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
     <% end %>
   <% end %>
-  <%= will_paginate @posts, :page_links => false %>
+  <%= will_paginate @posts, :page_links => false,
+                            :previous_label => '',
+                            :next_label => 'Load more...' %>
 <% end %>
 

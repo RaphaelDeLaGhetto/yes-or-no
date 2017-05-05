@@ -347,4 +347,22 @@ form {
   }
 }
 
+/**
+ * Pagination
+ */
+.pagination {
+  font-size: 2em;
+  background-color: #141471;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  text-align: center;
+}
 
+.pagination a {
+  color: white;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  text-decoration: underline;
+}

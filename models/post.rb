@@ -1,5 +1,7 @@
 require 'will_paginate/array'
 class Post < ActiveRecord::Base
+  #self.per_page = 10
+
 
   validates_presence_of :url
   validates_uniqueness_of :url
