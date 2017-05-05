@@ -15,4 +15,7 @@
   <% end %>
 <% end %>
 
-<%= will_paginate @posts, :page_links => false %>
+<%= will_paginate @posts, :page_links => false,
+                          :previous_label => '',
+                          :next_label => 'Load more...' %>
+

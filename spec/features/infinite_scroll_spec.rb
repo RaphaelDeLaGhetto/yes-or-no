@@ -8,7 +8,7 @@ describe "infinite scroll", js: true, :type => :feature do
   # doesn't proxy correctly (or something)
   #
   before :each do
-    @fake_agent = Agent.create(email: 'fake@email.com')
+    @fake_agent = Agent.create(email: 'fake@email.com', password: 'secret')
     (0..90).each do |num|
       post = Post.create(url: "http://fake.com/#{num}.jpg",
                   tag: "fake #{num}",
@@ -167,6 +167,121 @@ describe "infinite scroll", js: true, :type => :feature do
           wait_for_ajax
           expect(page).to have_selector('article', count: 30)
           expect(page).to have_link('Load more...', href: '/post?page=4')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 1)
+          expect(page).to_not have_link('Load more...')
+          expect(page).to have_content('Load more...')
+          expect(page).to have_selector('.next_page.disabled', count: 1)
+        end
+      end
+    end
+
+    describe 'GET /agent/:id' do
+      before :each do
+        click_link 'Logout'
+        click_link 'Login'
+        fill_in "Email", :with => @fake_agent.email 
+        fill_in "Password", :with => 'secret'
+        click_button "Login"
+        click_link 'Top Picks'
+        wait_for_ajax
+      end
+
+      it 'displays 30 posts initially' do
+        expect(page).to have_selector('article', count: 30)
+      end
+
+      it "displays a 'Load more' link" do
+        expect(page).to have_link('Load more...', href: '/post?page=2')
+      end
+
+      describe 'manual page flipping' do
+        it "allows the agent to load pages manually" do
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=3')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=4')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 1)
+          expect(page).to_not have_link('Load more...')
+          expect(page).to have_content('Load more...')
+          expect(page).to have_selector('.next_page.disabled', count: 1)
+        end
+      end
+    end
+
+    describe 'GET /agents/:id/yeses' do
+      before :each do
+        Post.all.each do |post|
+          @agent.vote true, post
+        end
+        expect(@agent.votes.count).to eq(91)
+        click_link 'Yeses'
+        wait_for_ajax
+      end
+
+      it 'displays 30 posts initially' do
+        expect(page).to have_selector('article', count: 30)
+      end
+
+      it "displays a 'Load more' link" do
+        expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/yeses?page=2")
+      end
+
+      describe 'manual page flipping' do
+        it "allows the agent to load pages manually" do
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/yeses?page=3")
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/yeses?page=4")
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 1)
+          expect(page).to_not have_link('Load more...')
+          expect(page).to have_content('Load more...')
+          expect(page).to have_selector('.next_page.disabled', count: 1)
+        end
+      end
+    end
+
+    describe 'GET /agents/:id/nos' do
+      before :each do
+        Post.all.each do |post|
+          @agent.vote false, post
+        end
+        expect(@agent.votes.count).to eq(91)
+        click_link 'Nos'
+        wait_for_ajax
+      end
+
+      it 'displays 30 posts initially' do
+        expect(page).to have_selector('article', count: 30)
+      end
+
+      it "displays a 'Load more' link" do
+        expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/nos?page=2")
+      end
+
+      describe 'manual page flipping' do
+        it "allows the agent to load pages manually" do
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/nos?page=3")
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: "/agents/#{@agent.id}/nos?page=4")
           click_link 'Load more...'
           wait_for_ajax
           expect(page).to have_selector('article', count: 1)
