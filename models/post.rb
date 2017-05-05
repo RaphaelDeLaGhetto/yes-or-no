@@ -52,7 +52,8 @@ class Post < ActiveRecord::Base
 
     # Need a few more records to see if this works. I suspect the page view helper will
     # always be stuck on page one
-    Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+    #Post.where(approved: true).page(page).sort_by(&:rating).reverse.paginate(page: page)
+    Post.where(approved: true).sort_by(&:rating).reverse.paginate(page: page)
 
     # Alternatively, I could sort descending on yeses and ascending on nos. If the above
     # doesn't pan out, try that

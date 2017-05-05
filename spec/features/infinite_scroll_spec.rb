@@ -31,13 +31,12 @@ describe "infinite scroll", js: true, :type => :feature do
   end 
 
   context 'not logged in' do
+    before :each do
+      visit '/'
+      wait_for_ajax
+    end
 
     describe 'GET /' do
-      before :each do
-        visit '/'
-        wait_for_ajax
-      end
-
       it 'displays 30 posts initially' do
         expect(page).to have_selector('article', count: 30)
       end
@@ -56,6 +55,40 @@ describe "infinite scroll", js: true, :type => :feature do
           wait_for_ajax
           expect(page).to have_selector('article', count: 30)
           expect(page).to have_link('Load more...', href: '/?page=4')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 1)
+          expect(page).to_not have_link('Load more...')
+          expect(page).to have_content('Load more...')
+          expect(page).to have_selector('.next_page.disabled', count: 1)
+        end
+      end
+    end
+
+    describe 'GET /post' do
+      before :each do
+        click_link 'Top Picks'
+        wait_for_ajax
+      end
+
+      it 'displays 30 posts initially' do
+        expect(page).to have_selector('article', count: 30)
+      end
+
+      it "displays a 'Load more' link" do
+        expect(page).to have_link('Load more...', href: '/post?page=2')
+      end
+
+      describe 'manual page flipping' do
+        it "allows the agent to load pages manually" do
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=3')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=4')
           click_link 'Load more...'
           wait_for_ajax
           expect(page).to have_selector('article', count: 1)
@@ -100,6 +133,40 @@ describe "infinite scroll", js: true, :type => :feature do
           wait_for_ajax
           expect(page).to have_selector('article', count: 30)
           expect(page).to have_link('Load more...', href: '/?page=4')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 1)
+          expect(page).to_not have_link('Load more...')
+          expect(page).to have_content('Load more...')
+          expect(page).to have_selector('.next_page.disabled', count: 1)
+        end
+      end
+    end
+
+    describe 'GET /post' do
+      before :each do
+        click_link 'Top Picks'
+        wait_for_ajax
+      end
+
+      it 'displays 30 posts initially' do
+        expect(page).to have_selector('article', count: 30)
+      end
+
+      it "displays a 'Load more' link" do
+        expect(page).to have_link('Load more...', href: '/post?page=2')
+      end
+
+      describe 'manual page flipping' do
+        it "allows the agent to load pages manually" do
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=3')
+          click_link 'Load more...'
+          wait_for_ajax
+          expect(page).to have_selector('article', count: 30)
+          expect(page).to have_link('Load more...', href: '/post?page=4')
           click_link 'Load more...'
           wait_for_ajax
           expect(page).to have_selector('article', count: 1)
