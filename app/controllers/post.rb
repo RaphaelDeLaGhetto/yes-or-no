@@ -72,4 +72,14 @@ YesOrNo::App.controllers :post do
     redirect to("/agents/#{@post.agent_id}")
   end
  
+  #
+  # search
+  #
+  get :search, :map => "/post/search/:tag" do
+    page = params[:page] || 1
+    @agent = Agent.find_by(id: session[:agent_id]) || Agent.new
+    @posts = Post.where("tag LIKE ?", "%##{params[:tag]}%").page(page)
+    render :landing
+  end
+ 
 end
