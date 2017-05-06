@@ -3,9 +3,18 @@
 module YesOrNo
   class App
     module PostHelper
-      # def simple_helper_method
-      # ...
-      # end
+      #
+      # Wraps anything prefixed with a hash in an anchor tag
+      #
+      # @param string
+      #
+      # @returns string
+      #
+      def get_hash_tags(str)
+        str.gsub(/#(\w+)/i) do |tag|
+          "<a href='/post/search/#{tag[1..-1]}'>#{tag}</a>"
+        end
+      end
     end
 
     helpers PostHelper

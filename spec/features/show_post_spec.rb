@@ -4,7 +4,7 @@ describe "show post", :type => :feature do
   before :each do
     @agent = create(:agent)
     @post_1 = create(:post, agent: @agent, approved: true)
-    @post_2 = create(:another_post, agent: @agent, approved: true)
+    @post_2 = create(:another_post, agent: @agent, approved: true, tag: 'I like #pizza and #beer')
     visit '/'
   end
 
@@ -24,6 +24,15 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.pending', count: 0)
       expect(page).to have_selector('.delete', count: 0)
       expect(page).to have_selector('header h1', :text => @post_1.tag)
+    end
+
+    it 'creates links to hashtags' do
+      find("a[href='/post/#{@post_2.id}']").click
+      expect(page).to have_current_path("/post/#{@post_2.id}")
+      expect(page).to have_content('I like')
+      expect(page).to have_link("#pizza", href: "/post/search/pizza")
+      expect(page).to have_content('and')
+      expect(page).to have_link("#beer", href: "/post/search/beer")
     end
   end
 

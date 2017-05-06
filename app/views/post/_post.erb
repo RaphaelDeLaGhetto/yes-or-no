@@ -1,6 +1,6 @@
 <article id="post-<%= post.id %>">
   <header>
-    <h1><%= post[:tag] %></h1>
+    <h1><%= get_hash_tags(post[:tag]).html_safe %></h1>
     <% if !post.approved %>
       <h2 class="pending">Pending approval</h2>
     <% end %>

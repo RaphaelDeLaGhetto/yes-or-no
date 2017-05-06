@@ -6,18 +6,8 @@
     <% end %>
     <% field_set_tag(:class => 'form-group') do %>
       <%= label_tag(:tag, :caption => 'Tag') %>
-      <div id="tags">
-        <%= text_field_tag(:tag, :id => 'tag',  :placeholder => "Add a tag", :maxlength => 256) %>
-      </div>
+      <%= text_field_tag(:tag, :id => 'tag', :maxlength => 256) %>
     <% end %>
-    <!--
-    <div id="tags">
-      <span>php</span>
-      <span>c++</span>
-      <span>jquery</span>
-      <input type="text" value="" placeholder="Add a tag" />
-    </div>
-    -->
     <% field_set_tag(:class => 'form-group') do %>
       <%= submit_tag('Add Image') %>
     <% end %>
