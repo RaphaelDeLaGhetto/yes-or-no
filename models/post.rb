@@ -2,11 +2,10 @@ require 'will_paginate/array'
 class Post < ActiveRecord::Base
   #self.per_page = 10
 
-
   validates_presence_of :url
   validates_uniqueness_of :url
   validates_presence_of :tag
-  validates_length_of :tag, maximum: 50 
+  validates_length_of :tag, maximum: 256 
   belongs_to :ip
   belongs_to :agent
   has_many :votes, dependent: :destroy
