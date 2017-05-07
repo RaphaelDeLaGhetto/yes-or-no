@@ -105,6 +105,7 @@ describe "infinite scroll", js: true, :type => :feature do
       @agent = create(:agent)
       visit '/login'
       fill_in "Email", :with => @agent.email 
+      click_button 'Next'
       fill_in "Password", :with => 'secret'
       click_button "Login"
     end
@@ -182,6 +183,7 @@ describe "infinite scroll", js: true, :type => :feature do
         click_link 'Logout'
         click_link 'Login'
         fill_in "Email", :with => @fake_agent.email 
+        click_button 'Next'
         fill_in "Password", :with => 'secret'
         click_button "Login"
         click_link 'Top Picks'

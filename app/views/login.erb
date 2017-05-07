@@ -3,14 +3,9 @@
   <% field_set_tag(:class => 'form-group') do %>
     <%= label_tag(:email) %>
     <%= email_field_tag(:email, :id => 'email', :value => @agent.email) %>
+    <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email" %>
   <% end %>
   <% field_set_tag(:class => 'form-group') do %>
-    <%= label_tag(:password) %>
-    <%= password_field_tag(:password, :id => 'password') %>
-  <% end %>
-  <% field_set_tag(:class => 'form-group') do %>
-    <%= submit_tag('Login') %>
+    <%= submit_tag('Next') %>
   <% end %>
 <% end %>
-
-<a id="signup" href="/agents/new">Signup or reset password</a>

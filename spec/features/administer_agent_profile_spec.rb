@@ -58,6 +58,7 @@ describe "administer agent profile", :type => :feature do
         it 'allows the agent to sign in with the new password' do
           visit '/login'
           fill_in "Email", :with => @another_agent.email 
+          click_button 'Next'
           fill_in "Password", :with => 'newpassword'
           click_button "Login"
           expect(page).to have_current_path('/')

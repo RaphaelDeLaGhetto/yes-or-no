@@ -13,9 +13,8 @@ describe "authenticate agent", :type => :feature do
     it 'leads to a login form' do
       click_link 'Login'
       expect(page).to have_selector('input[name="email"]', count: 1)
-      expect(page).to have_selector('input[name="password"]', count: 1)
+      expect(page).to have_selector('input[name="password"]', count: 0)
       expect(page).to have_selector('input[type="submit"]', count: 1)
-      expect(page).to have_link('Signup or reset password', :href => '/agents/new')
     end
   end
 
@@ -27,27 +26,28 @@ describe "authenticate agent", :type => :feature do
 
     it 'redirects to home if successful' do
       fill_in "Email", :with => @agent.email 
+      click_button "Next"
       fill_in "Password", :with => 'secret'
       click_button "Login"
       expect(page).to have_current_path('/')
     end
 
-    it 'renders the login form if the password is wrong' do
+    it 'renders the password form if the password is wrong' do
       fill_in "Email", :with => @agent.email 
+      click_button "Next"
       fill_in "Password", :with => 'wrongpassword'
       click_button "Login"
-      expect(page).to have_current_path('/login')
-      expect(page).to have_selector("input[name='email'][value='#{@agent.email}']", count: 1)
-      expect(page).to have_content('Email or password incorrect')
+      expect(page).to have_current_path('/login/password')
+      expect(page).to have_selector("input[name='password']", count: 1)
+      expect(page).to have_content('Did you forget your password?')
     end
 
-    it 'renders the login form if the email is wrong' do
-      fill_in "Email", :with => 'nosuchemail@example.com' 
-      fill_in "Password", :with => 'secret'
-      click_button "Login"
+    it 'renders the login form if the email is invalid' do
+      fill_in "Email", :with => 'example.com' 
+      click_button "Next"
       expect(page).to have_current_path('/login')
-      expect(page).to have_selector("input[name='email'][value='nosuchemail@example.com']", count: 1)
-      expect(page).to have_content('Email or password incorrect')
+      expect(page).to have_selector("input[name='email'][value='example.com']", count: 1)
+      expect(page).to have_content('Email is invalid')
     end
   end
 
@@ -56,6 +56,7 @@ describe "authenticate agent", :type => :feature do
       @agent = create(:agent)
       click_link 'Login'
       fill_in "Email", :with => @agent.email 
+      click_button "Next"
       fill_in "Password", :with => 'secret'
       click_button "Login"
     end

@@ -17,6 +17,7 @@ describe "agent account", :type => :feature do
     before :each do
       visit '/login'
       fill_in "Email", :with => @agent.email 
+      click_button "Next"
       fill_in "Password", :with => 'secret'
       click_button "Login"
     end

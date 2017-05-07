@@ -40,6 +40,7 @@ describe "show post", :type => :feature do
     before :each do
       click_link 'Login'
       fill_in "email", :with => @agent.email 
+      click_button 'Next'
       fill_in "password", :with => 'secret'
       click_button "Login"
       find("a[href='/post/#{@post_1.id}']").click
@@ -85,6 +86,7 @@ describe "show post", :type => :feature do
       @another_agent = create(:another_agent)
       click_link 'Login'
       fill_in "email", :with => @another_agent.email 
+      click_button 'Next'
       fill_in "password", :with => 'secret'
       click_button "Login"
       find("a[href='/post/#{@post_1.id}']").click

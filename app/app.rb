@@ -105,15 +105,52 @@ module YesOrNo
     end
 
     post '/login' do
-      @agent = Agent.find_by_email(params[:email]) || Agent.new(email: params[:email])
+      @agent = Agent.find_by_email(params[:email])
+      if @agent.present?
+        session[:unauthenticated_agent_id] = @agent.id
+        redirect '/login/password'
+      end
+
+      confirmation = SecureRandom.hex(10)
+      @agent = Agent.new(email: params[:email], confirmation: confirmation)
+      if @agent.save
+        deliver(:confirmation, :confirmation_email, @agent, confirmation)
+        session[:agent_id] = @agent.id
+        flash[:success] = 'Welcome! Check your email'
+        redirect '/'
+      else
+        erb :login
+      end
+    end
+
+    get '/login/password' do
+      redirect '/login' if session[:unauthenticated_agent_id].nil?
+      @agent = Agent.find(session[:unauthenticated_agent_id])
+      erb :password
+    end
+
+ 
+    post '/login/password' do
+      @agent = Agent.find_by_email(params[:email])
       if @agent.password == params[:password]
         session[:agent_id] = @agent.id
         redirect '/'
       else
-        @agent.errors.add(:email, :blank, message: "or password incorrect")
-        erb :login
-      end 
+        @agent.errors.add(:base, :blank, message: "Did you forget your password?")
+        erb :password
+      end
     end
+
+#    post '/login' do
+#      @agent = Agent.find_by_email(params[:email]) || Agent.new(email: params[:email])
+#      if @agent.password == params[:password]
+#        session[:agent_id] = @agent.id
+#        redirect '/'
+#      else
+#        @agent.errors.add(:email, :blank, message: "or password incorrect")
+#        erb :login
+#      end 
+#    end
 
     get '/logout' do
       session.clear

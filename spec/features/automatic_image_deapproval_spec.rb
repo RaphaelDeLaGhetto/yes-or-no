@@ -50,6 +50,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
     before :each do
       visit '/login'
       fill_in "Email", :with => @agent.email 
+      click_button 'Next'
       fill_in "Password", :with => 'secret'
       click_button "Login"
       wait_for_ajax
@@ -74,6 +75,7 @@ describe "de-approve images that are not found", js: true, :type => :feature do
       @another_agent = create(:another_agent)
       visit '/login'
       fill_in "Email", :with => @another_agent.email 
+      click_button 'Next'
       fill_in "Password", :with => 'secret'
       click_button "Login"
       wait_for_ajax

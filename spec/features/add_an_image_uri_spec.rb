@@ -22,6 +22,7 @@ describe "add an image URI", :type => :feature do
       @agent = create(:agent)
       visit '/login'
       fill_in "Email", :with => @agent.email
+      click_button "Next"
       fill_in "Password", :with => 'secret'
       click_button "Login"
       click_link "Your posts"
@@ -116,6 +117,7 @@ describe "add an image URI", :type => :feature do
       @another_agent = create(:another_agent)
       visit '/login'
       fill_in "Email", :with => @another_agent.email
+      click_button "Next"
       fill_in "Password", :with => 'secret'
       click_button "Login"
       click_link "Your posts"

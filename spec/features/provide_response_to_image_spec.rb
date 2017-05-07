@@ -46,6 +46,7 @@ describe "provide a response to image", js: true, :type => :feature do
       @agent = create(:agent)
       visit '/login'
       fill_in "Email", :with => @agent.email 
+      click_button 'Next'
       fill_in "Password", :with => 'secret'
       click_button "Login"
     end
