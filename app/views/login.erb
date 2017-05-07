@@ -1,4 +1,5 @@
 <%= partial(:errors, {locals: {obj: @agent}}) %>
+<h2>New and returning guests</h2>
 <% form_tag '/login', :method => 'post' do %>
   <% field_set_tag(:class => 'form-group') do %>
     <%= label_tag(:email) %>
