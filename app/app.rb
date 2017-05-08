@@ -141,17 +141,6 @@ module YesOrNo
       end
     end
 
-#    post '/login' do
-#      @agent = Agent.find_by_email(params[:email]) || Agent.new(email: params[:email])
-#      if @agent.password == params[:password]
-#        session[:agent_id] = @agent.id
-#        redirect '/'
-#      else
-#        @agent.errors.add(:email, :blank, message: "or password incorrect")
-#        erb :login
-#      end 
-#    end
-
     get '/logout' do
       session.clear
       redirect '/'

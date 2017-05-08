@@ -3,10 +3,10 @@
 <% form_tag '/login', :method => 'post' do %>
   <% field_set_tag(:class => 'form-group') do %>
     <%= label_tag(:email) %>
-    <%= email_field_tag(:email, :id => 'email', :value => @agent.email, :autofocus => true) %>
+    <%= email_field_tag(:email, :id => 'email', :value => @agent.email, :required => true, :autofocus => true) %>
     <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email" %>
   <% end %>
   <% field_set_tag(:class => 'form-group') do %>
-    <%= submit_tag('Next') %>
+    <%= submit_tag('Next', :id => 'next-button') %>
   <% end %>
 <% end %>
