@@ -205,4 +205,61 @@ RSpec.describe Agent, type: :model do
       end
     end
   end
+
+  describe '#tally_points' do
+    before :each do
+      @agent = create(:agent) 
+    end
+
+    it 'returns 0 if agent has no posts' do
+      expect(@agent.posts.count).to eq(0)
+      expect(@agent.tally_points).to eq(0)
+    end
+
+    it 'adds 10 for every approved post an agent has contributed' do
+      post = create(:post, agent: @agent)
+      expect(@agent.posts.count).to eq(1)
+      expect(@agent.tally_points).to eq(0)
+
+      post.approved = true
+      post.save
+      expect(@agent.tally_points).to eq(10)
+
+      post = create(:another_post, agent: @agent, approved: true)
+      expect(@agent.posts.count).to eq(2)
+      expect(@agent.tally_points).to eq(20)
+    end
+
+    describe 'voting impact' do
+      before :each do
+        @post1 = create(:post, agent: @agent, approved: true)
+        @post2 = create(:another_post, agent: @agent, approved: true)
+        @another_agent = create(:another_agent) 
+      end
+
+      it 'adds 3 for every yes vote on an agent\'s post' do
+        expect(@agent.tally_points).to eq(20)
+        @another_agent.vote true, @post1
+        expect(@agent.tally_points).to eq(23)
+        @another_agent.vote true, @post2
+        expect(@agent.tally_points).to eq(26)
+      end
+
+      it 'subtracts 1 for every no vote on an agent\'s post' do
+        expect(@agent.tally_points).to eq(20)
+        @another_agent.vote false, @post1
+        expect(@agent.tally_points).to eq(19)
+        @another_agent.vote false, @post2
+        expect(@agent.tally_points).to eq(18)
+      end
+
+      it 'tallies all yeses and nos' do
+        expect(@agent.tally_points).to eq(20)
+        @another_agent.vote false, @post1
+        expect(@agent.tally_points).to eq(19)
+        @another_agent.vote true, @post2
+        expect(@agent.tally_points).to eq(22)
+      end
+    end
+  end
 end
