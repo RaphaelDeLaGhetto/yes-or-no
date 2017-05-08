@@ -6,7 +6,7 @@ describe "agent registration or authentication", :type => :feature do
   end
 
   it 'renders a sign-up/sign-in form' do
-    expect(page).to have_selector('input[name="email"]', count: 1)
+    expect(page).to have_selector('input[name="email"][autofocus="autofocus"]', count: 1)
     expect(page).to have_selector('input[name="password"]', count: 0)
     expect(page).to have_selector('input[type="submit"]', count: 1)
   end
@@ -124,7 +124,7 @@ describe "agent registration or authentication", :type => :feature do
 
         it 'renders password form' do
           expect(page).to have_selector('input[type="hidden"][name="email"]', visible: false, count: 1)
-          expect(page).to have_selector('input[name="password"]', count: 1)
+          expect(page).to have_selector('input[name="password"][autofocus="autofocus"]', count: 1)
           expect(page).to have_selector('input[type="submit"][value="Login"]', count: 1)
         end
 
@@ -188,7 +188,7 @@ describe "agent registration or authentication", :type => :feature do
         
               it 'renders a password form' do
                 expect(page).to have_selector('input[name="agent[email]"]', count: 0)
-                expect(page).to have_selector('input[name="agent[password]"]', count: 1)
+                expect(page).to have_selector('input[name="agent[password]"][autofocus="autofocus"]', count: 1)
                 expect(page).to have_selector('input[type="submit"]', count: 1)
               end
           

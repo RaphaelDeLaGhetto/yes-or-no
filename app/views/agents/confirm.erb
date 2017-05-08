@@ -5,7 +5,7 @@
   <%= hidden_field_tag :id, :value => @agent.id %>
   <% field_set_tag(:class => 'form-group') do %>
     <%= f.label :password, value: '' %>
-    <%= f.password_field :password, value: '' %>
+    <%= f.password_field :password, value: '', :autofocus => 'autofocus' %>
     <%= error_message_on @agent, :password, :class => "text-error", :prepend => "The password " %>
   <% end %>
   <% field_set_tag(:class => 'form-group') do %>
