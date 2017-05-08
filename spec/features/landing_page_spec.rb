@@ -51,6 +51,10 @@ describe "landing page", :type => :feature do
 
     describe 'get /post' do
       before :each do
+        @post_3 = Post.create(url: 'http://example.com/pic3.jpg',
+                              tag: 'Top-rated. Only one vote',
+                              agent: @agent, approved: true, yeses: 1, nos: 0)
+
         @post_2.nos = 100
         @post_2.yeses = 50  
         @post_2.save
@@ -60,6 +64,7 @@ describe "landing page", :type => :feature do
         @post_1.save
 
         expect(@post_1.rating > @post_2.rating).to eq(true)
+        expect(@post_3.rating > @post_1.rating).to eq(true)
   
         click_link 'Top Picks'
         expect(page).to have_current_path('/post')
@@ -72,12 +77,13 @@ describe "landing page", :type => :feature do
       it 'renders post results but no yes/no buttons' do
         expect(page).to have_selector('.yes', count: 0)
         expect(page).to have_selector('.no', count: 0)
-        expect(page).to have_selector('.star-ratings', count: 2)
+        expect(page).to have_selector('.star-ratings', count: 3)
       end
 
       it 'renders posts in descending order of rank' do
         expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_1.tag)
         expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_2.tag)
+        expect(page).to have_selector("article:nth-of-type(3) header h1", :text => @post_3.tag)
       end
     end
 

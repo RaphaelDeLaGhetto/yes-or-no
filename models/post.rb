@@ -32,10 +32,14 @@ class Post < ActiveRecord::Base
   # A four-star rating based on total yeses and nos
   #
   def rating
-    total_votes = self.yeses + self.nos
     return 0 if total_votes == 0
     (100 * self.yeses) / total_votes
   end
+
+  def total_votes
+    self.yeses + self.nos
+  end
+
 
   #
   # 2017-4-18
@@ -43,7 +47,7 @@ class Post < ActiveRecord::Base
   # Keep an eye on this. Something stinks
   #
   def self.order_by_rating(page=1)
-    Post.where(approved: true).sort_by(&:rating).reverse.paginate(page: page)
+    Post.where(approved: true).sort_by(&:rating).sort_by(&:total_votes).reverse.paginate(page: page)
     # Alternatively, I could sort descending on yeses and ascending on nos. If the above
     # doesn't pan out, try that
   end
