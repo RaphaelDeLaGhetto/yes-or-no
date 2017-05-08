@@ -1,4 +1,4 @@
-class CreateAgentsIps < ActiveRecord::Migration
+class CreateAgentsIps < ActiveRecord::Migration[5.1]
   def self.up
     create_table :agents_ips do |t|
       t.references :agent

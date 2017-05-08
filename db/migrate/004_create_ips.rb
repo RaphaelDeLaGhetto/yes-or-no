@@ -1,4 +1,4 @@
-class CreateIps < ActiveRecord::Migration
+class CreateIps < ActiveRecord::Migration[5.1]
   def self.up
     create_table :ips do |t|
       t.string :address

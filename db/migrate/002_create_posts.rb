@@ -1,4 +1,4 @@
-class CreatePosts < ActiveRecord::Migration
+class CreatePosts < ActiveRecord::Migration[5.1]
   def self.up
     create_table :posts do |t|
       t.string :url

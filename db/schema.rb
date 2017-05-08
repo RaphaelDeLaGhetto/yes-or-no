@@ -10,61 +10,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 7) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "accounts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.string   "email"
-    t.string   "crypted_password"
-    t.string   "role"
+  create_table "accounts", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "surname"
+    t.string "email"
+    t.string "crypted_password"
+    t.string "role"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "agents", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email",             null: false
-    t.string   "password_hash"
-    t.string   "confirmation_hash"
+  create_table "agents", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.string "password_hash"
+    t.string "confirmation_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "points", default: 0
+    t.boolean "trusted", default: false
+  end
+
+  create_table "agents_ips", id: :serial, force: :cascade do |t|
+    t.integer "agent_id"
+    t.integer "ip_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "agents_ips", force: :cascade do |t|
-    t.integer  "agent_id"
-    t.integer  "ip_id"
+  create_table "ips", id: :serial, force: :cascade do |t|
+    t.string "address"
+    t.boolean "expired", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ips", force: :cascade do |t|
-    t.string   "address"
-    t.boolean  "expired",    default: false
+  create_table "posts", id: :serial, force: :cascade do |t|
+    t.string "url"
+    t.string "tag"
+    t.boolean "approved", default: false
+    t.integer "yeses", default: 0
+    t.integer "nos", default: 0
+    t.integer "agent_id"
+    t.integer "ip_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.string   "url"
-    t.string   "tag"
-    t.boolean  "approved",   default: false
-    t.integer  "yeses",      default: 0
-    t.integer  "nos",        default: 0
-    t.integer  "agent_id"
-    t.integer  "ip_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "votes", force: :cascade do |t|
-    t.integer  "post_id"
-    t.integer  "agent_id"
-    t.integer  "ip_id"
-    t.boolean  "yes",        default: false
+  create_table "votes", id: :serial, force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "agent_id"
+    t.integer "ip_id"
+    t.boolean "yes", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

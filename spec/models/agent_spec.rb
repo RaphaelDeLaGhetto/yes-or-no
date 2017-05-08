@@ -8,6 +8,8 @@ RSpec.describe Agent, type: :model do
       it { should have_db_column(:name) }
       it { should have_db_column(:email) }
       it { should have_db_column(:password_hash) }
+      it { should have_db_column(:points) }
+      it { should have_db_column(:trusted) }
       it { should have_db_column(:confirmation_hash) }
       it { should have_db_column(:created_at) }
       it { should have_db_column(:updated_at) }
@@ -18,6 +20,12 @@ RSpec.describe Agent, type: :model do
     subject { build(:agent) }
     it { should validate_presence_of(:email) }
     it { should validate_uniqueness_of(:email) }
+  end
+
+  context 'initialization' do
+    subject { Agent.new }
+    it { expect(subject.points).to eq(0) }
+    it { expect(subject.trusted).to eq(false) }
   end
 
   context 'relationships' do
