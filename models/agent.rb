@@ -40,8 +40,6 @@ class Agent < ActiveRecord::Base
   end
 
   def tally_points
-    posts = self.posts.where(approved: true)
-    return 0 if posts.empty?
-    posts.inject(0){|sum, post| sum += (10 + 3 * post.yeses - post.nos)} 
+    self.posts.where(approved: true).inject(0){|sum, post| sum += 10 + 3 * post.yeses - post.nos} 
   end
 end
