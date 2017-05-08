@@ -32,30 +32,48 @@ RSpec.describe Post, type: :model do
     it { should belong_to(:agent) }
     it { should have_many(:votes) }
 
-    it "deletes associated votes" do
-      expect(Vote.count).to eq(0)
+    describe 'deletion' do
+      before :each do
+        expect(Vote.count).to eq(0)
+  
+        @agent = create(:agent)
+        @post = create(:post, agent: @agent, approved: true)
+  
+        agent2 = create(:another_agent)
+        agent2.vote true, @post
+      end
 
-      agent = create(:agent)
-      post = create(:post, agent: agent, approved: true)
-
-      agent2 = create(:another_agent)
-      agent2.vote true, post
-
-      expect(Vote.count).to eq(1)
-
-      post.destroy
-
-      expect(Vote.count).to eq(0)
+      it "deletes associated votes" do
+        expect(Vote.count).to eq(1)
+        @post.destroy
+        expect(Vote.count).to eq(0)
+      end
+  
+      it "re-tallies an agent's points" do
+        expect(Agent.find(@agent.id).points).to eq(13)
+        @post.destroy
+        expect(Agent.find(@agent.id).points).to eq(0)
+      end
     end
 
   end
 
-  context 'initialization' do
+  context 'initialization standard' do
     subject { Post.create({ url: 'http://example.com/pic.jpg', tag: 'Some example image' }) }
     it { expect(subject.yeses).to eq(0) }
     it { expect(subject.nos).to eq(0) }
     it { expect(subject.approved).to be(false) }
   end
+
+  context 'initialization approved' do
+    subject { Post.create({ url: 'http://example.com/pic.jpg',
+                            tag: 'Some example image',
+                            approved: true,
+                            agent: create(:agent) }) }
+    it { expect(subject.approved).to be(true) }
+    it { expect(subject.agent.points).to eq(10) }
+  end
+
 
   context 'instance methods' do
     before :each do

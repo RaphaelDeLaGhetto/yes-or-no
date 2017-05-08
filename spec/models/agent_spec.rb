@@ -219,23 +219,29 @@ RSpec.describe Agent, type: :model do
       @agent = create(:agent) 
     end
 
-    it 'returns 0 if agent has no posts' do
+    it 'sets the points column to 0 if agent has no posts' do
+      @agent.points = 10
+      @agent.save
       expect(@agent.posts.count).to eq(0)
-      expect(@agent.tally_points).to eq(0)
+      @agent.tally_points
+      expect(Agent.find(@agent.id).points).to eq(0)
     end
 
     it 'adds 10 for every approved post an agent has contributed' do
       post = create(:post, agent: @agent)
       expect(@agent.posts.count).to eq(1)
       expect(@agent.tally_points).to eq(0)
+      expect(Agent.find(@agent.id).points).to eq(0)
 
       post.approved = true
       post.save
       expect(@agent.tally_points).to eq(10)
+      expect(Agent.find(@agent.id).points).to eq(10)
 
       post = create(:another_post, agent: @agent, approved: true)
       expect(@agent.posts.count).to eq(2)
       expect(@agent.tally_points).to eq(20)
+      expect(Agent.find(@agent.id).points).to eq(20)
     end
 
     describe 'voting impact' do
@@ -246,27 +252,27 @@ RSpec.describe Agent, type: :model do
       end
 
       it 'adds 3 for every yes vote on an agent\'s post' do
-        expect(@agent.tally_points).to eq(20)
+        expect(Agent.find(@agent.id).points).to eq(20)
         @another_agent.vote true, @post1
-        expect(@agent.tally_points).to eq(23)
+        expect(Agent.find(@agent.id).points).to eq(23)
         @another_agent.vote true, @post2
-        expect(@agent.tally_points).to eq(26)
+        expect(Agent.find(@agent.id).points).to eq(26)
       end
 
       it 'subtracts 1 for every no vote on an agent\'s post' do
-        expect(@agent.tally_points).to eq(20)
+        expect(Agent.find(@agent.id).points).to eq(20)
         @another_agent.vote false, @post1
-        expect(@agent.tally_points).to eq(19)
+        expect(Agent.find(@agent.id).points).to eq(19)
         @another_agent.vote false, @post2
-        expect(@agent.tally_points).to eq(18)
+        expect(Agent.find(@agent.id).points).to eq(18)
       end
 
       it 'tallies all yeses and nos' do
-        expect(@agent.tally_points).to eq(20)
+        expect(Agent.find(@agent.id).points).to eq(20)
         @another_agent.vote false, @post1
-        expect(@agent.tally_points).to eq(19)
+        expect(Agent.find(@agent.id).points).to eq(19)
         @another_agent.vote true, @post2
-        expect(@agent.tally_points).to eq(22)
+        expect(Agent.find(@agent.id).points).to eq(22)
       end
     end
   end
