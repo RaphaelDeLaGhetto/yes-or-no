@@ -34,6 +34,8 @@ gem 'will_paginate', '~> 3.1.1'
 
 gem 'dotenv'
 
+gem 'validate_url'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

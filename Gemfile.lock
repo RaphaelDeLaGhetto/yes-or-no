@@ -163,6 +163,9 @@ GEM
     tilt (2.0.7)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    validate_url (1.0.2)
+      activemodel (>= 3.0.0)
+      addressable
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -193,6 +196,7 @@ DEPENDENCIES
   rspec
   shoulda-matchers
   thin
+  validate_url
   will_paginate (~> 3.1.1)
 
 BUNDLED WITH
