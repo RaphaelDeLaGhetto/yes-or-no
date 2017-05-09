@@ -14,6 +14,11 @@ h1, h2 {
   color: #313131;
 }
 
+h2 aside {
+  font-size: .5em;
+  font-style: italic;
+}
+
 .about {
   color: #313131;
   background: #fafafa;
@@ -82,16 +87,36 @@ nav h1 {
   color: yellow;
 }
 
+.agent-points,
 #points {
-  font-size: .75em;
-  position: absolute;
-  right: 1em;
-  color: #ffffff;
   background-color: blue;
   margin-top: .5em;
   padding-left: 1em;
   padding-right: 1em;
   border-radius: 5px;
+  color: #ffffff;
+}
+
+.agent-points {
+  font-size: 1.25em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.homepage a {
+  text-decoration: none;
+}
+
+.homepage a:hover {
+  text-decoration: underline;
+}
+
+#points {
+  font-size: .75em;
+  position: absolute;
+  right: 1em;
 }
 
 #points a {

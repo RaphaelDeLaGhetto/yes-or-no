@@ -1,26 +1,31 @@
 <%= partial(:errors, {locals: {obj: @agent} }) if @agent %>
-<div class="profile">
-  <% if current_agent == @agent %>
-    <div class='email'>
-      <%= @agent.email %>
-      <aside>Only you can see your email</aside>
-    </div>
-  <% end %>
-  <div class="agent-points">
-    <span id="point-symbol">&#9733;</span>
-    <span><%= number_with_delimiter(@agent.points) %></span>
-  </div>
-  <div class='homepage'>
-  <% if @agent.name.present? && @agent.url.present? %>
-    <a href="<%= @agent.url %>" target="_blank"><%= @agent.name %></a>
-  <% elsif !@agent.name.present? && @agent.url.present? %>
-    <a href="<%= @agent.url %>" target="_blank">Homepage</a>
-  <% elsif @agent.name.present? && !@agent.url.present? %>
-    <span><%= @agent.name %></span>
-  <% else %>
-    <span>No name or homepage provided</span>
-  <% end %>
-</div>
+<article id="agent-<%= @agent.id %>" class="profile">
+  <header>
+    <% if current_agent == @agent %>
+      <h2 class='email'>
+        <%= @agent.email %>
+        <aside>(Only you can see your email)</aside>
+      </h2>
+    <% end %>
+  </header>
+  <section class='homepage'>
+    <h2>
+    <% if @agent.name.present? && @agent.url.present? %>
+      <a href="<%= @agent.url %>" target="_blank"><%= @agent.name %></a>
+    <% elsif !@agent.name.present? && @agent.url.present? %>
+      <a href="<%= @agent.url %>" target="_blank">Homepage</a>
+    <% elsif @agent.name.present? && !@agent.url.present? %>
+      <span><%= @agent.name %></span>
+    <% else %>
+      <span>No name or homepage provided</span>
+    <% end %>
+    </h2>
+  </section>
+  <footer class="agent-points">
+      <span id="point-symbol">&#9733;</span>
+      <span><%= number_with_delimiter(@agent.points) %></span>
+  </footer>
+</article>
 
 <% if current_agent == @agent %>
   <%= partial('form') %>
