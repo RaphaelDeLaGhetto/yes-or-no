@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "add an image URI", :type => :feature do
   context 'not logged in' do
     before :each do
-      visit '/agents/1'
+      visit '/agents/1/posts'
     end
 
     it 'redirects to login' do
@@ -95,7 +95,7 @@ describe "add an image URI", :type => :feature do
       end
     
       it "displays the approved image in the agent's account" do
-        visit "/agents/#{@agent.id}"
+        visit "/agents/#{@agent.id}/posts"
         expect(page).to have_selector('article', count: 1)
         expect(page).to_not have_content('Pending approval')
         expect(page).to have_selector('.yes', count: 0)
@@ -189,7 +189,7 @@ describe "add an image URI", :type => :feature do
       end
     
       it "displays the unapproved image in the agent's account" do
-        visit "/agents/#{@another_agent.id}"
+        visit "/agents/#{@another_agent.id}/posts"
         expect(page).to have_selector('article', count: 1)
         expect(page).to have_content('Pending approval')
         expect(page).to have_selector('.yes', count: 0)

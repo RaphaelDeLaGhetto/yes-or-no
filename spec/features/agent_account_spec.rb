@@ -8,7 +8,7 @@ describe "agent account", :type => :feature do
 
   context 'not logged in' do
     it 'redirects to login' do
-      visit "/agents/#{@agent.id}"
+      visit "/agents/#{@agent.id}/posts"
       expect(page).to have_current_path('/login')
     end
   end
@@ -23,23 +23,24 @@ describe "agent account", :type => :feature do
     end
 
     it 'renders an account menu' do
-      expect(page).to have_link('Your posts', href: "/agents/#{@agent.id}")
+      expect(page).to have_link('Your posts', href: "/agents/#{@agent.id}/posts")
       expect(page).to have_link('Yeses', href: "/agents/#{@agent.id}/yeses")
       expect(page).to have_link('Nos', href: "/agents/#{@agent.id}/nos")
       expect(page).to have_link('Logout', href: '/logout')
+      expect(page).to have_link(@agent.points, href: "/agents/#{@agent.id}")
     end
 
-    describe 'GET /agents/:id' do
+    describe 'GET /agents/:id/posts' do
       before :each do
         @post = create(:post, agent: @agent)
-        Post.create(url: 'http://fakeurl.com/image1.jpg', tag: 'fake', agent: Agent.create(email: 'fake@emall.com'))
+        Post.create(url: 'http://fakeurl.com/image1.jpg', tag: 'fake', agent: Agent.create(email: 'fake@email.com'))
         expect(Post.count).to eq(2)
         click_link 'Your posts'
-        expect(page).to have_current_path("/agents/#{@agent.id}")
+        expect(page).to have_current_path("/agents/#{@agent.id}/posts")
       end
 
       it 'sets style for active link' do
-        expect(page).to have_selector("a[href='/agents/#{@agent.id}'][class='active']", count: 1)
+        expect(page).to have_selector("a[href='/agents/#{@agent.id}/posts'][class='active']", count: 1)
       end
 
       it 'only displays posts belonging to this agent' do
@@ -63,10 +64,65 @@ describe "agent account", :type => :feature do
       end
     end
 
+    describe 'GET /agents/:id' do
+      before :each do
+        click_link "#{@agent.points}"
+      end
+
+      it 'renders the edit form' do
+        expect(page).to have_selector('input[name="name"]', count: 1)
+        expect(page).to have_selector('input[name="url"]', count: 1)
+        expect(page).to have_selector('input[type="submit"]', count: 1)
+      end
+
+      describe 'POST /agents' do
+        context 'success' do
+          before :each do
+            fill_in 'Name', :with => 'Company Name Inc.'
+            fill_in 'Homepage', :with => 'http://example.com'
+          end
+  
+          it 'redirects to /agents/:id' do
+            expect(page).to have_current_path("/agents/#{@agent.id}")
+          end
+  
+          it 'updates the agent record' do
+            agent = Agent.find(@agent.id)
+            expect(agent.name).to eq('Some Company Name')
+            expect(agent.url).to eq('http://example.com')
+          end
+        end
+
+        context 'failure' do
+          before :each do
+            fill_in 'Name', :with => 'Some Company Name'
+            fill_in 'Homepage', :with => 'example.com'
+          end
+  
+          it 'stays at /agents/:id' do
+            expect(page).to have_current_path("/agents/#{@agent.id}")
+          end
+ 
+          it 'renders the edit form' do
+            expect(page).to have_selector('input[name="name"][value="Some Company Name"]', count: 1)
+            expect(page).to have_selector('input[name="url"][value="example.com"]', count: 1)
+            expect(page).to have_selector('input[type="submit"]', count: 1)
+          end
+  
+          it 'does not update the agent record' do
+            agent = Agent.find(@agent.id)
+            expect(agent.name).to eq(nil)
+            expect(agent.url).to eq(nil)
+          end
+        end
+      end
+
+    end
+
     describe 'GET /logout' do
       before :each do
-        visit "/agents/#{@agent.id}"
-        expect(page).to have_current_path("/agents/#{@agent.id}")
+        visit "/agents/#{@agent.id}/posts"
+        expect(page).to have_current_path("/agents/#{@agent.id}/posts")
         expect(page).to have_link('Logout', :href => '/logout')
       end
 
@@ -74,7 +130,7 @@ describe "agent account", :type => :feature do
         click_link 'Logout'
         expect(page).to have_current_path('/')
         expect(page).to have_link('Login', :href => '/login')
-        visit "/agents/#{@agent.id}"
+        visit "/agents/#{@agent.id}/posts"
         expect(page).to have_current_path('/login')
       end
     end

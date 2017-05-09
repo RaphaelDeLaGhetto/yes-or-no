@@ -37,7 +37,7 @@ YesOrNo::App.controllers :post do
       redirect "/post/#{@post.id}"
     else
       flash[:error] = @post.errors.full_messages.map { |msg| "#{msg}" }.join("<br>")
-      redirect "/agents/#{@agent.id}"
+      redirect "/agents/#{@agent.id}/posts"
     end
   end
 

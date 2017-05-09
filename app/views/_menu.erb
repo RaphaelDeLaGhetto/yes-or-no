@@ -1,26 +1,28 @@
 <nav>
   <% if logged_in? %>
     <div id="points">
-      <span id="point-symbol">&#9733;</span>
-      <span><%= number_with_delimiter(current_agent.points) %></span>
+      <a href="/agents/<%= agent_id %>">
+        <span id="point-symbol">&#9733;</span>
+        <span><%= number_with_delimiter(current_agent.points) %></span>
+      </a>
     </div> 
   <% end %>
   <ul>
     <li id="question"><a href='/'><%= ENV['QUESTION'] %></a></li>
     <ul>
-      <li><a class='<%= request.path_info == '/post' ? "active" : ''  %>' href='/post'>Top Picks</a></h1></li>
+      <li><a class='<%= request.path_info == '/post' ? "active" : '' %>' href='/post'>Top Picks</a></h1></li>
       <% if logged_in? %>
         <li>
-          <a class='<%= request.path_info == "/agents/#{agent_id}" ? "active" : ''  %>'
-             href="/agents/<%= agent_id %>">Your posts</a>
+          <a class='<%= request.path_info == "/agents/#{agent_id}/posts" ? "active" : '' %>'
+             href="/agents/<%= agent_id %>/posts">Your posts</a>
         </li>
         <ul>
           <li>
-            <a class='<%= request.path_info == "/agents/#{agent_id}/yeses" ? "active" : ''  %>'
+            <a class='<%= request.path_info == "/agents/#{agent_id}/yeses" ? "active" : '' %>'
                href="/agents/<%= agent_id %>/yeses">Yeses</a>
           </li>
           <li>
-            <a class='<%= request.path_info == "/agents/#{agent_id}/nos" ? "active" : ''  %>'
+            <a class='<%= request.path_info == "/agents/#{agent_id}/nos" ? "active" : '' %>'
                href="/agents/<%= agent_id %>/nos">Nos</a>
           </li>
         </ul>

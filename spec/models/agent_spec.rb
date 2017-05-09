@@ -10,6 +10,7 @@ RSpec.describe Agent, type: :model do
       it { should have_db_column(:password_hash) }
       it { should have_db_column(:points) }
       it { should have_db_column(:trusted) }
+      it { should have_db_column(:url) }
       it { should have_db_column(:confirmation_hash) }
       it { should have_db_column(:created_at) }
       it { should have_db_column(:updated_at) }
@@ -56,6 +57,30 @@ RSpec.describe Agent, type: :model do
       end
     end
   end
+
+  describe "url" do
+    before :each do
+      @agent = create(:agent) 
+    end
+
+    it 'valid' do
+      urls = %w[https://crazy.sub.domain.example.com http://example.com http://example.io/ http://example.com/path]
+      urls.each do |url|
+        @agent.url = url
+        expect(@agent.valid?).to be_truthy
+      end
+    end
+
+    it 'not valid' do
+      urls = %w[marvel.de ftp://hero@movie httpsomefakeurldotcom]
+      urls.each do |url|
+        puts url
+        @agent.url = url
+        expect(@agent.valid?).to be_falsey
+      end
+    end
+  end
+
 
   describe 'password' do
     before :each do

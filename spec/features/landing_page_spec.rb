@@ -109,11 +109,12 @@ describe "landing page", :type => :feature do
 
     it 'renders an account menu' do
       expect(page).to have_link('Top Picks', href: "/post")
-      expect(page).to have_link('Your posts', href: "/agents/#{@agent.id}")
+      expect(page).to have_link('Your posts', href: "/agents/#{@agent.id}/posts")
       expect(page).to have_link('Yeses', href: "/agents/#{@agent.id}/yeses")
       expect(page).to have_link('Nos', href: "/agents/#{@agent.id}/nos")
       expect(page).to have_link('Logout', href: '/logout')
       expect(page).to have_selector('#points', count: 1)
+      expect(page).to have_link(@agent.points, href: "/agents/#{@agent.id}")
     end
 
     it 'renders an agent\'s score' do
@@ -178,11 +179,12 @@ describe "landing page", :type => :feature do
 
     it 'renders an account menu' do
       expect(page).to have_link('Top Picks', href: "/post")
-      expect(page).to have_link('Your posts', href: "/agents/#{@another_agent.id}")
+      expect(page).to have_link('Your posts', href: "/agents/#{@another_agent.id}/posts")
       expect(page).to have_link('Yeses', href: "/agents/#{@another_agent.id}/yeses")
       expect(page).to have_link('Nos', href: "/agents/#{@another_agent.id}/nos")
       expect(page).to have_link('Logout', href: '/logout')
       expect(page).to have_selector('#points', count: 1)
+      expect(page).to have_link(@another_agent.points, href: "/agents/#{@another_agent.id}")
     end
 
     it 'renders recent posts with yes/no buttons and no results' do

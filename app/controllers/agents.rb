@@ -57,13 +57,23 @@ YesOrNo::App.controllers :agents do
   end
 
   get :index, :with => :id do
+    @agent = Agent.find_by(id: params[:id])
+    @show_form = true;
+    render :show
+  end
+
+  patch :index do
+
+  end
+
+  get :posts, map: "/agents/:id/posts" do
     redirect('/login') if !logged_in?
     @agent = Agent.find_by(id: session[:agent_id])
 
     page = params[:page] || 1
     @posts = @agent.posts.page(page).order('created_at DESC')
     @show_form = true;
-    render :show
+    render :posts
   end
  
   get :answer, map: "/agents/:id/:answer" do
@@ -74,6 +84,6 @@ YesOrNo::App.controllers :agents do
     @posts = Post.joins(:votes).where(votes: { yes: params[:answer] == 'yeses', agent: @agent }).page(page).order('created_at DESC')
 
     @show_form = false;
-    render :show
+    render :posts
   end
 end

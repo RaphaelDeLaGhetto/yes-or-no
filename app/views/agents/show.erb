@@ -1,21 +1,6 @@
-<%= partial(:errors, {locals: {obj: @post} }) if @post %>
+<%= partial(:errors, {locals: {obj: @agent} }) if @agent %>
 <% if @show_form %>
-  <%= partial('post/form') %>
+  <%= partial('form') %>
 <% end %>
 
-<% if @posts.empty? %>
-  <% if request.path_info == "/agents/#{@agent.id}" %>
-    <h1>You haven't posted yet</h1>
-  <% else %>
-    <h1>You haven't answered yet</h1>
-  <% end %>
-<% else %>
-  <% @posts.each do |post| %>
-    <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
-  <% end %>
-<% end %>
-
-<%= will_paginate @posts, :page_links => false,
-                          :previous_label => '',
-                          :next_label => 'Load more...' %>
 
