@@ -72,9 +72,8 @@ RSpec.describe Agent, type: :model do
     end
 
     it 'not valid' do
-      urls = %w[marvel.de ftp://hero@movie httpsomefakeurldotcom]
+      urls = %w[marvel.de ftp://hero@movie httpsomefakeurldotcom example.com]
       urls.each do |url|
-        puts url
         @agent.url = url
         expect(@agent.valid?).to be_falsey
       end
