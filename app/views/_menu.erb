@@ -1,4 +1,10 @@
 <nav>
+  <% if logged_in? %>
+    <div id="points">
+      <span id="point-symbol">&#9733;</span>
+      <span><%= number_with_delimiter(current_agent.points) %></span>
+    </div> 
+  <% end %>
   <ul>
     <li id="question"><a href='/'><%= ENV['QUESTION'] %></a></li>
     <ul>
@@ -24,6 +30,7 @@
       <% end %>
     </ul>
   </ul>
+
   <h1><a href='/about'>Yes or no?</a></h1>
 </nav>
 

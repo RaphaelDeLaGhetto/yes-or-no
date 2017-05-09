@@ -78,6 +78,22 @@ nav h1 {
   width: 100%;
 }
 
+#point-symbol {
+  color: yellow;
+}
+
+#points {
+  font-size: .75em;
+  position: absolute;
+  right: 1em;
+  color: #ffffff;
+  background-color: blue;
+  margin-top: .5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 5px;
+}
+
 nav h1 a {
   display: block;
   text-align: right;

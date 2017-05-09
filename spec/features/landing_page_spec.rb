@@ -113,6 +113,12 @@ describe "landing page", :type => :feature do
       expect(page).to have_link('Yeses', href: "/agents/#{@agent.id}/yeses")
       expect(page).to have_link('Nos', href: "/agents/#{@agent.id}/nos")
       expect(page).to have_link('Logout', href: '/logout')
+      expect(page).to have_selector('#points', count: 1)
+    end
+
+    it 'renders an agent\'s score' do
+      expect(@agent.points).to eq(20)
+      expect(page).to have_content(@agent.points)
     end
 
     it 'renders recent posts with results and no yes/no buttons' do
@@ -176,6 +182,7 @@ describe "landing page", :type => :feature do
       expect(page).to have_link('Yeses', href: "/agents/#{@another_agent.id}/yeses")
       expect(page).to have_link('Nos', href: "/agents/#{@another_agent.id}/nos")
       expect(page).to have_link('Logout', href: '/logout')
+      expect(page).to have_selector('#points', count: 1)
     end
 
     it 'renders recent posts with yes/no buttons and no results' do
