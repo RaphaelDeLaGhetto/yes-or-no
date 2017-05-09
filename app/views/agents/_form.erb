@@ -4,11 +4,11 @@
     <%= hidden_field_tag :id, :value => @agent.id %>
     <% field_set_tag(:class => 'form-group') do %>
       <%= label_tag(:name, :caption => 'Name') %>
-      <%= text_field_tag(:name, :id => 'name', :maxlength => 256) %>
+      <%= text_field_tag(:name, :id => 'name', :value => @agent.name, :maxlength => 256) %>
     <% end %>
     <% field_set_tag(:class => 'form-group') do %>
       <%= label_tag(:url, :caption => 'Homepage') %>
-      <%= url_field_tag(:url, :id => 'url', :placeholder => 'https://') %>
+      <%= url_field_tag(:url, :id => 'url', :value => @agent.url, :placeholder => 'https://') %>
     <% end %>
     <% field_set_tag(:class => 'form-group') do %>
       <%= submit_tag('Update', :id => 'update-agent-button') %>

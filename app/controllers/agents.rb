@@ -58,12 +58,18 @@ YesOrNo::App.controllers :agents do
 
   get :index, :with => :id do
     @agent = Agent.find_by(id: params[:id])
-    @show_form = true;
     render :show
   end
 
   patch :index do
-
+    halt(403) if !logged_in? || current_agent.id.to_s != params[:id]
+    @agent = Agent.find_by(id: params[:id])
+    if @agent.update({ url: params[:url], name: params[:name] })
+      flash[:success] = 'Profile successfully updated'
+      redirect "/agents/#{@agent.id}"
+    else
+      render :show
+    end
   end
 
   get :posts, map: "/agents/:id/posts" do
@@ -72,7 +78,7 @@ YesOrNo::App.controllers :agents do
 
     page = params[:page] || 1
     @posts = @agent.posts.page(page).order('created_at DESC')
-    @show_form = true;
+    @show_form = true
     render :posts
   end
  
