@@ -57,7 +57,9 @@ YesOrNo::App.controllers :agents do
   end
 
   get :index, :with => :id do
+    page = params[:page] || 1
     @agent = Agent.find_by(id: params[:id])
+    @votes = Vote.joins(:post).where(posts: { agent: @agent }).page(page).order('created_at DESC')
     render :show
   end
 

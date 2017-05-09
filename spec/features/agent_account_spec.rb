@@ -117,6 +117,23 @@ describe "agent account", :type => :feature do
         expect(page.find("input[name='url']").text).to eq('')
         expect(page).to have_selector('input[type="submit"]', count: 1)
       end
+
+      it 'renders the list of votes in descending order of creation' do
+        @another_agent = create(:another_agent) 
+        @post1 = create(:post, agent: @agent, approved: true)
+        @post2 = create(:another_post, agent: @agent, approved: true)
+        @another_agent.vote true, @post1
+        @another_agent.vote false, @post2
+        expect(Vote.count).to eq(2)
+        expect(@post2.created_at).to be > @post1.created_at
+
+        visit '/'
+        click_link "#{@agent.points}"
+
+        expect(page).to have_selector("article.vote", count: 2)
+        expect(page).to have_selector("article:nth-of-type(2) span.change", :text => "-1")
+        expect(page).to have_selector("article:nth-of-type(3) span.change", :text => "+3")
+      end
   
       describe 'POST /agents' do
         context 'success' do
@@ -176,8 +193,6 @@ describe "agent account", :type => :feature do
           end
         end
       end
-
-
     end
 
     describe 'GET /logout' do

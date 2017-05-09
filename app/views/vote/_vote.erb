@@ -1,0 +1,4 @@
+<article class="vote" id="vote-<%= vote.id %>">
+  <span class="change"><%= vote.yes ? '+3' : '-1' %></span>
+  <span class="agent"><a href="/agents/<%= vote.agent.id %>"><%= vote.agent.name || 'Anonymous' %></a></span>
+</article>
