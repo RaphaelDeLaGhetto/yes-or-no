@@ -13,6 +13,21 @@ describe "show post", :type => :feature do
     expect(page).to have_selector("a[href='/post/#{@post_2.id}']", count: 1)
   end
 
+  it 'renders links to owner agent\'s profile by name, if set' do
+    expect(page).to have_selector("a[href='/agents/#{@agent.id}']", text: @agent.name, count: 2)
+    first(:link, @agent.name).click
+    expect(page).to have_current_path("/agents/#{@agent.id}")
+  end
+
+  it 'renders links to owner agent\'s profile by Anonymous, if name not set' do
+    @agent.name = '    '
+    @agent.save
+    visit '/'
+    expect(page).to have_selector("a[href='/agents/#{@agent.id}']", text: 'Anonymous', count: 2)
+    first(:link, 'Anonymous').click
+    expect(page).to have_current_path("/agents/#{@agent.id}")
+  end
+
   context 'not logged in' do
     it 'renders the post show page' do
       find("a[href='/post/#{@post_1.id}']").click
@@ -23,6 +38,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
       expect(page).to have_selector('.pending', count: 0)
       expect(page).to have_selector('.delete', count: 0)
+      expect(page).to have_selector('.owner', count: 1)
       expect(page).to have_selector('header h1', :text => @post_1.tag)
     end
 
@@ -54,6 +70,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.percent-rating', count: 1)
       expect(page).to have_selector('.pending', count: 0)
       expect(page).to have_selector('.delete', count: 1)
+      expect(page).to have_selector('.owner', count: 1)
       expect(page).to have_selector('header h1', :text => @post_1.tag)
     end
 
@@ -99,6 +116,7 @@ describe "show post", :type => :feature do
       expect(page).to have_selector('.star-ratings', count: 0)
       expect(page).to have_selector('.pending', count: 0)
       expect(page).to have_selector('.delete', count: 0)
+      expect(page).to have_selector('.owner', count: 1)
       expect(page).to have_selector('header h1', :text => @post_1.tag)
     end
 

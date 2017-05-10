@@ -4,6 +4,11 @@
     <% if !post.approved %>
       <h2 class="pending">Pending approval</h2>
     <% end %>
+    <h3 class="owner">
+      <a href="/agents/<%= post.agent.id %>">
+        <%= post.agent.name.present? ? post.agent.name : 'Anonymous' %>
+      </a>
+    </h3>
   </header>
   <section class="image">
     <a href="/post/<%= post[:id] %>">
