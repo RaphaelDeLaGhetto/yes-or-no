@@ -1,4 +1,7 @@
 <article class="vote" id="vote-<%= vote.id %>">
+  <div class="time-ago">
+    <%= time_ago_in_words(vote.created_at) %> ago
+  </div>
   <span class="thumb">
     <a href="/post/<%= vote.post.id %>">
       <img src="<%= vote.post.url %>">
