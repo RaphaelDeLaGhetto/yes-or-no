@@ -118,21 +118,51 @@ describe "agent account", :type => :feature do
         expect(page).to have_selector('input[type="submit"]', count: 1)
       end
 
-      it 'renders the list of votes in descending order of creation' do
-        @another_agent = create(:another_agent) 
-        @post1 = create(:post, agent: @agent, approved: true)
-        @post2 = create(:another_post, agent: @agent, approved: true)
-        @another_agent.vote true, @post1
-        @another_agent.vote false, @post2
-        expect(Vote.count).to eq(2)
-        expect(@post2.created_at).to be > @post1.created_at
+      describe 'vote list' do
+        before :each do
+          @another_agent = create(:another_agent) 
+          @post1 = create(:post, agent: @agent, approved: true)
+          @post2 = create(:another_post, agent: @agent, approved: true)
+          @another_agent.vote true, @post1
+          @another_agent.vote false, @post2
+          expect(Vote.count).to eq(2)
+          expect(@post2.created_at).to be > @post1.created_at
+  
+          visit '/'
+          click_link "#{@agent.points}"
+        end 
 
-        visit '/'
-        click_link "#{@agent.points}"
+        it 'renders the list of votes in descending order of creation' do
+          expect(page).to have_selector("article.vote", count: 2)
+          expect(page).to have_selector("article:nth-of-type(2) span.change", :text => "-1")
+          expect(page).to have_selector("article:nth-of-type(3) span.change", :text => "+3")
+        end
 
-        expect(page).to have_selector("article.vote", count: 2)
-        expect(page).to have_selector("article:nth-of-type(2) span.change", :text => "-1")
-        expect(page).to have_selector("article:nth-of-type(3) span.change", :text => "+3")
+        it 'links to the post upon which the vote was cast' do
+          expect(page).to have_selector("a[href='/post/#{@post1.id}']", count: 1)
+          expect(page).to have_selector("a[href='/post/#{@post2.id}']", count: 1)
+          page.find("a[href='/post/#{@post2.id}']:nth-of-type(1)").click
+          expect(page).to have_current_path("/post/#{@post2.id}")
+        end
+
+        describe 'owner agent links' do
+          it 'links on the voter agent\'s name, if set' do
+            expect(@another_agent.name).to_not be nil
+            expect(page).to have_selector("a[href='/agents/#{@another_agent.id}']",
+                                          text: @another_agent.name, count: 2)
+            first(:link, @another_agent.name).click
+            expect(page).to have_current_path("/agents/#{@another_agent.id}")
+          end
+
+          it 'links on Anonymous voter agent, if name not set' do
+            @another_agent.name = nil
+            @another_agent.save
+            click_link "#{@agent.points}"
+            expect(page).to have_selector("a[href='/agents/#{@another_agent.id}']", text: 'Anonymous', count: 2)
+            first(:link, 'Anonymous').click
+            expect(page).to have_current_path("/agents/#{@another_agent.id}")
+          end
+        end
       end
   
       describe 'POST /agents' do
