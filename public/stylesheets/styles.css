@@ -437,3 +437,54 @@ form {
 .pagination a:hover {
   text-decoration: underline;
 }
+
+/**
+ * Votes
+ */
+.vote {
+  padding-top: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  border: 0;
+  background-color: transparent;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.thumb {
+  text-align: left;
+}
+
+.agent {
+  padding-left: 1em;
+}
+
+.agent a,
+.thumb a {
+  color: #188EE4;
+  font-size: 1.25em;
+  text-decoration: none;
+}
+
+.agent a:hover {
+  text-decoration: underline;
+}
+
+.thumb img {
+  border-radius: 5px;
+  width: 50px;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+.change {
+  float: right;
+  font-size: 1.25em;
+}
