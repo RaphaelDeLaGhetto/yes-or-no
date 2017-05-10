@@ -322,9 +322,7 @@ describe "agent account", :type => :feature do
         expect(page).to have_selector('input[name="tag"]', count: 0)
         expect(page).to have_selector('input[type="submit"]', count: 0)
       end
-
     end
-
   end
 
   context 'non-owner agent logged in' do
@@ -389,7 +387,30 @@ describe "agent account", :type => :feature do
       it 'does not display email' do
         expect(page).to_not have_content(@agent.email)
       end
+
+      describe 'post list' do
+        before :each do
+          @post1 = create(:post, agent: @agent, approved: true, tag: '#wordup')
+          @post2 = create(:another_post, agent: @agent, approved: true)
+          @another_agent.vote true, @post1
+          @another_agent.vote false, @post2
+          expect(Vote.count).to eq(2)
+          expect(@post2.created_at).to be > @post1.created_at
+  
+          visit "/agents/#{@agent.id}"
+        end 
+
+        it 'renders post results but no yes/no buttons' do
+          expect(page).to have_selector('.yes', count: 0)
+          expect(page).to have_selector('.no', count: 0)
+          expect(page).to have_selector('.star-ratings', count: 2)
+        end
+
+        it 'renders posts in descending order of creation' do
+          expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post2.tag)
+          expect(page).to have_selector("article:nth-of-type(3) header h1", :text => @post1.tag)
+        end
+      end
     end
   end
 end
-

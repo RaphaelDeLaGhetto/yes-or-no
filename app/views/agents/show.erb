@@ -35,8 +35,14 @@
   <% @votes.each do |vote| %>
     <%= partial('vote/vote', {locals: {vote: vote}}) %>
   <% end %>
-  
   <%= will_paginate @votes, :page_links => false,
+                            :previous_label => '',
+                            :next_label => 'Load more...' %>
+<% elsif @posts.present? %>
+  <% @posts.each do |post| %>
+    <%= partial('post/post', {locals: {post: post, can_vote: false}}) %>
+  <% end %>
+  <%= will_paginate @posts, :page_links => false,
                             :previous_label => '',
                             :next_label => 'Load more...' %>
 <% end %>

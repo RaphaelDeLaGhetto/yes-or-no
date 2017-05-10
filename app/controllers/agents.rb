@@ -59,7 +59,11 @@ YesOrNo::App.controllers :agents do
   get :index, :with => :id do
     page = params[:page] || 1
     @agent = Agent.find_by(id: params[:id])
-    @votes = Vote.joins(:post).where(posts: { agent: @agent }).page(page).order('created_at DESC')
+    if @agent == current_agent
+      @votes = Vote.joins(:post).where(posts: { agent: @agent }).page(page).order('created_at DESC')
+    else
+      @posts = @agent.posts.order('created_at DESC').page(page)
+    end
     render :show
   end
 
