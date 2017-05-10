@@ -460,13 +460,20 @@ form {
   padding-left: 1em;
 }
 
+.owner {
+  font-size: .5em;
+  text-align: right;
+}
+
 .agent a,
+.owner a,
 .thumb a {
   color: #188EE4;
   font-size: 1.25em;
   text-decoration: none;
 }
 
+.owner a:hover,
 .agent a:hover {
   text-decoration: underline;
 }
@@ -488,3 +495,5 @@ form {
   float: right;
   font-size: 1.25em;
 }
+
+
