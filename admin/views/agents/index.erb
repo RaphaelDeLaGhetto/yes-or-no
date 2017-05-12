@@ -39,6 +39,7 @@
                 <th class=header> <%= mat(:agent, :id) %></th>
                 <th class=header> <%= mat(:agent, :name) %></th>
                 <th class=header> <%= mat(:agent, :email) %></th>
+                <th class=header> <%= mat(:agent, :trusted) %></th>
                 <th class=header> Posts </th>
                 <th class=header> <%= mat(:agent, :created_at) %></th>
                 <th class=header> <%= mat(:agent, :updated_at) %></th>
@@ -55,6 +56,9 @@
           <td class=list-column> <%= agent.id %> </td>
           <td class=list-column> <%= agent.name %> </td>
           <td class=list-column> <%= agent.email %> </td>
+          <td class=list-column>
+            <%= link_to(agent.trusted ? tag_icon(:'check-square-o') : tag_icon(:'square-o'), :rel => :tooltip, :title => "#{pat(:toggle_trusted)} post", :class => "toggle-trusted", :id => "agent-#{agent.id}") %>
+          </td>
           <td class=list-column> <%= link_to agent.posts.count, :href => url(:agents, :show, :id => agent.id) %> </td>
           <td class=list-column> <%= time_ago_in_words agent.created_at %></td>
           <td class=list-column> <%= time_ago_in_words agent.updated_at %></td>

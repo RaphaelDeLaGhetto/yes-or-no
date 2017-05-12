@@ -94,4 +94,14 @@ YesOrNo::Admin.controllers :agents do
     end
     redirect url(:agents, :index)
   end
+
+  patch :toggle_trusted, :map => "/agents/:id/toggle" do
+    content_type :json
+    agent = Agent.find(params[:id])
+    agent.trusted = !agent.trusted
+    agent.save
+    { trusted: agent.trusted }.to_json
+  end
+
+
 end

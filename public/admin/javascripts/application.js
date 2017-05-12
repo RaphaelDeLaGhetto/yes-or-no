@@ -147,5 +147,36 @@
       });
     });
 
+
+    /**
+     * Toggle agent trusted status
+     */
+    $('.toggle-trusted').click(function(e) {
+      var id = $(this).attr('id').replace('agent-', '');
+      $.ajax({
+        type: 'PATCH',
+        url: '/admin/agents/' + id + '/toggle',
+        data: { 
+          id: id,
+          authenticity_token: $('meta[name="csrf-token"]').attr('content') 
+        },
+        success: function(result) {
+          if (result.trusted) {
+            $('#agent-' + id).html('<i class="fa fa-check-square-o"></i>');
+          } else {
+            $('#agent-' + id).html('<i class="fa fa-square-o"></i>');
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          if(jqXHR.status === 403) {
+            $( location ).attr("href", '/login');
+          } else {
+            console.log(JSON.stringify(jqXHR));
+            console.log(JSON.stringify(textStatus));
+            console.log(JSON.stringify(errorThrown));
+          }
+        }
+      });
+    });
   });
 }(window.jQuery);

@@ -25,13 +25,51 @@ describe "administer agent profile", :type => :feature do
 
     it 'renders post count' do
       expect(page).to have_selector(".header", text: 'Posts')
-      expect(page).to have_selector(".list-row:nth-of-type(1) .list-column:nth-of-type(5)", text: '2', count: 1)
-      expect(page).to have_selector(".list-row:nth-of-type(2) .list-column:nth-of-type(5)", text: '0', count: 1)
+      expect(page).to have_selector(".list-row:nth-of-type(1) .list-column:nth-of-type(6)", text: '2', count: 1)
+      expect(page).to have_selector(".list-row:nth-of-type(2) .list-column:nth-of-type(6)", text: '0', count: 1)
     end
 
     it 'renders links to agent profile pages' do
       expect(page).to have_link("2", href: "/admin/agent/#{@agent.id}")
       expect(page).to have_link("0", href: "/admin/agent/#{@another_agent.id}")
+    end
+
+    describe 'agent trusted status', js: true do
+      it 'toggles the agent trusted state to true if false' do
+        @agent.trusted = false
+        @agent.save 
+        click_link "Agents"
+        expect(Agent.find(@agent.id).trusted).to eq(false)
+        find("#agent-#{@agent.id} .fa-square-o").click
+        wait_for_ajax
+        expect(Agent.find(@agent.id).trusted).to eq(true)
+      end
+   
+      it 'toggles the agent trusted state to false if true' do
+        expect(@agent.trusted).to eq(true)
+        find("#agent-#{@agent.id} .fa-check-square-o").click
+        wait_for_ajax
+        expect(Agent.find(@agent.id).trusted).to eq(false)
+      end
+   
+      it 'sets the unchecked box icon to checked' do
+        @agent.trusted = false
+        @agent.save 
+        click_link "Agents"
+        expect(Agent.find(@agent.id).trusted).to eq(false)
+        expect(page).to have_selector("#agent-#{@agent.id} i.fa.fa-square-o")
+        find("#agent-#{@agent.id} .fa-square-o").click
+        wait_for_ajax
+        expect(page).to have_selector("#agent-#{@agent.id} i.fa.fa-check-square-o")
+      end
+   
+      it 'sets the checked box icon to unchecked' do
+        expect(@agent.trusted).to eq(true)
+        expect(page).to have_selector("#agent-#{@agent.id} i.fa.fa-check-square-o")
+        find("#agent-#{@agent.id} .fa-check-square-o").click
+        wait_for_ajax
+        expect(page).to have_selector("#agent-#{@agent.id} i.fa.fa-square-o")
+      end
     end
 
     describe 'edit agent' do
