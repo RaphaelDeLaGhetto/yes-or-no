@@ -64,6 +64,28 @@ describe "administer agent profile", :type => :feature do
           expect(page).to have_current_path('/')
         end
       end
+
+      describe 'trusted toggle' do
+        before :each do
+          expect(Agent.find(@another_agent.id).trusted).to be true
+          uncheck 'trusted'
+          click_button 'Save'
+        end
+
+        it 'updates the agent trusted column in the database' do
+          expect(Agent.find(@another_agent.id).trusted).to be false
+        end
+
+        it 'toggles the trusted column back and forth' do
+          expect(Agent.find(@another_agent.id).trusted).to be false
+          check 'trusted'
+          click_button 'Save'
+          expect(Agent.find(@another_agent.id).trusted).to be true
+          uncheck 'trusted'
+          click_button 'Save'
+          expect(Agent.find(@another_agent.id).trusted).to be false
+        end
+      end
     end
 
     describe 'show agent' do

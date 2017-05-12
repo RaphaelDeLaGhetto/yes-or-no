@@ -22,6 +22,14 @@
     <span class='help-inline'><%= error ? f.error_message_on(:password) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
+<% error = @agent.errors.include?(:trusted) %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :trusted, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :trusted, :class => 'form-control input-xlarge input-with-feedback', :id => 'trusted' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:trusted) : "Ex: a simple text" %></span>
+  </div>
+</fieldset>
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>
   &nbsp;
