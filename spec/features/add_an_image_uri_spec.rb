@@ -231,6 +231,7 @@ describe "add an image URI", :type => :feature do
 
     context 'image submission with ENV["AUTO_APPROVE"] == true' do
       before :each do
+        @cached_auto_approve = ENV['AUTO_APPROVE']
         ENV['AUTO_APPROVE'] = 'true'
         expect(ENV['AUTO_APPROVE']).to eq 'true'
         expect(Post.count).to eq(0)
@@ -240,7 +241,7 @@ describe "add an image URI", :type => :feature do
       end
 
       after :each do
-        ENV['AUTO_APPROVE'] = nil 
+        ENV['AUTO_APPROVE'] = @cached_auto_approve
       end
 
       it "enters an automatically approved image into database" do
