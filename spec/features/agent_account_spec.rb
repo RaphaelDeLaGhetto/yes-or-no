@@ -30,6 +30,27 @@ describe "agent account", :type => :feature do
       expect(page).to have_link(@agent.points, href: "/agents/#{@agent.id}")
     end
 
+    describe 'no posts or responses' do
+      before :each do
+        expect(Post.count).to eq(0)
+      end
+
+      it 'notifies the agent that he hasn\'t posted anything yet' do
+        click_link 'Your posts'
+        expect(page).to have_content("You haven't posted yet")
+      end
+
+      it 'notifies the agent that he hasn\'t answered no to anything yet' do
+        click_link 'Yeses'
+        expect(page).to have_content("You haven't answered yet")
+      end
+
+      it 'notifies the agent that he hasn\'t answered yes to anything yet' do
+        click_link 'Nos'
+        expect(page).to have_content("You haven't answered yet")
+      end
+    end
+
     describe 'GET /agents/:id/posts' do
       before :each do
         @post = create(:post, agent: @agent)

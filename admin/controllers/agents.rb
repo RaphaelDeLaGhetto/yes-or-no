@@ -102,6 +102,4 @@ YesOrNo::Admin.controllers :agents do
     agent.save
     { trusted: agent.trusted }.to_json
   end
-
-
 end

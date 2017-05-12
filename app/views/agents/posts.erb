@@ -4,7 +4,7 @@
 <% end %>
 
 <% if @posts.empty? %>
-  <% if request.path_info == "/agents/#{@agent.id}" %>
+  <% if request.path_info == "/agents/#{@agent.id}/posts" %>
     <h1>You haven't posted yet</h1>
   <% else %>
     <h1>You haven't answered yet</h1>
