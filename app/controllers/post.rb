@@ -30,10 +30,10 @@ YesOrNo::App.controllers :post do
     params[:agent_id] = @agent.id
 
     @post = Post.new(params.except('authenticity_token'))
-    @post.approved = true if admin.present?
+    @post.approved = true if admin.present? || @agent.trusted
 
     if @post.save
-      flash[:success] = admin.present? ? 'Image submitted' : 'Image submitted for review'
+      flash[:success] = admin.present?  || @agent.trusted ? 'Image submitted successfully' : 'Image submitted for review'
       redirect "/post/#{@post.id}"
     else
       flash[:error] = @post.errors.full_messages.map { |msg| "#{msg}" }.join("<br>")

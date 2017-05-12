@@ -3,6 +3,7 @@ FactoryGirl.define do
     name  "Dan"
     email "dan@example.com"
     password "secret"
+    trusted true
 
     factory :another_agent do
       name  "Lanny"

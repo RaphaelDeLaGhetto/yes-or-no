@@ -112,9 +112,10 @@ describe "add an image URI", :type => :feature do
     end
   end
 
-  context 'regular agent logged in' do
+  context 'regular untrusted agent logged in' do
     before :each do
-      @another_agent = create(:another_agent)
+      @another_agent = create(:another_agent, trusted: false)
+      expect(@another_agent.trusted).to be false
       visit '/login'
       fill_in "Email", :with => @another_agent.email
       click_button "Next"
@@ -223,6 +224,100 @@ describe "add an image URI", :type => :feature do
           visit '/'
           expect(page).to have_selector('article', count: 1)
         end
+      end
+    end
+  end
+
+  context 'regular trusted agent logged in' do
+    before :each do
+      @another_agent = create(:another_agent)
+      expect(@another_agent.trusted).to be true
+      visit '/login'
+      fill_in "Email", :with => @another_agent.email
+      click_button "Next"
+      fill_in "Password", :with => 'secret'
+      click_button "Login"
+      click_link "Your posts"
+    end
+
+    it 'renders a submission form' do
+      expect(page).to have_selector('input[name="url"]', count: 1)
+      expect(page).to have_selector('input[name="tag"]', count: 1)
+      expect(page).to have_selector('input[type="submit"]', count: 1)
+    end
+  
+    describe 'unsuccessful image submission' do
+
+      describe 'no image URL provided' do
+        before :each do
+          expect(Post.count).to eq(0)
+          fill_in "Image URL", :with => ""
+          fill_in "Tag", :with => "DSB"
+          click_button "Add Image"
+        end
+  
+        it "does not enter image into database" do
+          expect(Post.count).to eq(0)
+        end
+
+        it "displays an error message" do
+          expect(page).to have_content("Url can't be blank")
+        end
+      end
+
+      describe 'no image description provided' do
+        before :each do
+          expect(Post.count).to eq(0)
+          fill_in "Image URL", :with => "http://example.com/image.jpg"
+          fill_in "Tag", :with => "  "
+          click_button "Add Image"
+        end
+  
+        it "does not enter image into database" do
+          expect(Post.count).to eq(0)
+        end
+
+        it "displays an error message" do
+          expect(page).to have_content("Tag can't be blank")
+        end
+      end
+    end
+
+    describe 'image submission' do
+      before :each do
+        expect(Post.count).to eq(0)
+        fill_in "Image URL", :with => "example.com/image.jpg"
+        fill_in "Tag", :with => "DSB"
+        click_button "Add Image"
+      end
+
+      it "enters an automatically approved image into database" do
+        expect(Post.count).to eq(1)
+        post = Post.last
+        expect(post.approved).to be true
+      end
+
+      it "displays a submission confirmation message" do
+        expect(page).to have_content('Image submitted successfully')
+      end
+
+      it "redirects to post show path" do
+        expect(page).to have_current_path("/post/#{Post.first.id}")
+      end
+    
+      it "displays the approved image in the agent's account" do
+        visit "/agents/#{@another_agent.id}/posts"
+        expect(page).to have_selector('article', count: 1)
+        expect(page).to_not have_content('Image submitted for review')
+        expect(page).to have_selector('.yes', count: 0)
+        expect(page).to have_selector('.no', count: 0)
+        expect(page).to have_css('.star-ratings') 
+        expect(page).to have_selector('.star-ratings', count: 1)
+      end
+ 
+      it 'displays the post on the main page' do
+        visit '/'
+        expect(page).to have_selector('article', count: 1)
       end
     end
   end
