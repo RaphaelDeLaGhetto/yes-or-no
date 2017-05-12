@@ -27,6 +27,9 @@ EMAIL_PASSWORD=
 
 # App
 QUESTION="Is this app useful?"
+
+# For testing purposes, leave this false or don't set
+#AUTO_APPROVE=false
 ```
 
 The mailer configuration provided works with `mailcatcher`.

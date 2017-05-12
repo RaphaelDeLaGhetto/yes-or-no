@@ -18,6 +18,7 @@ describe "add an image URI", :type => :feature do
 
   context 'admin logged in' do
     before :each do
+      expect(ENV['AUTO_APPROVE'] == false || ENV['AUTO_APPROVE'] == nil).to be true
       @admin = create(:admin)
       @agent = create(:agent)
       visit '/login'
@@ -114,6 +115,7 @@ describe "add an image URI", :type => :feature do
 
   context 'regular untrusted agent logged in' do
     before :each do
+      expect(ENV['AUTO_APPROVE'] == false || ENV['AUTO_APPROVE'] == nil).to be true
       @another_agent = create(:another_agent, trusted: false)
       expect(@another_agent.trusted).to be false
       visit '/login'
@@ -226,10 +228,55 @@ describe "add an image URI", :type => :feature do
         end
       end
     end
+
+    context 'image submission with ENV["AUTO_APPROVE"] == true' do
+      before :each do
+        ENV['AUTO_APPROVE'] = 'true'
+        expect(ENV['AUTO_APPROVE']).to eq 'true'
+        expect(Post.count).to eq(0)
+        fill_in "Image URL", :with => "example.com/image.jpg"
+        fill_in "Tag", :with => "DSB"
+        click_button "Add Image"
+      end
+
+      after :each do
+        ENV['AUTO_APPROVE'] = nil 
+      end
+
+      it "enters an automatically approved image into database" do
+        expect(Post.count).to eq(1)
+        post = Post.last
+        expect(post.approved).to be true
+      end
+
+      it "displays a submission confirmation message" do
+        expect(page).to have_content('Image submitted successfully')
+      end
+
+      it "redirects to post show path" do
+        expect(page).to have_current_path("/post/#{Post.first.id}")
+      end
+    
+      it "displays the approved image in the agent's account" do
+        visit "/agents/#{@another_agent.id}/posts"
+        expect(page).to have_selector('article', count: 1)
+        expect(page).to_not have_content('Image submitted for review')
+        expect(page).to have_selector('.yes', count: 0)
+        expect(page).to have_selector('.no', count: 0)
+        expect(page).to have_css('.star-ratings') 
+        expect(page).to have_selector('.star-ratings', count: 1)
+      end
+ 
+      it 'displays the post on the main page' do
+        visit '/'
+        expect(page).to have_selector('article', count: 1)
+      end
+    end
   end
 
   context 'regular trusted agent logged in' do
     before :each do
+      expect(ENV['AUTO_APPROVE'] == false || ENV['AUTO_APPROVE'] == nil).to be true
       @another_agent = create(:another_agent)
       expect(@another_agent.trusted).to be true
       visit '/login'
