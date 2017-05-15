@@ -37,7 +37,7 @@
         <%= vote_count %> votes cast
       </span>
       <span class="change positive">
-        +<%= vote_count * 2 %>
+        +<%= number_with_delimiter(vote_count * 2) %>
       </span>
     <% else %>
       <span class="thumb">
@@ -53,7 +53,7 @@
         <%= post_count %> posts 
       </span>
       <span class="change positive">
-        +<%= post_count * 10 %>
+        +<%= number_with_delimiter(post_count * 10) %>
       </span>
     <% else %>
       <span class="thumb">
