@@ -498,3 +498,65 @@ form {
 }
 
 
+/**
+ * Attention getter
+ */
+#attention-logged-in,
+#attention-landing {
+  z-index: 1;
+  color: #00cc00;
+  position: absolute;
+  font-size: 3em;
+  text-shadow: 2px 2px #009900;
+  opacity: 0;
+  transform: rotate(45deg);
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pointArrowTopRight {
+  from {
+    right: 2.2em;
+    top: 1.5em;
+  }
+  to {
+    right: 1.2em;
+    top: 0.2em;
+    opacity: 1;
+  }
+}
+
+#attention-logged-in {
+  animation-name: pointArrowTopRight;
+}
+
+@keyframes pointArrowBottomRight {
+  from {
+    right: 1.6em;
+    top: 0em;
+  }
+  to {
+    right: 1.2em;
+    top: .8em;
+    opacity: 1;
+  }
+}
+
+@media all and (min-width: 900px) {
+  @keyframes pointArrowBottomRight {
+    from {
+      right: 1.6em;
+      top: 0em;
+    }
+    to {
+      right: 1.2em;
+      top: 2.0em;
+      opacity: 1;
+    }
+  }
+}
+
+#attention-landing {
+  transform: rotate(-45deg);
+  animation-name: pointArrowBottomRight;
+}
