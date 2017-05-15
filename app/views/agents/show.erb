@@ -29,6 +29,39 @@
 
 <% if current_agent == @agent %>
   <%= partial('form') %>
+
+  <article class="votes" id="votes-points">
+    <% vote_count = @agent.votes.count %>
+    <% if vote_count > 0 %>
+      <span class="thumb">
+        <%= vote_count %> votes cast
+      </span>
+      <span class="change positive">
+        +<%= vote_count * 2 %>
+      </span>
+    <% else %>
+      <span class="thumb">
+        You haven't cast any votes
+      </span>
+      <span class="change">0</span>
+    <% end %>
+  </article>
+  <article class="posts" id="posts-points">
+    <% post_count = @agent.posts.count %>
+    <% if post_count > 0 %>
+      <span class="thumb">
+        <%= post_count %> posts 
+      </span>
+      <span class="change positive">
+        +<%= post_count * 10 %>
+      </span>
+    <% else %>
+      <span class="thumb">
+        You haven't posted anything
+      </span>
+      <span class="change">0</span>
+    <% end %>
+  </article>
 <% end %>
 
 <% if @votes.present? %>

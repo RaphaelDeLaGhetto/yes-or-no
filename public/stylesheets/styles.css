@@ -441,6 +441,8 @@ form {
 /**
  * Votes
  */
+.votes,
+.posts,
 .vote {
   padding-top: 0;
   padding-left: 1em;
@@ -454,6 +456,16 @@ form {
 
 .thumb {
   text-align: left;
+}
+
+.votes,
+.posts {
+}
+.votes .thumb,
+.posts .thumb {
+  font-style: bold;
+  text-align: right;
+  font-size: 1.5em;
 }
 
 .agent {

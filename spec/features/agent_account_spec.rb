@@ -49,6 +49,18 @@ describe "agent account", :type => :feature do
         click_link 'Nos'
         expect(page).to have_content("You haven't answered yet")
       end
+
+      it 'notifies the agent that he has no points from posting' do
+        expect(@agent.posts.count).to eq(0)
+        click_link @agent.points 
+        expect(page).to have_content("You haven't posted anything")
+      end
+
+      it 'notifies the agent that he has points from voting' do
+        expect(@agent.votes.count).to eq(0)
+        click_link @agent.points 
+        expect(page).to have_content("You haven't cast any votes")
+      end
     end
 
     describe 'GET /agents/:id/posts' do
@@ -149,15 +161,28 @@ describe "agent account", :type => :feature do
           expect(Vote.count).to eq(2)
           expect(@post2.created_at).to be > @post1.created_at
   
+          post = Post.create(agent: @another_agent, url: 'http://example.com/some.jpg', approved: true, tag: 'hello')
+          @agent.vote true, post
+
           visit '/'
           @agent = Agent.find(@agent.id)
           click_link "#{@agent.points}"
         end 
 
+        it 'renders the points awarded for posts' do
+          expect(page).to have_selector("article.posts", count: 1, text: "#{@agent.posts.count * 10}")
+          expect(page).to have_selector("article.posts", count: 1, text: "#{@agent.posts.count} posts")
+        end
+
+        it 'renders the points awarded for votes' do
+          expect(page).to have_selector("article.votes", count: 1, text: "#{@agent.votes.count * 2}")
+          expect(page).to have_selector("article.votes", count: 1, text: "#{@agent.votes.count} votes cast")
+        end
+
         it 'renders the list of votes in descending order of creation' do
           expect(page).to have_selector("article.vote", count: 2)
-          expect(page).to have_selector("article:nth-of-type(2) span.change", :text => "-1")
-          expect(page).to have_selector("article:nth-of-type(3) span.change", :text => "+3")
+          expect(page).to have_selector("article.vote:nth-of-type(1) span.change", :text => "-1")
+          expect(page).to have_selector("article.vote:nth-of-type(2) span.change", :text => "+3")
         end
 
         it 'links to the post upon which the vote was cast' do
