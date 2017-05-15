@@ -150,6 +150,7 @@ describe "agent account", :type => :feature do
           expect(@post2.created_at).to be > @post1.created_at
   
           visit '/'
+          @agent = Agent.find(@agent.id)
           click_link "#{@agent.points}"
         end 
 

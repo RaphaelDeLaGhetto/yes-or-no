@@ -38,12 +38,16 @@ class Agent < ActiveRecord::Base
   end
 
   def vote(yes, post)
-    self.votes.create(yes: yes, post: post) if self.can_vote? post 
-    post.agent.tally_points if post.agent.present?
+    if self.can_vote? post 
+      self.votes.create(yes: yes, post: post)
+      self.points += 2
+      self.save
+      post.agent.points += yes ? 3 : -1 if post.agent.present?
+    end
   end
 
   def tally_points
-    self.points = self.posts.where(approved: true).inject(0){|sum, post| sum += 10 + 3 * post.yeses - post.nos} 
+    self.points = self.posts.where(approved: true).inject(0){|sum, post| sum += 10 + 3 * post.yeses - post.nos} + self.votes.count * 2
     self.save
     self.points
   end

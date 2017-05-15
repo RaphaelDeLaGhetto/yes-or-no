@@ -298,6 +298,14 @@ RSpec.describe Agent, type: :model do
         @another_agent.vote true, @post2
         expect(Agent.find(@agent.id).points).to eq(22)
       end
+
+      it 'adds 2 points for every vote cast by an agent' do
+        expect(Agent.find(@another_agent.id).points).to eq(0)
+        @another_agent.vote false, @post1
+        expect(Agent.find(@another_agent.id).points).to eq(2)
+        @another_agent.vote true, @post2
+        expect(Agent.find(@another_agent.id).points).to eq(4)
+      end
     end
   end
 end

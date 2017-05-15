@@ -140,6 +140,7 @@ module YesOrNo
       if @agent.password == params[:password]
         session[:agent_id] = @agent.id
         session[:first_login] = true
+        @agent.tally_points
         redirect '/'
       else
         @agent.errors.add(:base, :blank, message: "Did you forget your password?")
