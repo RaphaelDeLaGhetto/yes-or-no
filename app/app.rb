@@ -90,6 +90,11 @@ module YesOrNo
       set :delivery_method, :test
     end
 
+    after '/' do
+      session[:first_login] = nil
+      session[:home_visited] = true
+    end
+
     get '/' do
       page = params[:page] || 1
       @posts = Post.where(approved: true).order('created_at DESC').page(page)
@@ -134,6 +139,7 @@ module YesOrNo
       @agent = Agent.find_by_email(params[:email])
       if @agent.password == params[:password]
         session[:agent_id] = @agent.id
+        session[:first_login] = true
         redirect '/'
       else
         @agent.errors.add(:base, :blank, message: "Did you forget your password?")

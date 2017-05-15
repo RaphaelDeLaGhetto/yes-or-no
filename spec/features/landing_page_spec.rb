@@ -48,6 +48,17 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(3) header h1", :text => @post_1.tag)
     end
+    
+    describe 'attention getter' do
+      it 'displays the attention getter on first visit' do
+        expect(page).to have_selector("#attention-landing", :count => 1)
+      end
+
+      it 'does not display the attention getter on the second visit' do
+        visit '/'
+        expect(page).to have_selector("#attention-landing", :count => 0)
+      end
+    end
 
     describe 'get /post' do
       before :each do
@@ -134,6 +145,17 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
     end
 
+    describe 'attention getter' do
+      it 'displays the attention getter on first visit' do
+        expect(page).to have_selector("#attention-logged-in", :count => 1)
+      end
+
+      it 'does not display the attention getter on the second visit' do
+        visit '/'
+        expect(page).to have_selector("#attention-logged-in", :count => 0)
+      end
+    end
+
     describe 'get /post' do
       before :each do
         @post_2.nos = 100
@@ -197,6 +219,17 @@ describe "landing page", :type => :feature do
       expect(@post_2.created_at).to be > @post_1.created_at
       expect(page).to have_selector("article:nth-of-type(1) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_1.tag)
+    end
+
+    describe 'attention getter' do
+      it 'displays the attention getter on first visit' do
+        expect(page).to have_selector("#attention-logged-in", :count => 1)
+      end
+
+      it 'does not display the attention getter on the second visit' do
+        visit '/'
+        expect(page).to have_selector("#attention-logged-in", :count => 0)
+      end
     end
 
     describe 'get /post' do

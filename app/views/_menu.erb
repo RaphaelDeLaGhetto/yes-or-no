@@ -6,6 +6,9 @@
         <span><%= number_with_delimiter(current_agent.points) %></span>
       </a>
     </div> 
+    <% if session[:first_login] %>  
+      <div id="attention-logged-in">&#11014;&#xFE0E;</div>
+    <% end %>
   <% end %>
   <ul>
     <li id="question"><a href='/'><%= ENV['QUESTION'] %></a></li>
@@ -32,6 +35,8 @@
       <% end %>
     </ul>
   </ul>
-
+  <% if !logged_in? && session[:home_visited].nil? %>
+    <div id="attention-landing">&#11015;&#xFE0E;</div>
+  <% end %>
   <h1><a href='/about'>Yes or no?</a></h1>
 </nav>
