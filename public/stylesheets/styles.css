@@ -70,6 +70,7 @@ h2 aside {
  */
 nav {
   margin: 0 0 2em 0;
+  padding-top: 2em;
   background-color: grey;
   background-image: url(/images/splash.jpg);
   width: 100%;
@@ -160,11 +161,53 @@ article {
   padding-top: 1em;
 }
 
+.top-collapse {
+  transition: all .5s;
+}
+
+#question.top-collapse {
+  width: 100%;
+  background-color: #3e444d;
+  padding-left: 1.25em;
+  transform: translateX(-1.25em);
+  font-size: 1em;
+  opacity: .8;
+}
+
+#points.top-collapse {
+  margin-top: .1em;
+}
+
+@media all and (min-width: 900px) {
+  #question.top-collapse {
+    font-size: 2em;
+  }
+  #points.top-collapse {
+    margin-top: .7em;
+  }
+}
+
+#points,
 #question {
+  top: 0;
+  position: fixed;
+  transition: all .5s;
+}
+
+#points {
+  z-index: 4;
+}
+
+#question {
+  z-index: 3;
   font-size: 2em;
 }
 
 @media all and (min-width: 900px) {
+  nav {
+    padding-top: 4em;
+  }
+ 
   #question {
     font-size: 4em;
   }
@@ -577,5 +620,3 @@ form {
     animation-name: pointArrowBottomRightBigScreen;
   }
 }
-
-
