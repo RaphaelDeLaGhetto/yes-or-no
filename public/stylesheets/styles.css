@@ -554,21 +554,28 @@ form {
   }
 }
 
-@media all and (min-width: 900px) {
-  @keyframes pointArrowBottomRight {
-    from {
-      right: 1.6em;
-      top: 0em;
-    }
-    to {
-      right: 1.2em;
-      top: 2.0em;
-      opacity: 1;
-    }
-  }
-}
-
 #attention-landing {
   transform: rotate(-45deg);
   animation-name: pointArrowBottomRight;
 }
+
+/* There has to be a way to nest keyframes in media queries */
+@keyframes pointArrowBottomRightBigScreen {
+  from {
+    right: 1.6em;
+    top: 0em;
+  }
+  to {
+    right: 1.2em;
+    top: 2.0em;
+    opacity: 1;
+  }
+}
+
+@media all and (min-width: 900px) {
+  #attention-landing {
+    animation-name: pointArrowBottomRightBigScreen;
+  }
+}
+
+
