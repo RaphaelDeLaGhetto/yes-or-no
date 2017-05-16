@@ -463,7 +463,7 @@ form {
 }
 .votes .thumb,
 .posts .thumb {
-  font-style: bold;
+  font-weight: bold;
   text-align: right;
   font-size: 1.5em;
 }
