@@ -63,9 +63,8 @@ $(document).ready(function(){
   });
 
   /**
-   * navbar. Collapse on scroll
+   * Collapse on scroll
    */
-  // jQuery to collapse the navbar on scroll
   $(window).scroll(function() {
     if ($('#question').offset().top > 25) {
       $('#question').addClass('top-collapse');
