@@ -73,6 +73,44 @@ describe "provide a response to image", js: true, :type => :feature do
       it 'renders a thank you message' do
         expect(page).to have_content('Thank you for your feedback')
       end
+
+      context 'returning unauthenticated agent' do
+        before :each do
+          expect(@post.votes.count).to eq(1)
+          expect(@agent.votes.count).to eq(1)
+  
+          click_link "Logout"
+          visit '/'
+          find("a[href='/post/#{@post.id}']").click
+   
+          click_button 'No'
+          wait_for_ajax
+  
+          fill_in "Email", :with => @agent.email 
+          click_button "Next"
+          fill_in "Password", :with => 'secret'
+          click_button "Login"
+        end
+
+        it 'forwards to the clicked vote show page' do
+          expect(page).to have_current_path("/post/#{@post.id}")
+        end
+  
+        it 'renders the star rating' do
+          expect(page).to have_selector('.star-ratings', count: 1)
+        end
+  
+        it 'does not change the vote stuff' do
+          expect(@post.votes.count).to eq(1)
+          expect(@post.votes.last.yes).to eq(true)
+          expect(@agent.votes.count).to eq(1)
+          expect(@agent.votes.last.yes).to eq(true)
+        end
+  
+        it 'renders a voted already message' do
+          expect(page).to have_content('You already responded to this post')
+        end
+      end
     end
   end
 

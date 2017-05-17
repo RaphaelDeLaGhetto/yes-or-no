@@ -142,8 +142,11 @@ module YesOrNo
         @agent.tally_points
         if session[:forward_answer]
           post = Post.find(session[:forward_answer][:id])
-          @agent.vote session[:forward_answer][:answer] == 'yes', post
-          flash[:success] = 'Thank you for your feedback'
+          if (@agent.vote(session[:forward_answer][:answer] == 'yes', post).nil?)
+            flash[:success] = 'You already responded to this post'
+          else
+            flash[:success] = 'Thank you for your feedback'
+          end
           redirect "/post/#{session[:forward_answer][:id]}"
         else
           redirect '/'
