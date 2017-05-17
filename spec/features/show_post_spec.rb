@@ -124,7 +124,7 @@ describe "show post", :type => :feature do
         end
   
         it 'renders a voted already message' do
-          expect(page).to have_content('You already responded to this post')
+          expect(page).to have_content('Welcome back!')
         end
       end
     end

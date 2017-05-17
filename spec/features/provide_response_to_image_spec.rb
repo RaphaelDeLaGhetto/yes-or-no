@@ -107,8 +107,8 @@ describe "provide a response to image", js: true, :type => :feature do
           expect(@agent.votes.last.yes).to eq(true)
         end
   
-        it 'renders a voted already message' do
-          expect(page).to have_content('You already responded to this post')
+        it 'renders a friendly message' do
+          expect(page).to have_content('Welcome back!')
         end
       end
     end
