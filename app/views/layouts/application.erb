@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <% if @post %>
-      <meta property="og:description" content="<%= ENV['QUESTION'] %>" />
-      <meta property="og:title" content="<%= @post.tag %>" />
+      <meta property="og:description" content="<%= @post.tag %>" />
+      <meta property="og:title" content="<%= ENV['QUESTION'] %>" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="<%= request.url %>" />
       <meta property="og:image" content="<%= @post.url %>" />

@@ -54,9 +54,10 @@ describe "show post", :type => :feature do
     it 'sets open graph meta data' do
       find("a[href='/post/#{@post_1.id}']").click
       expect(page).to have_current_path("/post/#{@post_1.id}")
-      expect(page).to have_selector("meta[property='og:description'][content='#{ENV['QUESTION']}']",
+      expect(page).to have_selector("meta[property='og:description'][content='#{@post_1.tag}']",
                                      count: 1, visible: false)
-      expect(page).to have_selector("meta[property='og:title'][content='#{@post_1.tag}']", count: 1, visible: false)
+      expect(page).to have_selector("meta[property='og:title'][content='#{ENV['QUESTION']}']",
+                                     count: 1, visible: false)
       expect(page).to have_selector("meta[property='og:type'][content='website']", count: 1, visible: false)
       expect(page).to have_selector("meta[property='og:url'][content='http://www.example.com/post/#{@post_1.id}']",
                                      count: 1, visible: false)
