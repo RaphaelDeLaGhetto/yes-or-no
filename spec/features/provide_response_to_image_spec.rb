@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "provide a response to image", js: true, :type => :feature do
   before :each do
-    @post = Post.create(url: 'http://fakeurl.com/image.jpg', tag: 'fake', approved: true, agent: Agent.create(email: 'fake@emall.com'))
+    @post = Post.create(url: 'http://fakeurl.com/image.jpg', tag: 'fake', approved: true, agent: Agent.create(email: 'fake@email.com'))
     proxy.stub('http://fakeurl.com/image.jpg').and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
     expect(Post.count).to eq(1)
   end
@@ -38,6 +38,41 @@ describe "provide a response to image", js: true, :type => :feature do
       click_button 'Yes'
       wait_for_ajax
       expect(Vote.count).to eq(0)
+    end
+
+    describe 'friendly forwarding' do
+      before :each do
+        @agent = create(:agent)
+        expect(@post.votes.count).to eq(0)
+        expect(@agent.votes.count).to eq(0)
+ 
+        click_button 'Yes'
+        wait_for_ajax
+
+        fill_in "Email", :with => @agent.email 
+        click_button "Next"
+        fill_in "Password", :with => 'secret'
+        click_button "Login"
+      end
+
+      it 'forwards to the clicked vote show page' do
+        expect(page).to have_current_path("/post/#{@post.id}")
+      end
+
+      it 'renders the star rating' do
+        expect(page).to have_selector('.star-ratings', count: 1)
+      end
+
+      it 'updates vote stuff' do
+        expect(@post.votes.count).to eq(1)
+        expect(@post.votes.last.yes).to eq(true)
+        expect(@agent.votes.count).to eq(1)
+        expect(@agent.votes.last.yes).to eq(true)
+      end
+
+      it 'renders a thank you message' do
+        expect(page).to have_content('Thank you for your feedback')
+      end
     end
   end
 

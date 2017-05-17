@@ -50,6 +50,46 @@ describe "show post", :type => :feature do
       expect(page).to have_content('and')
       expect(page).to have_link("#beer", href: "/post/search/beer")
     end
+
+    describe 'friendly forwarding', js: true do
+      before :each do
+        @post_3 = Post.create(url: 'http://example.com/crazy.jpg', agent: create(:another_agent), approved: true, tag: 'Too #crazy for me')
+        proxy.stub(@post_3.url).and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+        proxy.stub(@post_1.url).and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+        proxy.stub(@post_2.url).and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+        expect(@agent.votes.count).to eq(0)
+
+        visit '/'
+        find("a[href='/post/#{@post_3.id}']").click
+ 
+        click_button 'No'
+        wait_for_ajax
+
+        fill_in "Email", :with => @agent.email 
+        click_button "Next"
+        fill_in "Password", :with => 'secret'
+        click_button "Login"
+      end
+
+      it 'forwards to the clicked vote show page' do
+        expect(page).to have_current_path("/post/#{@post_3.id}")
+      end
+
+      it 'renders the star rating' do
+        expect(page).to have_selector('.star-ratings', count: 1)
+      end
+
+      it 'updates vote stuff' do
+        expect(@post_3.votes.count).to eq(1)
+        expect(@post_3.votes.last.yes).to eq(false)
+        expect(@agent.votes.count).to eq(1)
+        expect(@agent.votes.last.yes).to eq(false)
+      end
+
+      it 'renders a thank you message' do
+        expect(page).to have_content('Thank you for your feedback')
+      end
+    end
   end
 
   context 'owner agent logged in' do
@@ -106,6 +146,7 @@ describe "show post", :type => :feature do
       click_button 'Next'
       fill_in "password", :with => 'secret'
       click_button "Login"
+
       find("a[href='/post/#{@post_1.id}']").click
       expect(page).to have_current_path("/post/#{@post_1.id}")
     end

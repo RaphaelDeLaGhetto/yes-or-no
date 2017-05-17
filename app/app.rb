@@ -133,7 +133,6 @@ module YesOrNo
       @agent = Agent.find(session[:unauthenticated_agent_id])
       erb :password
     end
-
  
     post '/login/password' do
       @agent = Agent.find_by_email(params[:email])
@@ -141,7 +140,14 @@ module YesOrNo
         session[:agent_id] = @agent.id
         session[:first_login] = true
         @agent.tally_points
-        redirect '/'
+        if session[:forward_answer]
+          post = Post.find(session[:forward_answer][:id])
+          @agent.vote session[:forward_answer][:answer] == 'yes', post
+          flash[:success] = 'Thank you for your feedback'
+          redirect "/post/#{session[:forward_answer][:id]}"
+        else
+          redirect '/'
+        end
       else
         @agent.errors.add(:base, :blank, message: "Did you forget your password?")
         erb :password

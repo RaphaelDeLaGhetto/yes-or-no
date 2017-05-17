@@ -54,7 +54,12 @@ YesOrNo::App.controllers :post do
   # Yes/No decision routes
   #
   post :answer, map: "/post/:answer" do
-    halt(403, 'Log in to vote') unless logged_in?
+    # Want to forward to show post if agent is not currently authenticated
+    if !logged_in?
+      session[:forward_answer] = { id: params[:id], answer: params[:answer] }
+      halt(403, 'Log in to vote')
+    end
+
     @agent = Agent.find_by(id: session[:agent_id])
     post = Post.find(params[:id])
     @agent.vote params[:answer] == 'yes', post
