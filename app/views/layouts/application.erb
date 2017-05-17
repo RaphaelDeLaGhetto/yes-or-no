@@ -5,6 +5,12 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
+    <% if @post %>
+      <meta property="og:title" content="<%= @post.tag %>" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="<%= request.url %>" />
+      <meta property="og:image" content="<%= @post.url %>" />
+    <% end %>
   </head>
   <body>
     <%= partial(:menu, {locals: {agent_id: session[:agent_id]} }) %>

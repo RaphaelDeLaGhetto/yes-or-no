@@ -51,6 +51,16 @@ describe "show post", :type => :feature do
       expect(page).to have_link("#beer", href: "/post/search/beer")
     end
 
+    it 'sets open graph meta data' do
+      find("a[href='/post/#{@post_1.id}']").click
+      expect(page).to have_current_path("/post/#{@post_1.id}")
+      expect(page).to have_selector("meta[property='og:title'][content='#{@post_1.tag}']", count: 1, visible: false)
+      expect(page).to have_selector("meta[property='og:type'][content='website']", count: 1, visible: false)
+      expect(page).to have_selector("meta[property='og:url'][content='http://www.example.com/post/#{@post_1.id}']",
+                                     count: 1, visible: false)
+      expect(page).to have_selector("meta[property='og:image'][content='#{@post_1.url}']", count: 1, visible: false)
+    end
+
     describe 'friendly forwarding', js: true do
       before :each do
         @post_3 = Post.create(url: 'http://example.com/crazy.jpg', agent: create(:another_agent), approved: true, tag: 'Too #crazy for me')
