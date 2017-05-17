@@ -28,7 +28,7 @@ end
 
 shell.say ""
 
-agent = Agent.create(email: 'daniel@capitolhill.ca', password: 'secret')
+agent = Agent.create(email: 'you@example.com', password: 'secret')
 posts = [
   { url: 'http://terrygurno.com/wp-content/uploads/2016/02/Yes-or-no.jpg', tag: 'Written on palms', approved: true, agent_id: agent.id },
   { url: 'http://denisewakeman.com/wp-content/uploads/2015/07/Ghost-Blogging-Yes-or-No-Poll-c.png', tag: 'Ghost blogging', approved: true, agent_id: agent.id },
