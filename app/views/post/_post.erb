@@ -12,7 +12,10 @@
   </header>
   <section class="image">
     <a href="/post/<%= post[:id] %>">
-      <img class="question-image" src="<%= post[:url] %>" alt="<%= post[:tag] %>">
+      <img class="question-image"
+           src="<%= post[:url] %>"
+           alt="<%= post[:tag] %>"
+           onError="deapprove(this)">
     </a>
   </section>
   <footer>

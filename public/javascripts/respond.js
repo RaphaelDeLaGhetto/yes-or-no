@@ -1,3 +1,36 @@
+/**
+ * Deapprove image that no longer exists or attached to mangled URL
+ * This is called on the `onError` event on `img` tags. The jQuery
+ * `error` event only seems to get called once
+ */
+var deapprove = function(el) {
+  var parent = el;
+  var parentId = $(el).parent().parent().parent().attr('id');
+  $.ajax({
+    type: 'POST',
+    url: '/post/deapprove',
+    data: { 
+      id: parentId.replace('post-', ''),
+      authenticity_token: $('meta[name="csrf-token"]').attr('content') 
+    },
+    success: function(result) {
+      if(result.isOwner) {
+        $('#'+parentId).
+          html('<a href="/post/' + parentId.replace('post-', '') + '">' +
+               '<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>' +
+               '</a>');
+      } else {
+        $('#'+parentId).hide();
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log(JSON.stringify(jqXHR));
+      console.log(JSON.stringify(textStatus));
+      console.log(JSON.stringify(errorThrown));
+    }
+  });
+};
+
 /* 2017-3-29 http://stackoverflow.com/questions/35203019/how-can-i-send-an-ajax-request-on-button-click-from-a-form-with-2-buttons */
 $(document).ready(function(){
   $('button').click(function(e) {
@@ -30,34 +63,6 @@ $(document).ready(function(){
           console.log(JSON.stringify(textStatus));
           console.log(JSON.stringify(errorThrown));
         }
-      }
-    });
-  });
-
-  $('.question-image').on('error', function(instance) {
-    var parent = this;
-    var parentId = $(this).parent().parent().parent().attr('id');
-    $.ajax({
-      type: 'POST',
-      url: '/post/deapprove',
-      data: { 
-        id: parentId.replace('post-', ''),
-        authenticity_token: $('meta[name="csrf-token"]').attr('content') 
-      },
-      success: function(result) {
-        if(result.isOwner) {
-          $('#'+parentId).
-            html('<a href="/post/' + parentId.replace('post-', '') + '">' +
-                 '<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>' +
-                 '</a>');
-        } else {
-          $('#'+parentId).hide();
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(JSON.stringify(jqXHR));
-        console.log(JSON.stringify(textStatus));
-        console.log(JSON.stringify(errorThrown));
       }
     });
   });

@@ -60,13 +60,24 @@ describe "de-approve images that are not found", js: true, :type => :feature do
       expect(page).to have_selector('article', count: 2)
     end
 
-    it 'displays an error message or the post that didn\'t load' do
+    it 'displays an error message for the post that didn\'t load' do
       expect(page).to have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
     end
 
     it 'de-approves the missing post' do
       expect(Post.find(@post1.id).approved).to eq(true)
       expect(Post.find(@post2.id).approved).to eq(false)
+    end
+
+    describe 'GET /post/:id' do
+      before :each do
+        visit "/post/#{@post2.id}"
+        wait_for_ajax
+      end
+
+      it 'displays an error message for the post that didn\'t load' do
+        expect(page).to have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
+      end
     end
   end
 
