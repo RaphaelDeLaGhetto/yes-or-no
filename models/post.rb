@@ -10,7 +10,7 @@ class Post < ActiveRecord::Base
   belongs_to :agent
   has_many :votes, dependent: :destroy
 
-  # New posts are worth 10 points
+  # New posts are worth points
   after_save{ |post| post.agent.tally_points if post.agent.present? && post.approved }
   after_destroy { |post| post.agent.tally_points if post.agent.present? }
 

@@ -50,7 +50,7 @@ RSpec.describe Post, type: :model do
       end
   
       it "re-tallies an agent's points" do
-        expect(Agent.find(@agent.id).points).to eq(13)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i + ENV['YES_POINTS'].to_i)
         @post.destroy
         expect(Agent.find(@agent.id).points).to eq(0)
       end
@@ -71,7 +71,7 @@ RSpec.describe Post, type: :model do
                             approved: true,
                             agent: create(:agent) }) }
     it { expect(subject.approved).to be(true) }
-    it { expect(subject.agent.points).to eq(10) }
+    it { expect(subject.agent.points).to eq(ENV['POST_POINTS'].to_i) }
   end
 
 

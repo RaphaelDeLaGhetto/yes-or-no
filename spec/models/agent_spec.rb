@@ -244,14 +244,14 @@ RSpec.describe Agent, type: :model do
     end
 
     it 'sets the points column to 0 if agent has no posts' do
-      @agent.points = 10
+      @agent.points = ENV['POST_POINTS']
       @agent.save
       expect(@agent.posts.count).to eq(0)
       @agent.tally_points
       expect(Agent.find(@agent.id).points).to eq(0)
     end
 
-    it 'adds 10 for every approved post an agent has contributed' do
+    it 'adds for every approved post an agent has contributed' do
       post = create(:post, agent: @agent)
       expect(@agent.posts.count).to eq(1)
       expect(@agent.tally_points).to eq(0)
@@ -259,13 +259,13 @@ RSpec.describe Agent, type: :model do
 
       post.approved = true
       post.save
-      expect(@agent.tally_points).to eq(10)
-      expect(Agent.find(@agent.id).points).to eq(10)
+      expect(@agent.tally_points).to eq(ENV['POST_POINTS'].to_i)
+      expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i)
 
       post = create(:another_post, agent: @agent, approved: true)
       expect(@agent.posts.count).to eq(2)
-      expect(@agent.tally_points).to eq(20)
-      expect(Agent.find(@agent.id).points).to eq(20)
+      expect(@agent.tally_points).to eq(ENV['POST_POINTS'].to_i * 2)
+      expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2)
     end
 
     describe 'voting impact' do
@@ -275,36 +275,36 @@ RSpec.describe Agent, type: :model do
         @another_agent = create(:another_agent) 
       end
 
-      it 'adds 3 for every yes vote on an agent\'s post' do
-        expect(Agent.find(@agent.id).points).to eq(20)
+      it 'adds for every yes vote on an agent\'s post' do
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2)
         @another_agent.vote true, @post1
-        expect(Agent.find(@agent.id).points).to eq(23)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['YES_POINTS'].to_i)
         @another_agent.vote true, @post2
-        expect(Agent.find(@agent.id).points).to eq(26)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['YES_POINTS'].to_i * 2)
       end
 
-      it 'subtracts 1 for every no vote on an agent\'s post' do
-        expect(Agent.find(@agent.id).points).to eq(20)
+      it 'subtracts for every no vote on an agent\'s post' do
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2)
         @another_agent.vote false, @post1
-        expect(Agent.find(@agent.id).points).to eq(19)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['NO_POINTS'].to_i)
         @another_agent.vote false, @post2
-        expect(Agent.find(@agent.id).points).to eq(18)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['NO_POINTS'].to_i * 2)
       end
 
       it 'tallies all yeses and nos' do
-        expect(Agent.find(@agent.id).points).to eq(20)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2)
         @another_agent.vote false, @post1
-        expect(Agent.find(@agent.id).points).to eq(19)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['NO_POINTS'].to_i)
         @another_agent.vote true, @post2
-        expect(Agent.find(@agent.id).points).to eq(22)
+        expect(Agent.find(@agent.id).points).to eq(ENV['POST_POINTS'].to_i * 2 + ENV['NO_POINTS'].to_i + ENV['YES_POINTS'].to_i)
       end
 
-      it 'adds 2 points for every vote cast by an agent' do
+      it 'adds points for every vote cast by an agent' do
         expect(Agent.find(@another_agent.id).points).to eq(0)
         @another_agent.vote false, @post1
-        expect(Agent.find(@another_agent.id).points).to eq(2)
+        expect(Agent.find(@another_agent.id).points).to eq(ENV['VOTE_POINTS'].to_i)
         @another_agent.vote true, @post2
-        expect(Agent.find(@another_agent.id).points).to eq(4)
+        expect(Agent.find(@another_agent.id).points).to eq(ENV['VOTE_POINTS'].to_i * 2)
       end
     end
   end

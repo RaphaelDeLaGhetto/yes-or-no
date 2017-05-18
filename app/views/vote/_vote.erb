@@ -11,6 +11,6 @@
     <a href="/agents/<%= vote.agent.id %>"><%= vote.agent.name || 'Anonymous' %></a>
   </span>
   <span class="change <%= vote.yes ? 'positive' : 'negative' %>">
-    <%= vote.yes ? '+3' : '-1' %>
+    <%= vote.yes ? '+' : '' %><%= vote.yes ? "#{ENV['YES_POINTS']}" : "#{ENV['NO_POINTS']}" %>
   </span>
 </article>

@@ -129,7 +129,7 @@ describe "landing page", :type => :feature do
     end
 
     it 'renders an agent\'s score' do
-      expect(@agent.points).to eq(20)
+      expect(@agent.points).to eq(ENV['POST_POINTS'].to_i * 2)
       expect(page).to have_content(@agent.points)
     end
 

@@ -28,6 +28,12 @@ EMAIL_PASSWORD=
 # App
 QUESTION="Is this app useful?"
 
+# Points
+POST_POINTS=10
+VOTE_POINTS=2
+YES_POINTS=3
+NO_POINTS=-1
+
 # For testing purposes, leave this false or don't set
 #AUTO_APPROVE=false
 ```

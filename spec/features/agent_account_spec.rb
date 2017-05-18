@@ -170,19 +170,19 @@ describe "agent account", :type => :feature do
         end 
 
         it 'renders the points awarded for posts' do
-          expect(page).to have_selector("article.posts", count: 1, text: "#{@agent.posts.count * 10}")
+          expect(page).to have_selector("article.posts", count: 1, text: "#{@agent.posts.count * ENV['POST_POINTS'].to_i}")
           expect(page).to have_selector("article.posts", count: 1, text: "#{@agent.posts.count} posts")
         end
 
         it 'renders the points awarded for votes' do
-          expect(page).to have_selector("article.votes", count: 1, text: "#{@agent.votes.count * 2}")
+          expect(page).to have_selector("article.votes", count: 1, text: "#{@agent.votes.count * ENV['VOTE_POINTS'].to_i}")
           expect(page).to have_selector("article.votes", count: 1, text: "#{@agent.votes.count} votes cast")
         end
 
         it 'renders the list of votes in descending order of creation' do
           expect(page).to have_selector("article.vote", count: 2)
-          expect(page).to have_selector("article.vote:nth-of-type(1) span.change", :text => "-1")
-          expect(page).to have_selector("article.vote:nth-of-type(2) span.change", :text => "+3")
+          expect(page).to have_selector("article.vote:nth-of-type(1) span.change", :text => "#{ENV['NO_POINTS']}")
+          expect(page).to have_selector("article.vote:nth-of-type(2) span.change", :text => "+#{ENV['YES_POINTS']}")
         end
 
         it 'links to the post upon which the vote was cast' do
