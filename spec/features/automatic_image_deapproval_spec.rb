@@ -54,14 +54,17 @@ describe "de-approve images that are not found", js: true, :type => :feature do
       fill_in "Password", :with => 'secret'
       click_button "Login"
       wait_for_ajax
+      wait_for_ajax
     end
 
-    it 'only displays all posts' do
+    it 'displays all posts' do
       expect(page).to have_selector('article', count: 2)
     end
 
     it 'displays an error message for the post that didn\'t load' do
-      expect(page).to have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
+      expect(page).to have_css("a[href='/post/#{@post2.id}']")
+      expect(page).to have_link(@post2.url, href: @post2.url)
+      expect(page).to have_content('This URL does not point to an image that can be loaded:') 
     end
 
     it 'de-approves the missing post' do
@@ -76,7 +79,9 @@ describe "de-approve images that are not found", js: true, :type => :feature do
       end
 
       it 'displays an error message for the post that didn\'t load' do
-        expect(page).to have_link("The image at #{@post2.url} could not be loaded", href: "/post/#{@post2.id}")
+        expect(page).to have_css("a[href='#{@post2.url}']")
+        expect(page).to have_link(@post2.url, href: @post2.url)
+        expect(page).to have_content('This URL does not point to an image that can be loaded:') 
       end
     end
   end

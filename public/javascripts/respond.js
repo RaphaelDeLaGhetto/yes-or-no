@@ -15,12 +15,18 @@ var deapprove = function(el) {
     },
     success: function(result) {
       if(result.isOwner) {
-        $('#'+parentId).
-          html('<a href="/post/' + parentId.replace('post-', '') + '">' +
-               '<div class="alert alert-warning">The image at ' + result.url + ' could not be loaded</div>' +
-               '</a>');
+        var $warningBox = $('<div>', { 'class': 'alert alert-warning' });
+        var $topLine = $('<div></div>', { text: 'This URL does not point to an image that can be loaded:' });
+        var $brokenUrl = $('<a>', { 'class': 'broken', href: result.url, text: result.url });
+        var $bottomLine = $('<div>', { text: 'Image files typically end with ' }).
+                          append('<em>.jpg</em>, <em>.gif</em>, or <em>.png</em>. ').
+                          append('In most browsers you can <em>right-click</em>').
+                          append(' on an image and select <em>\'Copy image address\'</em>. ').
+                          append('Use this <em>URL</em> to post a new image.');
+        $warningBox.append($topLine).append($brokenUrl).append($bottomLine);
+        $('#' + parentId + ' .image a').html($warningBox);
       } else {
-        $('#'+parentId).hide();
+        $('#' + parentId).hide();
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {

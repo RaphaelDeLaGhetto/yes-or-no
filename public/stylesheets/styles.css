@@ -19,6 +19,10 @@ h2 aside {
   font-style: italic;
 }
 
+.image a {
+  text-decoration: none;
+}
+
 .about {
   color: #313131;
   background: #fafafa;
@@ -371,6 +375,19 @@ button {
 
 .alert-warning {
   background-color: #ff9800; /* Orange */
+  font-size: 1.75em;
+}
+
+.alert-warning a {
+  text-decoration: none;
+}
+
+.alert-warning a:hover {
+  text-decoration: underline;
+}
+
+.alert-warning .broken {
+  font-size: .7em;
 }
 
 /**
