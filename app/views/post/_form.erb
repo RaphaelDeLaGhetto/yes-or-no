@@ -11,6 +11,7 @@
         <%= text_field_tag(:tag, :id => 'tag', :maxlength => 256) %>
       <% end %>
       <% field_set_tag(:class => 'form-group') do %>
+        <%= label_tag(:submit, :caption => 'Links boost your SEO') %>
         <%= submit_tag('Add Image', :id => 'add-image-button') %>
       <% end %>
     <% end %>

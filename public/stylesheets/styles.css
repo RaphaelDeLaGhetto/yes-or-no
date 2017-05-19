@@ -274,6 +274,11 @@ button {
   border: none;
 }
 
+label[for='submit'] {
+  font-size: .7em;
+  text-align: right;
+}
+
 .yes {
   background-color: #005b00;
   margin-left: 1.5em;
