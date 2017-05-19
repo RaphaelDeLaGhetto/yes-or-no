@@ -3,12 +3,12 @@
     <p>Link to images on social media or your website</p>
     <% form_tag url_for(:post, :create), :id => 'post-form', :method => 'post' do %>
       <% field_set_tag(:class => 'form-group') do %>
-        <%= label_tag(:url, :caption => 'Link to image') %>
-        <%= url_field_tag(:url, :id => 'url') %>
+        <%= label_tag(:url, :caption => 'Link to an image') %>
+        <%= url_field_tag(:url, :id => 'url', :placeholder => 'https://example.com/mypic.jpg') %>
       <% end %>
       <% field_set_tag(:class => 'form-group') do %>
         <%= label_tag(:tag, :caption => 'Description (hashtags welcome!)') %>
-        <%= text_field_tag(:tag, :id => 'tag', :maxlength => 256) %>
+        <%= text_field_tag(:tag, :id => 'tag', :maxlength => 256, :placeholder => '#hashtags are searchable!') %>
       <% end %>
       <% field_set_tag(:class => 'form-group') do %>
         <%= label_tag(:submit, :caption => 'Links boost your SEO') %>
