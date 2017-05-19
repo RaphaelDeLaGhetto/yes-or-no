@@ -1,4 +1,4 @@
-<div class="about">
+<div class="form-wrapper">
   <p>Easy Account Registration and Retrieval</p>
   <% form_for(@agent, '/agents/create') do |f| %>
     <% field_set_tag(:class => 'form-group') do %>
@@ -7,7 +7,7 @@
       <%= error_message_on @agent, :email, :class => "text-error", :prepend => "The email" %>
     <% end %>
     <% field_set_tag(:class => 'form-group') do %>
-      <%= f.submit "Send", :class => "btn btn-primary" %>
+      <%= f.submit "Send", :class => "btn btn-primary", :id => "send-button" %>
     <% end %>
   <% end %>
   <p>You will receive a link to set your password</p>

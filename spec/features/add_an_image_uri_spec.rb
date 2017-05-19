@@ -40,8 +40,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image URL provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => ""
-          fill_in "Tag", :with => "DSB"
+          fill_in "url", :with => ""
+          fill_in "tag", :with => "DSB"
           click_button "Add Image"
         end
   
@@ -57,8 +57,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image description provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => "http://example.com/image.jpg"
-          fill_in "Tag", :with => "  "
+          fill_in "url", :with => "http://example.com/image.jpg"
+          fill_in "tag", :with => "  "
           click_button "Add Image"
         end
   
@@ -75,8 +75,8 @@ describe "add an image URI", :type => :feature do
     describe 'image submission' do
       before :each do
         expect(Post.count).to eq(0)
-        fill_in "Image URL", :with => "example.com/image.jpg"
-        fill_in "Tag", :with => "DSB"
+        fill_in "url", :with => "example.com/image.jpg"
+        fill_in "tag", :with => "DSB"
         click_button "Add Image"
       end
 
@@ -137,8 +137,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image URL provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => ""
-          fill_in "Tag", :with => "DSB"
+          fill_in "url", :with => ""
+          fill_in "tag", :with => "DSB"
           click_button "Add Image"
         end
   
@@ -154,8 +154,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image description provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => "http://example.com/image.jpg"
-          fill_in "Tag", :with => "  "
+          fill_in "url", :with => "http://example.com/image.jpg"
+          fill_in "tag", :with => "  "
           click_button "Add Image"
         end
   
@@ -172,8 +172,8 @@ describe "add an image URI", :type => :feature do
     describe 'image submission' do
       before :each do
         expect(Post.count).to eq(0)
-        fill_in "Image URL", :with => "example.com/image.jpg"
-        fill_in "Tag", :with => "DSB"
+        fill_in "url", :with => "example.com/image.jpg"
+        fill_in "tag", :with => "DSB"
         click_button "Add Image"
       end
 
@@ -235,8 +235,8 @@ describe "add an image URI", :type => :feature do
         ENV['AUTO_APPROVE'] = 'true'
         expect(ENV['AUTO_APPROVE']).to eq 'true'
         expect(Post.count).to eq(0)
-        fill_in "Image URL", :with => "example.com/image.jpg"
-        fill_in "Tag", :with => "DSB"
+        fill_in "url", :with => "example.com/image.jpg"
+        fill_in "tag", :with => "DSB"
         click_button "Add Image"
       end
 
@@ -299,8 +299,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image URL provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => ""
-          fill_in "Tag", :with => "DSB"
+          fill_in "url", :with => ""
+          fill_in "tag", :with => "DSB"
           click_button "Add Image"
         end
   
@@ -316,8 +316,8 @@ describe "add an image URI", :type => :feature do
       describe 'no image description provided' do
         before :each do
           expect(Post.count).to eq(0)
-          fill_in "Image URL", :with => "http://example.com/image.jpg"
-          fill_in "Tag", :with => "  "
+          fill_in "url", :with => "http://example.com/image.jpg"
+          fill_in "tag", :with => "  "
           click_button "Add Image"
         end
   
@@ -334,8 +334,8 @@ describe "add an image URI", :type => :feature do
     describe 'image submission' do
       before :each do
         expect(Post.count).to eq(0)
-        fill_in "Image URL", :with => "example.com/image.jpg"
-        fill_in "Tag", :with => "DSB"
+        fill_in "url", :with => "example.com/image.jpg"
+        fill_in "tag", :with => "DSB"
         click_button "Add Image"
       end
 

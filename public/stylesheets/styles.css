@@ -464,6 +464,8 @@ form {
 
 #login-button,
 #next-button,
+#send-button,
+#update-button,
 #add-image-button,
 #reset-password {
   border: none;
@@ -635,5 +637,78 @@ form {
 @media all and (min-width: 900px) {
   #attention-landing {
     animation-name: pointArrowBottomRightBigScreen;
+  }
+}
+
+/**
+ * Form styles
+ */
+.form-wrapper {
+  color: #313131;
+  background: #fafafa;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  border-radius: 5px;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.form-wrapper .form-group {
+  width: 100%;
+}
+
+.form-wrapper em {
+  color: #313161;
+  font-weight: bold;
+}
+
+.form-wrapper .text-error {
+  font-size: .8em;
+  color: #aa0000;
+}
+
+.form-wrapper p {
+  padding-top: 1em;
+  text-align: center;
+  color: #313161;
+  font-weight: bold;
+}
+
+.form-wrapper a {
+  text-decoration: none;
+}
+
+.form-wrapper form {
+  width: 100%;
+}
+
+.form-wrapper form label {
+  color: #313161;
+}
+
+@media all and (min-width: 900px) {
+  .form-wrapper {
+    width: 60%;
+  }
+  .form-wrapper form {
+    width: 70%;
+  }
+  .form-wrapper li {
+    font-size: 1em;
+  }
+}
+
+@media all and (min-width: 900px) {
+  .form-wrapper {
+    width: 60%;
+  }
+  .form-wrapper form {
+    width: 70%;
+  }
+  .form-wrapper li {
+    font-size: 1em;
   }
 }
