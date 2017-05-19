@@ -37,7 +37,7 @@ YesOrNo::App.controllers :post do
       flash[:success] = approved ? 'Image submitted successfully' : 'Image submitted for review'
       redirect "/post/#{@post.id}"
     else
-      flash[:error] = @post.errors.full_messages.map { |msg| "#{msg}" }.join("<br>")
+      flash[:error] = @post.errors.full_messages.map { |msg| "#{msg}" }.join(". ")
       redirect "/agents/#{@agent.id}/posts"
     end
   end
