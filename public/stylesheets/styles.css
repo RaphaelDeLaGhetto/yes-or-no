@@ -272,6 +272,7 @@ button {
   color: #ffffff;
   font-size: 2em;
   border: none;
+  -webkit-appearance: none; /* for iOS */
 }
 
 label[for='submit'] {
@@ -399,6 +400,8 @@ label[for='submit'] {
  * Forms
  */
 input {
+  -webkit-box-sizing: border-box; /* for iOS */
+  -webkit-appearance: none; /* for iOS */
   font-size: 1.1em;
 }
 
