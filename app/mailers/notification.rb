@@ -42,9 +42,10 @@
 YesOrNo::App.mailer :notification do
 
   email :notification_email do |agent|
-    from agent.email
+    from ENV['EMAIL']
     subject "Email signup: #{agent.email}"
     to ENV['EMAIL']
+    reply_to ENV['EMAIL']
     locals :agent_profile_link => "#{ENV['HOST']}/agents/#{agent.id}"
     render 'notification/notification_email'
   end

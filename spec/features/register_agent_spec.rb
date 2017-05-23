@@ -132,7 +132,8 @@ describe "agent registration", :type => :feature do
     it 'sends notification email to ENV["EMAIL"]' do
       email = Mail::TestMailer.deliveries[1]
       expect(email.to).to eq([ENV['EMAIL']])
-      expect(email.from).to eq(['someguy@example.com'])
+      expect(email.from).to eq([ENV['EMAIL']])
+      expect(email.reply_to).to eq(['someguy@example.com'])
       expect(email.subject).to have_content("Email signup: someguy@example.com")
       expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}")
       expect(email.attachments.count).to eq(0)
