@@ -313,6 +313,4 @@ describe "agent registration or authentication", :type => :feature do
       expect(Agent.count).to eq(1)
     end
   end
-
-
 end

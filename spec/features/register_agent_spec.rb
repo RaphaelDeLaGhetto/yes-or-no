@@ -189,7 +189,7 @@ describe "agent registration", :type => :feature do
       expect(page).to have_content('The email is invalid')
     end
 
-    it 'does not send a confimration email' do
+    it 'does not send a confirmation email' do
       expect(Mail::TestMailer.deliveries.count).to eq(0)
     end
 
