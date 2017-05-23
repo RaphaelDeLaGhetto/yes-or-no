@@ -1,14 +1,16 @@
-<h1>Set your password</h1>
-<h2><%=@agent.email %></h2>
-<% form_for(@agent, '/agents/confirm') do |f| %>
-  <%= hidden_field_tag :'_method', :value => 'PATCH' %>
-  <%= hidden_field_tag :id, :value => @agent.id %>
-  <% field_set_tag(:class => 'form-group') do %>
-    <%= f.label :password, value: '' %>
-    <%= f.password_field :password, value: '', :autofocus => 'autofocus' %>
-    <%= error_message_on @agent, :password, :class => "text-error", :prepend => "The password " %>
+<div class='form-wrapper'>
+  <h1>Set Your Password</h1>
+  <h2><%=@agent.email %></h2>
+  <% form_for(@agent, '/agents/confirm') do |f| %>
+    <%= hidden_field_tag :'_method', :value => 'PATCH' %>
+    <%= hidden_field_tag :id, :value => @agent.id %>
+    <% field_set_tag(:class => 'form-group') do %>
+      <%= f.label :password, value: '' %>
+      <%= f.password_field :password, value: '', :autofocus => 'autofocus' %>
+      <%= error_message_on @agent, :password, :class => "text-error", :prepend => "The password " %>
+    <% end %>
+    <% field_set_tag(:class => 'form-group') do %>
+      <%= f.submit "Update", :class => "btn btn-primary" %>
+    <% end %>
   <% end %>
-  <% field_set_tag(:class => 'form-group') do %>
-    <%= f.submit "Update", :class => "btn btn-primary" %>
-  <% end %>
-<% end %>
+</div>
