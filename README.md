@@ -34,9 +34,10 @@ VOTE_POINTS=2
 YES_POINTS=3
 NO_POINTS=-1
 
-# For testing purposes, leave these false or don't set
+# For testing purposes, leave this false or don't set
 #AUTO_APPROVE=false
-#SIGNUP_NOTIFICATION=false
+# For testing purposes, leave this unset
+#NOTIFICATION_EMAIL=someotherguy@example.com
 ```
 
 The mailer configuration provided works with `mailcatcher`.

@@ -20,7 +20,7 @@ YesOrNo::App.controllers :agents do
 
     if @agent.save
       deliver(:confirmation, :confirmation_email, @agent, confirmation)
-      deliver(:notification, :notification_email, @agent) if ENV['SIGNUP_NOTIFICATION'] == 'true'
+      deliver(:notification, :notification_email, @agent) if ENV['NOTIFICATION_EMAIL'].present?
       flash[:success] = 'Check your email to set your password'
       redirect('/')
     else

@@ -35,7 +35,7 @@ describe "agent registration", :type => :feature do
 
 
     it 'does not send a notification email to ENV["EMAIL"]' do
-      expect(ENV['SIGNUP_NOTIFICATION'] == false || ENV['SIGNUP_NOTIFICATION'] == nil).to be true
+      expect(ENV['NOTIFICATION_EMAIL'].nil?).to be true
       # Cf. test above
       expect(Mail::TestMailer.deliveries.count).to eq(1)
     end
@@ -100,11 +100,10 @@ describe "agent registration", :type => :feature do
     end
   end
 
-  context 'success with ENV["SIGNUP_NOTIFICATION"] == true' do
+  context 'success with ENV["NOTIFICATION_EMAIL"] set to a valid email' do
     before :each do
-      @cached_auto_approve = ENV['SIGNUP_NOTIFICATION']
-      ENV['SIGNUP_NOTIFICATION'] = 'true'
-      expect(ENV['SIGNUP_NOTIFICATION']).to eq 'true'
+      @cached_notification_email = ENV['NOTIFICATION_EMAIL']
+      ENV['NOTIFICATION_EMAIL'] = 'someotherguy@example.com'
       allow(SecureRandom).to receive(:hex).and_return('abc123')
       expect(Agent.count).to eq(0)
       fill_in "Email", :with => "someguy@example.com"
@@ -112,7 +111,7 @@ describe "agent registration", :type => :feature do
     end
 
     after :each do
-      ENV['SIGNUP_NOTIFICATION'] = @cached_auto_approve
+      ENV['NOTIFICATION_EMAIL'] = @cached_notification_email
     end
 
     it 'displays a message confirming email was sent' do
@@ -131,8 +130,8 @@ describe "agent registration", :type => :feature do
 
     it 'sends notification email to ENV["EMAIL"]' do
       email = Mail::TestMailer.deliveries[1]
-      expect(email.to).to eq([ENV['EMAIL']])
-      expect(email.from).to eq(['someguy@example.com'])
+      expect(email.to).to eq([ENV['NOTIFICATION_EMAIL']])
+      expect(email.from).to eq([ENV['EMAIL']])
       expect(email.subject).to have_content("Email signup: someguy@example.com")
       expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}")
       expect(email.attachments.count).to eq(0)
