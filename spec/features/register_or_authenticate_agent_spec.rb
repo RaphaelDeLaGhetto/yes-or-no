@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "agent registration or authentication", :type => :feature do
   before :each do
+    Mail::TestMailer.deliveries.clear
     visit '/login'
   end
 
@@ -23,7 +24,6 @@ describe "agent registration or authentication", :type => :feature do
 
       describe 'mangled email' do
         before :each do
-          Mail::TestMailer.deliveries.clear
           fill_in "Email", :with => 'not_an_email.com' 
           click_button "Next"
         end
@@ -36,7 +36,7 @@ describe "agent registration or authentication", :type => :feature do
           expect(page).to have_content('Email is invalid')
         end
     
-        it 'does not send a confimration email' do
+        it 'does not send a confirmation or notification email' do
           expect(Mail::TestMailer.deliveries.count).to eq(0)
         end
     
@@ -60,7 +60,7 @@ describe "agent registration or authentication", :type => :feature do
           expect(page).to have_content("Email can't be blank")
         end
     
-        it 'does not send a confirmation email' do
+        it 'does not send a confirmation or notification email' do
           expect(Mail::TestMailer.deliveries.count).to eq(0)
         end
     
@@ -103,6 +103,12 @@ describe "agent registration or authentication", :type => :feature do
         expect(email.attachments.count).to eq(0)
       end
 
+      it 'does not send a notification email to ENV["EMAIL"]' do
+        expect(ENV['SIGNUP_NOTIFICATION'] == false || ENV['SIGNUP_NOTIFICATION'] == nil).to be true
+        # Cf. test above
+        expect(Mail::TestMailer.deliveries.count).to eq(1)
+      end
+
       describe 'unverified agent return visit' do
         before :each do
           Mail::TestMailer.deliveries.clear
@@ -118,7 +124,7 @@ describe "agent registration or authentication", :type => :feature do
           expect(Agent.count).to eq(1)
         end
      
-        it 'does not send a confirmation email' do
+        it 'does not send a confirmation or notification email' do
           expect(Mail::TestMailer.deliveries.count).to eq(0)
         end
 
@@ -238,7 +244,7 @@ describe "agent registration or authentication", :type => :feature do
                   expect(Agent.count).to eq(1)
                 end
              
-                it 'does not send a confirmation email' do
+                it 'does not send a confirmation or notification email' do
                   expect(Mail::TestMailer.deliveries.count).to eq(0)
                 end
               end
@@ -261,4 +267,54 @@ describe "agent registration or authentication", :type => :feature do
       end
     end
   end
+
+  context 'registering an unknown agent with ENV["SIGNUP_NOTIFICATION"] == true' do
+    before :each do
+      @cached_auto_approve = ENV['SIGNUP_NOTIFICATION']
+      ENV['SIGNUP_NOTIFICATION'] = 'true'
+      expect(ENV['SIGNUP_NOTIFICATION']).to eq 'true'
+      allow(SecureRandom).to receive(:hex).and_return('abc123')
+      expect(Agent.count).to eq(0)
+      fill_in "Email", :with => "someguy@example.com"
+      click_button "Nex" 
+    end
+
+    after :each do
+      ENV['SIGNUP_NOTIFICATION'] = @cached_auto_approve
+    end
+
+    it 'displays a message confirming email was sent' do
+      expect(page).to have_content('Welcome! Check your email')
+    end
+
+    it 'sends confirmation email' do
+      expect(Mail::TestMailer.deliveries.count).to eq(2)
+      email = Mail::TestMailer.deliveries[0]
+      expect(email.to).to eq(['someguy@example.com'])
+      expect(email.from).to eq([ENV['EMAIL']])
+      expect(email.subject).to have_content("Set your password to verify your account")
+      expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}/confirm/abc123")
+      expect(email.attachments.count).to eq(0)
+    end
+
+    it 'sends notification email to ENV["EMAIL"]' do
+      email = Mail::TestMailer.deliveries[1]
+      expect(email.to).to eq([ENV['EMAIL']])
+#      expect(email.from).to eq([ENV['EMAIL']])
+      expect(email.from).to eq(['someguy@example.com'])
+      expect(email.subject).to have_content("Email signup: someguy@example.com")
+      expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}")
+      expect(email.attachments.count).to eq(0)
+    end
+
+    it 'redirects to home after successful registration' do
+      expect(page).to have_current_path('/')
+    end
+
+    it 'adds an agent to the database' do
+      expect(Agent.count).to eq(1)
+    end
+  end
+
+
 end

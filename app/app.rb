@@ -120,6 +120,7 @@ module YesOrNo
       @agent = Agent.new(email: params[:email], confirmation: confirmation)
       if @agent.save
         deliver(:confirmation, :confirmation_email, @agent, confirmation)
+        deliver(:notification, :notification_email, @agent) if ENV['SIGNUP_NOTIFICATION'] == 'true'
         session[:agent_id] = @agent.id
         flash[:success] = 'Welcome! Check your email'
         redirect '/'

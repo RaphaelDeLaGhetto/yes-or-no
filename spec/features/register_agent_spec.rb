@@ -132,8 +132,7 @@ describe "agent registration", :type => :feature do
     it 'sends notification email to ENV["EMAIL"]' do
       email = Mail::TestMailer.deliveries[1]
       expect(email.to).to eq([ENV['EMAIL']])
-      expect(email.from).to eq([ENV['EMAIL']])
-      expect(email.reply_to).to eq(['someguy@example.com'])
+      expect(email.from).to eq(['someguy@example.com'])
       expect(email.subject).to have_content("Email signup: someguy@example.com")
       expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}")
       expect(email.attachments.count).to eq(0)
@@ -166,7 +165,7 @@ describe "agent registration", :type => :feature do
       expect(page).to have_current_path('/')
     end
 
-    it 'sends a confimration email' do
+    it 'sends a confirmation email' do
       expect(Mail::TestMailer.deliveries.count).to eq(1)
     end
 
