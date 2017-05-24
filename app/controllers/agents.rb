@@ -13,6 +13,7 @@ YesOrNo::App.controllers :agents do
     @agent = Agent.find_by(email: params[:agent][:email])
 
     if @agent.nil?
+      is_new = true
       @agent = Agent.new(email: params[:agent][:email], confirmation: confirmation)
     else
       @agent.confirmation = confirmation
@@ -20,7 +21,7 @@ YesOrNo::App.controllers :agents do
 
     if @agent.save
       deliver(:confirmation, :confirmation_email, @agent, confirmation)
-      deliver(:notification, :notification_email, @agent) if ENV['NOTIFICATION_EMAIL'].present?
+      deliver(:notification, :notification_email, @agent) if ENV['NOTIFICATION_EMAIL'].present? && is_new
       flash[:success] = 'Check your email to set your password'
       redirect('/')
     else

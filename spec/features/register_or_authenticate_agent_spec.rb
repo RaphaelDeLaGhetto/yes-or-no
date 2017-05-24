@@ -177,7 +177,13 @@ describe "agent registration or authentication", :type => :feature do
             expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}/confirm/abc123")
             expect(email.attachments.count).to eq(0)
           end
-      
+
+          it 'does not send a notification email to ENV["EMAIL"]' do
+            expect(ENV['NOTIFICATION_EMAIL'].nil?).to be true
+            # Cf. test above
+            expect(Mail::TestMailer.deliveries.count).to eq(1)
+          end
+
           it 'redirects to home after successful reset request' do
             expect(page).to have_current_path('/')
           end
@@ -275,7 +281,7 @@ describe "agent registration or authentication", :type => :feature do
       allow(SecureRandom).to receive(:hex).and_return('abc123')
       expect(Agent.count).to eq(0)
       fill_in "Email", :with => "someguy@example.com"
-      click_button "Nex" 
+      click_button "Next" 
     end
 
     after :each do
@@ -311,6 +317,47 @@ describe "agent registration or authentication", :type => :feature do
 
     it 'adds an agent to the database' do
       expect(Agent.count).to eq(1)
+    end
+
+    describe 'unverified agent return visit' do
+      before :each do
+        Mail::TestMailer.deliveries.clear
+        click_link 'Logout'
+        visit  '/'
+        click_link 'Login'
+        expect(Agent.count).to eq(1)
+        fill_in 'Email', :with => 'someguy@example.com'
+        click_button 'Next'
+      end
+
+
+      describe 'password reset/agent verification' do
+
+        before :each do
+          allow(SecureRandom).to receive(:hex).and_return('abc123')
+          expect(Agent.count).to eq(1)
+          click_button 'Reset password'
+        end
+
+        it 'displays a message confirming email was sent' do
+          expect(page).to have_content('Check your email to set your password')
+        end
+    
+        it 'sends confirmation email' do
+          email = Mail::TestMailer.deliveries.last
+          expect(email.to).to eq(['someguy@example.com'])
+          expect(email.from).to eq([ENV['EMAIL']])
+          expect(email.subject).to have_content("Set your password to verify your account")
+          expect(email.body).to have_content("#{ENV['HOST']}/agents/#{Agent.first.id}/confirm/abc123")
+          expect(email.attachments.count).to eq(0)
+        end
+
+        it 'does not send a notification email to ENV["NOTIFICATION_EMAIL"]' do
+          expect(ENV['NOTIFICATION_EMAIL'].present?).to be true
+          # Cf. test above
+          expect(Mail::TestMailer.deliveries.count).to eq(1)
+        end
+      end
     end
   end
 end
