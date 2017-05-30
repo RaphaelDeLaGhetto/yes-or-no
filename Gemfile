@@ -53,6 +53,7 @@ group :test, :development do
   gem 'mailcatcher'
   gem 'rack_session_access'
   gem 'puffing-billy'
+  gem 'fantaskspec'
 end
 
 group :heroku do

@@ -7,6 +7,7 @@ require 'capybara/poltergeist'
 require 'shoulda/matchers'
 require "rack_session_access/capybara"
 require 'billy/capybara/rspec'
+require 'fantaskspec'
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
@@ -98,7 +99,6 @@ RSpec.configure do |conf|
   # Shoulda
   conf.include(Shoulda::Matchers::ActiveModel, type: :model)
   conf.include(Shoulda::Matchers::ActiveRecord, type: :model)
-
 end
 
 
