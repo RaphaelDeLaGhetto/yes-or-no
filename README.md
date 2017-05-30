@@ -127,4 +127,11 @@ heroku run bundle exec rake db:migrate
 heroku run bundle exec rake db:seed
 ```
 
+## `rake` bulk insert
+
+Put images to be inserted in a directory under `./public`.
+
+```
+RACK_ENV=production bundle exec post:images['someguy@example.com', './public/path/to/images']
+```
 
