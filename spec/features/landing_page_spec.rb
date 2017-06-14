@@ -48,7 +48,43 @@ describe "landing page", :type => :feature do
       expect(page).to have_selector("article:nth-of-type(2) header h1", :text => @post_2.tag)
       expect(page).to have_selector("article:nth-of-type(3) header h1", :text => @post_1.tag)
     end
+
+    it 'renders no ads by default' do
+      visit '/'
+      expect(ENV['AD_SPACING']).to eq(nil)
+      expect(page).to have_selector('.ad', count: 0)
+    end
     
+    describe 'ad spacing', js: true do
+      before :each do
+        Post.destroy_all
+        expect(Post.count).to eq(0)
+        @fake_agent = Agent.create(email: 'fake@email.com', password: 'secret')
+        (0..29).each do |num|
+          post = Post.create(url: "http://fake.com/#{num}.jpg",
+                      tag: "fake #{num}",
+                      approved: true,
+                      agent: @fake_agent)
+          proxy.stub(post.url).
+            and_return(redirect_to: "http://localhost:#{Capybara.current_session.server.port}/admin/images/logo.png")
+        end 
+        expect(Post.count).to eq(30)
+      end
+
+      it 'renders an ad for every post' do
+        ENV['AD_SPACING'] = '1'
+        visit '/'
+        expect(page).to have_selector('.ad', count: 30)
+      end
+
+      it 'renders an ad every five posts' do
+        ENV['AD_SPACING'] = '5'
+        visit '/'
+        expect(page).to have_selector('.ad', count: 6)
+      end
+ 
+    end
+
     describe 'attention getter' do
       it 'displays the attention getter on first visit' do
         expect(page).to have_selector("#attention-landing", :count => 1)

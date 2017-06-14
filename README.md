@@ -38,6 +38,9 @@ NO_POINTS=-1
 #AUTO_APPROVE=false
 # For testing purposes, leave this unset
 #NOTIFICATION_EMAIL=someotherguy@example.com
+
+# Set the frequency of ad blocks (default 0)
+#AD_SPACING=0
 ```
 
 The mailer configuration provided works with `mailcatcher`.
@@ -103,6 +106,13 @@ bundle exec rake db:migrate RACK_ENV=test
 
 ```
 bundle exec rspec
+```
+
+Run one test:
+
+```
+RACK_ENV=test bundle exec rspec spec/features/landing_page_spec.rb
+
 ```
 
 ## Server

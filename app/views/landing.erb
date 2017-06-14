@@ -1,11 +1,14 @@
 <% if @posts.empty? %>
   <h1>No one's posted anything</h1>
 <% else %>
-  <% @posts.each do |post| %>
+  <% @posts.each_with_index do |post, index| %>
     <% if @agent %>
       <%= partial('post/post', {locals: {post: post, can_vote: @agent.can_vote?(post)}}) %>
     <% else %>
       <%= partial('post/post', {locals: {post: post, can_vote: @can_vote}}) %>
+    <% end %>
+    <% if ENV['AD_SPACING'] && index % ENV['AD_SPACING'].to_i == 0 %>
+      <%= partial('ad') %>
     <% end %>
   <% end %>
   <%= will_paginate @posts, :page_links => false,
