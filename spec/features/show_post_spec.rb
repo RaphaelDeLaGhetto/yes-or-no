@@ -28,6 +28,32 @@ describe "show post", :type => :feature do
     expect(page).to have_current_path("/agents/#{@agent.id}")
   end
 
+  describe 'advertisements' do
+    it 'renders no ads by default' do
+      ENV['AD_SPACING'] = nil 
+      visit "/post/#{@post_1.id}"
+      expect(page).to have_selector('.ad', count: 0)
+    end
+
+    it 'renders no ads if spacing is 0' do
+      ENV['AD_SPACING'] = '0'
+      visit "/post/#{@post_1.id}"
+      expect(page).to have_selector('.ad', count: 0)
+    end
+
+    it 'renders one ad if spacing is 1' do
+      ENV['AD_SPACING'] = '1'
+      visit "/post/#{@post_1.id}"
+      expect(page).to have_selector('.ad', count: 1)
+    end
+
+    it 'renders one ad if spacing is greater than 0' do
+      ENV['AD_SPACING'] = '5'
+      visit "/post/#{@post_1.id}"
+      expect(page).to have_selector('.ad', count: 1)
+    end
+  end
+
   context 'not logged in' do
     it 'renders the post show page' do
       find("a[href='/post/#{@post_1.id}']").click

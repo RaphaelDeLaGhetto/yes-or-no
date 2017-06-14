@@ -50,8 +50,14 @@ describe "landing page", :type => :feature do
     end
 
     it 'renders no ads by default' do
+      ENV['AD_SPACING'] = nil 
       visit '/'
-      expect(ENV['AD_SPACING']).to eq(nil)
+      expect(page).to have_selector('.ad', count: 0)
+    end
+
+    it 'renders no ads if spacing is 0' do
+      ENV['AD_SPACING'] = '0'
+      visit '/'
       expect(page).to have_selector('.ad', count: 0)
     end
     

@@ -4,3 +4,6 @@
   <% end %>
 <% end %>
 <%= partial('post/post', {locals: {post: @post, can_vote: @agent.can_vote?(@post)}}) %>
+<% if ENV['AD_SPACING'] && ENV['AD_SPACING'].to_i > 0 %>
+  <%= partial('ad') %>
+<% end %>
