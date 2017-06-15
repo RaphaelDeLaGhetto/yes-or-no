@@ -719,4 +719,8 @@ form {
   .form-wrapper li {
     font-size: 1em;
   }
+  .ad {
+    text-align: center;        
+    margin-bottom: 1em;        
+  }
 }
