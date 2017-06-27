@@ -12,7 +12,8 @@ describe "edit post", :type => :feature do
     end
 
     it 'does not display an update button' do
-      expect(false).to eq(true)
+      expect(page).to have_selector("input[name='description']", count: 0)
+      expect(page).to have_selector('input[type="submit"]', count: 0)
     end
 
     it 'sets the description field to not editable' do
