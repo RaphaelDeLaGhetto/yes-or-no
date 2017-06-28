@@ -50,6 +50,7 @@ GEM
       rspec (~> 3.0)
     http_parser.rb (0.6.0)
     i18n (0.8.1)
+    jwt (1.5.4)
     mail (2.6.5)
       mime-types (>= 1.16, < 4)
     mailcatcher (0.6.5)
@@ -187,6 +188,7 @@ DEPENDENCIES
   dotenv
   factory_girl
   fantaskspec
+  jwt
   mailcatcher
   padrino (= 0.13.3.2)
   padrino-flash

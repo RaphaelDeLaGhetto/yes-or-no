@@ -36,6 +36,8 @@ gem 'dotenv'
 
 gem 'validate_url'
 
+gem 'jwt'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

@@ -18,6 +18,9 @@ Paste and save the following:
 # General
 HOST=http://localhost
 
+# API
+HMAC_SECRET=my$ecretK3y
+
 # Mailer
 EMAIL=someguy@example.com
 SMTP_ADDRESS=127.0.0.1
