@@ -17,7 +17,8 @@ RSpec.describe "/api" do
         post "/api/auth", { email: @agent.email, password: 'secret' }
         expect(last_response.status).to eq(200)
         expect(last_response.body).to_not eq(nil)
-        decoded_token = JWT.decode last_response.body, ENV['HMAC_SECRET'], false, { :algorithm => 'HS256' }
+        decoded_token = JWT.decode(JSON.parse(last_response.body)['token'],
+                                   ENV['HMAC_SECRET'], false, { :algorithm => 'HS256' })
         expect(decoded_token[0]['agent_id']).to eq(@agent.id)
       end
     end
@@ -62,7 +63,7 @@ RSpec.describe "/api" do
         @admin = create(:admin)
         post "/api/auth", { email: @admin.email, password: 'secret' }
         expect(last_response.status).to eq(200)
-        @token = last_response.body 
+        @token = JSON.parse(last_response.body)['token'] 
       end
   
       it "returns 200" do
@@ -132,7 +133,7 @@ RSpec.describe "/api" do
 
       post "/api/auth", { email: @another_agent.email, password: 'secret' }
       expect(last_response.status).to eq(200)
-      @token = last_response.body 
+      @token = JSON.parse(last_response.body)['token'] 
     end
 
     describe 'unsuccessful image submission' do
@@ -221,7 +222,7 @@ RSpec.describe "/api" do
 
       post "/api/auth", { email: @another_agent.email, password: 'secret' }
       expect(last_response.status).to eq(200)
-      @token = last_response.body 
+      @token = JSON.parse(last_response.body)['token'] 
     end
 
     describe 'unsuccessful image submission' do

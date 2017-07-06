@@ -8,7 +8,7 @@ YesOrNo::App.controllers :api, :provides => [:json] do
     if agent && agent.password == params[:password]
       hmac_secret = ENV['HMAC_SECRET']
       response.status = 200
-      JWT.encode({agent_id: agent.id}, hmac_secret, 'HS256')
+      { token: JWT.encode({agent_id: agent.id}, hmac_secret, 'HS256') }.to_json
     else
       response.status = 403
     end
