@@ -4,6 +4,30 @@ yes-or-no
 Simple visual _Yes or No_ application built on [Padrino](http://padrinorb.com/).
 Submit image links and present to allow users to respond _Yes_ or _No_.
 
+# Host dependencies
+
+This is needed for the `pg` gem.
+
+```
+sudo apt install libpq-dev
+```
+
+Headless browser for testing:
+
+```
+sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
+sudo ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
+```
+
+Verify `phantomjs` installation:
+
+```
+phantomjs --version
+```
+
+You may need to log in and out of the shell for this to work.
+
 # Configuration
 
 Create a `.env` file:
