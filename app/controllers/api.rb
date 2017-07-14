@@ -3,9 +3,10 @@ YesOrNo::App.controllers :api, :provides => [:json] do
   #
   # authenticate
   #
-  post :auth, map: "/api/auth" do
-    agent = Agent.find_by_email(params[:email])
-    if agent && agent.password == params[:password]
+  post :auth, map: "/api/auth", :csrf_protection => false do
+    json = JSON.parse(request.body.read)
+    agent = Agent.find_by_email(json['email'])
+    if agent && agent.password == json['password']
       hmac_secret = ENV['HMAC_SECRET']
       response.status = 200
       { token: JWT.encode({agent_id: agent.id}, hmac_secret, 'HS256') }.to_json
@@ -18,18 +19,20 @@ YesOrNo::App.controllers :api, :provides => [:json] do
   # create
   #
   post :create, map: "/api/post" do
-    if params[:token].nil?
+    json = JSON.parse(request.body.read)
+
+    if json['token'].nil?
       response.status = 403
       return { error: 'Invalid token' }.to_json
     end
-    decoded_token = JWT.decode params[:token], ENV['HMAC_SECRET'], false, { :algorithm => 'HS256' }
+    decoded_token = JWT.decode json['token'], ENV['HMAC_SECRET'], false, { :algorithm => 'HS256' }
 
     agent = Agent.find(decoded_token[0]['agent_id'])
     admin = Account.find_by(email: agent.email)
 
-    params[:agent_id] = agent.id
+    json['agent_id'] = agent.id
 
-    post = Post.new(params.except('token', 'format'))
+    post = Post.new(json.except('token', 'format'))
     approved = admin.present? || agent.trusted || ENV['AUTO_APPROVE'] == 'true'
     post.approved = true if approved
 
