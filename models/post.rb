@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
   validates_length_of :tag, maximum: 256 
   belongs_to :ip
   belongs_to :agent
+  validates_presence_of :agent
   has_many :votes, dependent: :destroy
 
   # New posts are worth points

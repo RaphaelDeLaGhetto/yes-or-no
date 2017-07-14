@@ -16,6 +16,7 @@ RSpec.describe Post, type: :model do
 
   context 'validations' do
     subject { Post.new }
+    it { should validate_presence_of(:agent) }
     it { should validate_presence_of(:url) }
     it { should validate_uniqueness_of(:url) }
     it { should validate_presence_of(:tag) }
@@ -77,7 +78,7 @@ RSpec.describe Post, type: :model do
 
   context 'instance methods' do
     before :each do
-      @post = create(:post)
+      @post = create(:post, agent: create(:agent))
     end
 
     describe '#answer_yes' do
@@ -145,10 +146,11 @@ RSpec.describe Post, type: :model do
 
   context 'class methods' do
     before :each do
-      @post_0 = create(:post)
-      @post_1 = Post.create(url: 'example.com/image_1.jpg', tag: 'Post 1', approved: true, yeses: 10, nos: 2)
-      @post_2 = Post.create(url: 'example.com/image_2.jpg', tag: 'Post 2', approved: true)
-      @post_3 = Post.create(url: 'example.com/image_3.jpg', tag: 'Post 3', approved: true, yeses: 100, nos: 10)
+      agent = create(:agent)
+      @post_0 = create(:post, agent: agent)
+      @post_1 = Post.create(url: 'example.com/image_1.jpg', tag: 'Post 1', approved: true, yeses: 10, nos: 2, agent: agent)
+      @post_2 = Post.create(url: 'example.com/image_2.jpg', tag: 'Post 2', approved: true, agent: agent)
+      @post_3 = Post.create(url: 'example.com/image_3.jpg', tag: 'Post 3', approved: true, yeses: 100, nos: 10, agent: agent)
       expect(Post.count).to eq(4)
     end
 
