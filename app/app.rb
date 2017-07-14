@@ -8,6 +8,11 @@ module YesOrNo
 
     enable :sessions
 
+    #
+    # For the API
+    #
+    set :allow_disabled_csrf, true
+
     ##
     # Caching support.
     #
