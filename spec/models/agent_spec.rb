@@ -129,6 +129,7 @@ RSpec.describe Agent, type: :model do
     end
 
     it 'returns true if agent has not voted' do
+      @post.agent = create(:another_agent)
       @post.save
       expect(@post.agent).not_to eq(@agent)
       expect(@agent.can_vote? @post).to eq(true)
@@ -142,7 +143,7 @@ RSpec.describe Agent, type: :model do
 
     context 'has not voted' do
       before :each do
-        @post = create(:post, approved: true)
+        @post = create(:post, approved: true, agent: create(:another_agent))
         expect(Vote.count).to eq(0)
         expect(@agent).not_to eq(@post.agent)
         @agent.vote true, @post
