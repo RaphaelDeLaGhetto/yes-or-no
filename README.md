@@ -87,7 +87,7 @@ bundle install
 This is only intended for development:
 
 ```
-docker run --name yesorno-postgres -e POSTGRES_USER=root -p 5432:5432 -d postgres                                                                                                   
+docker run --name yesorno-postgres -e POSTGRES_USER=root -p 5432:5432 -d postgres
 ```
 
 #### Debug container
