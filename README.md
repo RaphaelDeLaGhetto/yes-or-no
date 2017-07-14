@@ -12,22 +12,6 @@ This is needed for the `pg` gem.
 sudo apt install libpq-dev
 ```
 
-Headless browser for testing:
-
-```
-sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
-sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
-sudo ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
-```
-
-Verify `phantomjs` installation:
-
-```
-phantomjs --version
-```
-
-You may need to log in and out of the shell for this to work.
-
 # Configuration
 
 Create a `.env` file:
@@ -120,7 +104,21 @@ This runs as a daemon. Go to the web console (http://127.0.0.1:1080) to look at 
 
 ## Dependencies
 
-Install `phantomjs`. It was already installed in my current Ubuntu 14.04, so I'm not sure about `apt` or other dependencies.
+'phantomjs' browser for testing:
+
+```
+sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
+sudo ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
+```
+
+Verify `phantomjs` installation:
+
+```
+phantomjs --version
+```
+
+You may need to log in and out of the shell for this to work.
 
 ### Create/migrate test database
 
@@ -139,13 +137,12 @@ Run one test:
 
 ```
 RACK_ENV=test bundle exec rspec spec/features/landing_page_spec.rb
-
 ```
 
 ## Server
 
 ```
-padrino start -h 0.0.0.0
+bundle exec padrino start -h 0.0.0.0 -p 8000
 ```
 
 # Production
