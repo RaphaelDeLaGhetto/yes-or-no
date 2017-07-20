@@ -21,7 +21,7 @@ YesOrNo::App.controllers :api, :provides => [:json] do
   #
   # create
   #
-  post :create, map: "/api/post" do
+  post :create, map: "/api/post", :csrf_protection => false do
     json = JSON.parse(request.body.read)
 
     if json['token'].nil?
