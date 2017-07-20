@@ -10,7 +10,8 @@ RSpec.describe "/api" do
       it 'returns 403 for an unregistered agent' do 
         post "/api/auth", { email: 'someguy@example.com', password: 'secret' }.to_json
         expect(last_response.status).to eq(403)
-        expect(last_response.body).to eq('')
+        body = JSON.parse(last_response.body)
+        expect(body['error']).to eq('Could not authenticate')
       end
 
       it 'returns a JWT token' do 
@@ -20,6 +21,13 @@ RSpec.describe "/api" do
         decoded_token = JWT.decode(JSON.parse(last_response.body)['token'],
                                    ENV['HMAC_SECRET'], false, { :algorithm => 'HS256' })
         expect(decoded_token[0]['agent_id']).to eq(@agent.id)
+      end
+
+      it 'returns an API create endpoint' do 
+        post "/api/auth", { email: @agent.email, password: 'secret' }.to_json
+        expect(last_response.status).to eq(200)
+        body = JSON.parse(last_response.body)
+        expect(body['create']).to eq("#{last_request.base_url}/api/post")
       end
     end
 
